@@ -36,6 +36,15 @@ struct _PreferencesGeneral {
 
 G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE)
 
+  // portal initialization
+  if (portal == nullptr) {
+    portal = xdp_portal_new();
+  }
+
+  update_background_portal(settings->get_boolean("enable-autostart"));
+
+
+/*
 auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
   std::filesystem::path autostart_dir{g_get_user_config_dir() + "/autostart"s};
 
@@ -72,6 +81,7 @@ auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> 
 
   return 0;
 }
+*/
 
 void dispose(GObject* object) {
   auto* self = EE_PREFERENCES_GENERAL(object);
@@ -109,18 +119,56 @@ void preferences_general_init(PreferencesGeneral* self) {
 
   // initializing some widgets
 
-  gtk_switch_set_active(self->enable_autostart,
-                        static_cast<gboolean>(std::filesystem::is_regular_file(
-                            g_get_user_config_dir() + "/autostart/easyeffects-service.desktop"s)));
+ // gtk_switch_set_active(self->enable_autostart,
+ //                      static_cast<gboolean>(std::filesystem::is_regular_file(
+  //                          g_get_user_config_dir() + "/autostart/easyeffects-service.desktop"s)));
 
   gsettings_bind_widgets<"process-all-inputs", "process-all-outputs", "use-dark-theme", "shutdown-on-window-close",
-                         "use-cubic-volumes", "autohide-popovers">(
+                         "use-cubic-volumes", "autohide-popovers", "enable-autostart">(
       self->settings, self->process_all_inputs, self->process_all_outputs, self->theme_switch,
-      self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers);
+      self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers, self->enable_autostart);
+      
+  settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
+    update_background_portal(settings->get_boolean(key));
+  });
 }
 
 auto create() -> PreferencesGeneral* {
   return static_cast<PreferencesGeneral*>(g_object_new(EE_TYPE_PREFERENCES_GENERAL, nullptr));
 }
+
++void GeneralSettingsUi::update_background_portal(const bool& state) {
++  XdpBackgroundFlags background_flags = XDP_BACKGROUND_FLAG_NONE;
++
++  g_autoptr(GPtrArray) command_line = nullptr;
++
++  if (state) {
++    command_line = g_ptr_array_new_with_free_func(g_free);
++
++    g_ptr_array_add(command_line, g_strdup("easyeffects"));
++    g_ptr_array_add(command_line, g_strdup("--gapplication-service"));
++
++    background_flags = XDP_BACKGROUND_FLAG_AUTOSTART;
++  }
++
++  auto* reason = g_strdup("EasyEffects Autostart");
++
++  xdp_portal_request_background(portal, nullptr, reason, command_line, background_flags, NULL,
++                                on_request_background_called, nullptr);
++
++  g_free(reason);
++}
++
++void GeneralSettingsUi::on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
++  g_autoptr(GError) error = nullptr;
++
++  if (!xdp_portal_request_background_finish(portal, result, &error)) {
++    util::warning(std::string("portal: background request failed:") + ((error) ? error->message : "unknown reason"));
++
++    return;
++  }
++
++  util::debug("portal: background request successfully completed");
++}
 
 }  // namespace ui::preferences::general

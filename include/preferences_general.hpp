@@ -20,15 +20,21 @@
 #pragma once
 
 #include <adwaita.h>
-#include <filesystem>
 #include <fstream>
 #include <string>
 #include "ui_helpers.hpp"
 #include "util.hpp"
+#include "libportal/background.h"
 
 namespace ui::preferences::general {
 
 G_BEGIN_DECLS
+
+inline static XdpPortal* portal = nullptr;
+
+static void update_background_portal(const bool& state);
+
+static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
 
 #define EE_TYPE_PREFERENCES_GENERAL (preferences_general_get_type())
 
