@@ -114,8 +114,7 @@ void preferences_general_init(PreferencesGeneral* self) {
   if (portal == nullptr) {
      portal = xdp_portal_new();
   }
-  int *steve = self->settings;
-  
+    
   update_background_portal(steve->get_boolean("enable-autostart"));
 
   // initializing some widgets
