@@ -126,10 +126,10 @@ void preferences_general_init(PreferencesGeneral* self) {
       self->settings, self->process_all_inputs, self->process_all_outputs, self->theme_switch,
       self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers, self->enable_autostart);
       
-    update_background_portal(settings->get_boolean("enable-autostart"));
-  // settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
+    
+  settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
     update_background_portal(settings->get_boolean(key));
-  );
+  });
 }
 
 auto create() -> PreferencesGeneral* {
