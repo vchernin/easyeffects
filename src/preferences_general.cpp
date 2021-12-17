@@ -138,7 +138,7 @@ auto create() -> PreferencesGeneral* {
   return static_cast<PreferencesGeneral*>(g_object_new(EE_TYPE_PREFERENCES_GENERAL, nullptr));
 }
 
-void GeneralSettingsUi::update_background_portal(const bool& state) {
+void update_background_portal(const bool& state) {
   XdpBackgroundFlags background_flags = XDP_BACKGROUND_FLAG_NONE;
 
   g_autoptr(GPtrArray) command_line = nullptr;
@@ -160,7 +160,7 @@ void GeneralSettingsUi::update_background_portal(const bool& state) {
   g_free(reason);
 }
 
-void GeneralSettingsUi::on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
+void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
   g_autoptr(GError) error = nullptr;
 
   if (!xdp_portal_request_background_finish(portal, result, &error)) {
