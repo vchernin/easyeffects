@@ -37,7 +37,7 @@ struct _PreferencesGeneral {
 G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE)
 
 inline static XdpPortal* portal = nullptr;
-static void update_background_portal(const bool& state);z
+static void update_background_portal(const bool& state);
 static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
 
 // portal initialization
