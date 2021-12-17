@@ -138,38 +138,38 @@ auto create() -> PreferencesGeneral* {
   return static_cast<PreferencesGeneral*>(g_object_new(EE_TYPE_PREFERENCES_GENERAL, nullptr));
 }
 
-+void GeneralSettingsUi::update_background_portal(const bool& state) {
-+  XdpBackgroundFlags background_flags = XDP_BACKGROUND_FLAG_NONE;
-+
-+  g_autoptr(GPtrArray) command_line = nullptr;
-+
-+  if (state) {
-+    command_line = g_ptr_array_new_with_free_func(g_free);
-+
-+    g_ptr_array_add(command_line, g_strdup("easyeffects"));
-+    g_ptr_array_add(command_line, g_strdup("--gapplication-service"));
-+
-+    background_flags = XDP_BACKGROUND_FLAG_AUTOSTART;
-+  }
-+
-+  auto* reason = g_strdup("EasyEffects Autostart");
-+
-+  xdp_portal_request_background(portal, nullptr, reason, command_line, background_flags, NULL,
-+                                on_request_background_called, nullptr);
-+
-+  g_free(reason);
-+}
-+
-+void GeneralSettingsUi::on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
-+  g_autoptr(GError) error = nullptr;
-+
-+  if (!xdp_portal_request_background_finish(portal, result, &error)) {
-+    util::warning(std::string("portal: background request failed:") + ((error) ? error->message : "unknown reason"));
-+
-+    return;
-+  }
-+
-+  util::debug("portal: background request successfully completed");
-+}
+void GeneralSettingsUi::update_background_portal(const bool& state) {
+  XdpBackgroundFlags background_flags = XDP_BACKGROUND_FLAG_NONE;
+
+  g_autoptr(GPtrArray) command_line = nullptr;
+
+  if (state) {
+    command_line = g_ptr_array_new_with_free_func(g_free);
+
+    g_ptr_array_add(command_line, g_strdup("easyeffects"));
+    g_ptr_array_add(command_line, g_strdup("--gapplication-service"));
+
+    background_flags = XDP_BACKGROUND_FLAG_AUTOSTART;
+  }
+
+  auto* reason = g_strdup("EasyEffects Autostart");
+
+  xdp_portal_request_background(portal, nullptr, reason, command_line, background_flags, NULL,
+                                on_request_background_called, nullptr);
+
+  g_free(reason);
+}
+
+void GeneralSettingsUi::on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
+  g_autoptr(GError) error = nullptr;
+
+  if (!xdp_portal_request_background_finish(portal, result, &error)) {
+    util::warning(std::string("portal: background request failed:") + ((error) ? error->message : "unknown reason"));
+
+    return;
+  }
+
+  util::debug("portal: background request successfully completed");
+}
 
 }  // namespace ui::preferences::general
