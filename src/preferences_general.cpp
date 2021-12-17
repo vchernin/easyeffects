@@ -40,14 +40,6 @@ inline static XdpPortal* portal = nullptr;
 static void update_background_portal(const bool& state);
 static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
 
-// portal initialization
-if (portal == nullptr) {
-  portal = xdp_portal_new();
-}
-
-update_background_portal(settings->get_boolean("enable-autostart"));
-
-
 /*
 auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
   std::filesystem::path autostart_dir{g_get_user_config_dir() + "/autostart"s};
@@ -121,6 +113,10 @@ void preferences_general_init(PreferencesGeneral* self) {
 
   self->settings = g_settings_new("com.github.wwmm.easyeffects");
 
+  if (portal == nullptr) {
+     portal = xdp_portal_new();
+   }
+
   // initializing some widgets
 
  // gtk_switch_set_active(self->enable_autostart,
@@ -132,7 +128,8 @@ void preferences_general_init(PreferencesGeneral* self) {
       self->settings, self->process_all_inputs, self->process_all_outputs, self->theme_switch,
       self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers, self->enable_autostart);
       
-  settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
+    update_background_portal(settings->get_boolean("enable-autostart"));
+  // settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
     update_background_portal(settings->get_boolean(key));
   });
 }
