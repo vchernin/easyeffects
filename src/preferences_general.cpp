@@ -131,7 +131,7 @@ void preferences_general_init(PreferencesGeneral* self) {
     update_background_portal(settings->get_boolean("enable-autostart"));
   // settings->signal_changed("enable-autostart").connect([=, this](const auto& key) {
     update_background_portal(settings->get_boolean(key));
-  });
+  );
 }
 
 auto create() -> PreferencesGeneral* {
