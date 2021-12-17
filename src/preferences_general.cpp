@@ -105,7 +105,7 @@ void preferences_general_class_init(PreferencesGeneralClass* klass) {
   gtk_widget_class_bind_template_child(widget_class, PreferencesGeneral, shutdown_on_window_close);
   gtk_widget_class_bind_template_child(widget_class, PreferencesGeneral, use_cubic_volumes);
 
-  gtk_widget_class_bind_template_callback(widget_class, PreferencesGeneral, on_enable_autostart);
+  gtk_widget_class_bind_template_callback(widget_class, on_enable_autostart);
 }
 
 void preferences_general_init(PreferencesGeneral* self) {
