@@ -36,12 +36,16 @@ struct _PreferencesGeneral {
 
 G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE)
 
-  // portal initialization
-  if (portal == nullptr) {
-    portal = xdp_portal_new();
-  }
+inline static XdpPortal* portal = nullptr;
+static void update_background_portal(const bool& state);z
+static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
 
-  update_background_portal(settings->get_boolean("enable-autostart"));
+// portal initialization
+if (portal == nullptr) {
+  portal = xdp_portal_new();
+}
+
+update_background_portal(settings->get_boolean("enable-autostart"));
 
 
 /*

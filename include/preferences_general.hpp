@@ -30,12 +30,6 @@ namespace ui::preferences::general {
 
 G_BEGIN_DECLS
 
-inline static XdpPortal* portal = nullptr;
-
-static void update_background_portal(const bool& state);
-
-static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
-
 #define EE_TYPE_PREFERENCES_GENERAL (preferences_general_get_type())
 
 G_DECLARE_FINAL_TYPE(PreferencesGeneral, preferences_general, EE, PREFERENCES_GENERAL, AdwPreferencesPage)
