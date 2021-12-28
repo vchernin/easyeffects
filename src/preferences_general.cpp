@@ -36,6 +36,67 @@ struct _PreferencesGeneral {
 
 G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE)
 
+inline static XdpPortal* portal = nullptr;
+static void update_background_portal(const bool& state);
+static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
+
+
+void update_background_portal(const bool& state) {
+  XdpBackgroundFlags background_flags = XDP_BACKGROUND_FLAG_NONE;
+
+  g_autoptr(GPtrArray) command_line = nullptr;
+
+  if (state) {
+    command_line = g_ptr_array_new_with_free_func(g_free);
+
+    g_ptr_array_add(command_line, g_strdup("easyeffects"));
+    g_ptr_array_add(command_line, g_strdup("--gapplication-service"));
+
+    background_flags = XDP_BACKGROUND_FLAG_AUTOSTART;
+  }
+
+  auto* reason = g_strdup("EasyEffects Background Access");
+
+  xdp_portal_request_background(portal, nullptr, reason, command_line, background_flags, NULL,
+                                on_request_background_called, nullptr);
+
+  g_free(reason);
+}
+
+void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data) {
+  g_autoptr(GError) error = nullptr;
+
+  if (!xdp_portal_request_background_finish(portal, result, &error)) {
+    util::warning(std::string("portal: a background request failed:") + ((error) ? error->message : "unknown reason"));
+
+    return;
+  }
+
+  util::debug("portal: a background request successfully completed");
+
+}
+
+
+auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
+    update_background_portal(state);
+    return 0;
+}
+
+void on_shutdown_on_window_close_called(GtkSwitch* btn, gboolean state, PreferencesGeneral* self) {
+    if (g_settings_get_boolean(self->settings, "enable-autostart")) {
+        util::debug("portal: requesting both background access and autostart file since autostart is enabled");
+        update_background_portal(true);
+    }
+    else {
+        util::debug("portal: requesting only background access, not creating autostart file");
+        update_background_portal(false);
+    }
+    return;
+
+}
+
+
+/*
 auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
   std::filesystem::path autostart_dir{g_get_user_config_dir() + "/autostart"s};
 
@@ -72,11 +133,14 @@ auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> 
 
   return 0;
 }
+*/
 
 void dispose(GObject* object) {
   auto* self = EE_PREFERENCES_GENERAL(object);
 
   g_object_unref(self->settings);
+
+  g_settings_unbind(self->shutdown_on_window_close, "active");
 
   util::debug(log_tag + "disposed"s);
 
@@ -100,6 +164,7 @@ void preferences_general_class_init(PreferencesGeneralClass* klass) {
   gtk_widget_class_bind_template_child(widget_class, PreferencesGeneral, use_cubic_volumes);
 
   gtk_widget_class_bind_template_callback(widget_class, on_enable_autostart);
+  gtk_widget_class_bind_template_callback(widget_class, on_shutdown_on_window_close_called);
 }
 
 void preferences_general_init(PreferencesGeneral* self) {
@@ -107,20 +172,31 @@ void preferences_general_init(PreferencesGeneral* self) {
 
   self->settings = g_settings_new("com.github.wwmm.easyeffects");
 
-  // initializing some widgets
+  if (portal == nullptr) {
+     portal = xdp_portal_new();
+  }
+    
 
-  gtk_switch_set_active(self->enable_autostart,
-                        static_cast<gboolean>(std::filesystem::is_regular_file(
-                            g_get_user_config_dir() + "/autostart/easyeffects-service.desktop"s)));
 
   gsettings_bind_widgets<"process-all-inputs", "process-all-outputs", "use-dark-theme", "shutdown-on-window-close",
-                         "use-cubic-volumes", "autohide-popovers">(
+                         "use-cubic-volumes", "autohide-popovers", "enable-autostart">(
       self->settings, self->process_all_inputs, self->process_all_outputs, self->theme_switch,
-      self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers);
+      self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers, self->enable_autostart);
+
+  g_signal_connect(self->shutdown_on_window_close, "state-set", G_CALLBACK(on_shutdown_on_window_close_called), self);
+
+
+  if (!gtk_switch_get_active(self->shutdown_on_window_close)) {
+    on_shutdown_on_window_close_called(self->shutdown_on_window_close, false, self);
+  }
 }
+
+
 
 auto create() -> PreferencesGeneral* {
   return static_cast<PreferencesGeneral*>(g_object_new(EE_TYPE_PREFERENCES_GENERAL, nullptr));
 }
+
+
 
 }  // namespace ui::preferences::general

@@ -132,6 +132,7 @@ easyeffects_deps = [
 	dependency('libebur128',version: '>=1.2.0'),
 	dependency('rnnoise'),
 	dependency('samplerate'),
+	dependency('libportal'),
 	dependency('rubberband'),
 	dependency('speexdsp'),
 	dependency('nlohmann_json'),
