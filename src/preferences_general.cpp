@@ -39,6 +39,7 @@ G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE
 inline static XdpPortal* portal = nullptr;
 static void update_background_portal(const bool& state);
 static void on_request_background_called(GObject* source, GAsyncResult* result, gpointer data);
+auto on_enable_autostart(const bool& state) -> bool;
 
 /*
 auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
@@ -115,7 +116,7 @@ void preferences_general_init(PreferencesGeneral* self) {
      portal = xdp_portal_new();
   }
     
-  update_background_portal(self);
+  //update_background_portal(self);
 
   // initializing some widgets
 
@@ -128,11 +129,16 @@ void preferences_general_init(PreferencesGeneral* self) {
       self->settings, self->process_all_inputs, self->process_all_outputs, self->theme_switch,
       self->shutdown_on_window_close, self->use_cubic_volumes, self->autohide_popovers, self->enable_autostart);
       
-  update_background_portal(self);
+ // update_background_portal(self);
   
   //self->signal_changed("enable-autostart").connect([=, this](const auto& key) {
    // update_background_portal(self);
   //});
+}
+
+auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
+    update_background_portal(state);
+    return 0;
 }
 
 auto create() -> PreferencesGeneral* {
