@@ -246,13 +246,13 @@ void preferences_general_init(PreferencesGeneral* self) {
   if (!gtk_switch_get_active(self->shutdown_on_window_close) && !gtk_switch_get_active(self->enable_autostart)) {
     util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are disabled"));
     self->reset_shutdown = true;
-    on_shutdown_on_window_close_called(self->shutdown_on_window_close, false, self);
+    update_background_portal(true, self);
   }
 
   else if (gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
     util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are enabled"));
     self->reset_autostart = true;
-    on_enable_autostart(self->enable_autostart, true, self);
+    update_background_portal(true, self);
   }
 
   // first two ifs confirmed to work perfectly
