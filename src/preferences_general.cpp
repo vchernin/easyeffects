@@ -33,8 +33,6 @@ struct _PreferencesGeneral {
 
   GSettings* settings;
 
-  gboolean is_autostart_switch;
-
   gboolean reset_shutdown, reset_autostart;
 
 };
@@ -74,73 +72,34 @@ void on_request_background_called(GObject* source, GAsyncResult* result, gpointe
   g_autoptr(GError) error = nullptr;
 
   // libportal check if portal request worked
-  // todo here check preferences with self
   if (!xdp_portal_request_background_finish(portal, result, &error)) {
     util::warning(std::string("portal: a background request failed: ") + ((error) ? error->message : "unknown reason"));
-    util::warning(std::string("portal: Background portal access has likely been denied"));
-    util::warning(std::string("portal: To let EasyEffects ask for the portal again, run flatpak permission-reset com.github.wwmm.easyeffects"));
+    util::warning(std::string("portal: background portal access has likely been denied"));
+    util::warning(std::string("portal: to let EasyEffects ask for the portal again, run flatpak permission-reset com.github.wwmm.easyeffects"));
 
-    // TODO one remaining problem
-    // when resetting when running (i.e. not creating new prefencens window and running sanity checks).
-    // should reset switch based on if it detects it's in the wrong spot, not based on is_autostart_switch.
-    // if gtk_switch_get_active(((PreferencesGeneral *)self)->enable_autostart) == true
-    // reset autostart
-    // if gtk_switch_get_active(((PreferencesGeneral *)self)->shutdown_on_window_close) == false
-    // reset shutdown
-    // probably still need reset_autostart and reset_shutdown (since regardless of how conditional works, switch will be moving and callback will be called).
-    // but hopefuly don't need is_autostart_switch
 
     if (gtk_switch_get_active(((PreferencesGeneral *)self)->enable_autostart) == true || gtk_switch_get_state(((PreferencesGeneral *)self)->enable_autostart) == true) {
-    // reset autostart
         ((PreferencesGeneral *)self)->reset_autostart = true;
-        // g_settings_reset(((PreferencesGeneral *)self)->settings, "enable-autostart");
-        util::warning(std::string("portal: Setting autostart state and switch to false"));
+        util::warning(std::string("portal: setting autostart state and switch to false"));
         gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, false);
         gtk_switch_set_active(((PreferencesGeneral *)self)->enable_autostart, false);
-      //  ((PreferencesGeneral *)self)->reset_autostart = false;
     }
     if (gtk_switch_get_active(((PreferencesGeneral *)self)->shutdown_on_window_close) == false || gtk_switch_get_state(((PreferencesGeneral *)self)->shutdown_on_window_close) == false) {
         ((PreferencesGeneral *)self)->reset_shutdown = true;
-       // g_settings_reset(((PreferencesGeneral *)self)->settings, "shutdown-on-window-close");
-        util::warning(std::string("portal: Setting shutdown on window close state and switch to true"));
+        util::warning(std::string("portal: setting shutdown on window close state and switch to true"));
         gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
         gtk_switch_set_active(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
-       // ((PreferencesGeneral *)self)->reset_shutdown = false;
     }
 
     ((PreferencesGeneral *)self)->reset_autostart = false;
     ((PreferencesGeneral *)self)->reset_shutdown = false;
-/*
-    // reset switches in case there was a problem
-    if (((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_autostart) {
-        ((PreferencesGeneral *)self)->reset_autostart = true;
-        // g_settings_reset(((PreferencesGeneral *)self)->settings, "enable-autostart");
-        util::warning(std::string("portal: Setting autostart state and switch to false"));
-        gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, false);
-        gtk_switch_set_active(((PreferencesGeneral *)self)->enable_autostart, false);
-        ((PreferencesGeneral *)self)->reset_autostart = false;
-    }
-    if (!((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_shutdown) {
-        ((PreferencesGeneral *)self)->reset_shutdown = true;
-       // g_settings_reset(((PreferencesGeneral *)self)->settings, "shutdown-on-window-close");
-        util::warning(std::string("portal: Setting shutdown on window close state and switch to true"));
-        gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
-        gtk_switch_set_active(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
-        ((PreferencesGeneral *)self)->reset_shutdown = false;
-    }
-*/
     return;
   }
 
-  // set switches to the correct setting in case it worked
-  //if (((PreferencesGeneral *)self)->is_autostart_switch) {
-        gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, gtk_switch_get_active(((PreferencesGeneral *)self)->enable_autostart));
-       // gtk_switch_set_active(((PreferencesGeneral *)self)->enable_autostart, true);
- // }
- // else if (!((PreferencesGeneral *)self)->is_autostart_switch) {
-        gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, gtk_switch_get_active(((PreferencesGeneral *)self)->shutdown_on_window_close));
-      //  gtk_switch_set_active(((PreferencesGeneral *)self)->shutdown_on_window_close, false);
-//  }
+  gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, gtk_switch_get_active(((PreferencesGeneral *)self)->enable_autostart));
+
+  gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, gtk_switch_get_active(((PreferencesGeneral *)self)->shutdown_on_window_close));
+
   ((PreferencesGeneral *)self)->reset_autostart = false;
   ((PreferencesGeneral *)self)->reset_shutdown = false;
   util::debug("portal: a background request successfully completed");
@@ -151,36 +110,24 @@ void on_request_background_called(GObject* source, GAsyncResult* result, gpointe
 gboolean on_enable_autostart(GtkSwitch* obj, gboolean state, PreferencesGeneral* self) {
     if (!self->reset_autostart) {
         util::debug("portal: requesting autostart file since autostart is enabled");
-        self->is_autostart_switch = true;
         update_background_portal(state, self);
     }
-
     return true;
 }
 
 gboolean on_shutdown_on_window_close_called(GtkSwitch* btn, gboolean state, PreferencesGeneral* self) {
-    // TODO should use state here, no reason to call when state is true (i.e. enabling shutdown on window close)
-    // TODO THIS IS ONE OF TWO KNOWN BUGS
-
-    // TODO the other known bug is that when resetting, and disabling autstart the portal will be called.
-    // this makes sense since it's treated like a normal button switch, but here it's done by us.
-    // We don't need to do this excessive call,
-    // how can we reset both just one switch, or both switches with minimal portal calls?
     if (!self->reset_shutdown) {
         if (g_settings_get_boolean(self->settings, "enable-autostart") && !state) {
             util::debug("portal: requesting both background access and autostart file since autostart is enabled");
-            self->is_autostart_switch = false;
             update_background_portal(true, self);
         }
         else if (!g_settings_get_boolean(self->settings, "enable-autostart") && !state) {
             util::debug("portal: requesting only background access, not creating autostart file");
-            self->is_autostart_switch = false;
             update_background_portal(false, self);
         }
 
         else if (g_settings_get_boolean(self->settings, "enable-autostart") && state) {
             util::debug("portal: requesting autostart access since autostart enabled");
-            self->is_autostart_switch = false;
             update_background_portal(true, self);
         }
 
@@ -289,19 +236,17 @@ void preferences_general_init(PreferencesGeneral* self) {
 
   // sanity checks in case switch(es) was somehow already set previously.
   if (!gtk_switch_get_active(self->shutdown_on_window_close) && !gtk_switch_get_active(self->enable_autostart)) {
-    util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are disabled"));
-    update_background_portal(true, self);
+    util::debug(std::string("portal: Running portal sanity check, autostart and shutdown switches are disabled"));
+    update_background_portal(false, self);
   }
 
   else if (gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
-    util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are enabled"));
+    util::debug(std::string("portal: Running portal sanity check, autostart and shutdown switches are enabled"));
     update_background_portal(true, self);
   }
 
-  // first two ifs confirmed to work perfectly
-  // but not this one...
   else if (!gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
-    util::warning(std::string("portal: Running portal sanity check, autostart switch is enabled and shutdown switch is disabled"));
+    util::debug(std::string("portal: Running portal sanity check, autostart switch is enabled and shutdown switch is disabled"));
     // bool passed to update_background_portal should not matter
     update_background_portal(true, self);
   }
