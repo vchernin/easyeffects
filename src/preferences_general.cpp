@@ -35,7 +35,7 @@ struct _PreferencesGeneral {
 
   gboolean is_autostart_switch;
 
-  gboolean reset_all_service_switches;
+  gboolean reset_shutdown, reset_autostart;
 
 };
 
@@ -81,15 +81,21 @@ void on_request_background_called(GObject* source, GAsyncResult* result, gpointe
     util::warning(std::string("portal: To let EasyEffects ask for the portal again, run flatpak permission-reset com.github.wwmm.easyeffects"));
 
     // reset switches in case there was a problem
-    if (((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_all_service_switches) {
+    if (((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_autostart) {
+        ((PreferencesGeneral *)self)->reset_autostart = true;
+        g_settings_reset(((PreferencesGeneral *)self)->settings, "enable-autostart");
         util::warning(std::string("portal: Setting autostart state and switch to false"));
-        gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, false);
-        gtk_switch_set_active(((PreferencesGeneral *)self)->enable_autostart, false);
+        //gtk_switch_set_state(((PreferencesGeneral *)self)->enable_autostart, false);
+       // gtk_switch_set_active(((PreferencesGeneral *)self)->enable_autostart, false);
+        ((PreferencesGeneral *)self)->reset_autostart = false;
     }
-    if (!((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_all_service_switches) {
+    if (!((PreferencesGeneral *)self)->is_autostart_switch || ((PreferencesGeneral *)self)->reset_shutdown) {
+        ((PreferencesGeneral *)self)->reset_shutdown = true;
+        g_settings_reset(((PreferencesGeneral *)self)->settings, "shutdown-on-window-close");
         util::warning(std::string("portal: Setting shutdown on window close state and switch to true"));
-        gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
-        gtk_switch_set_active(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
+       // gtk_switch_set_state(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
+        //gtk_switch_set_active(((PreferencesGeneral *)self)->shutdown_on_window_close, true);
+        ((PreferencesGeneral *)self)->reset_shutdown = false;
     }
 
     return;
@@ -111,8 +117,11 @@ void on_request_background_called(GObject* source, GAsyncResult* result, gpointe
 
 
 gboolean on_enable_autostart(GtkSwitch* obj, gboolean state, PreferencesGeneral* self) {
-    self->is_autostart_switch = true;
-    update_background_portal(state, self);
+    if (!self->reset_autostart) {
+        self->is_autostart_switch = true;
+        update_background_portal(state, self);
+    }
+
     return true;
 }
 
@@ -124,16 +133,19 @@ gboolean on_shutdown_on_window_close_called(GtkSwitch* btn, gboolean state, Pref
     // this makes sense since it's treated like a normal button switch, but here it's done by us.
     // We don't need to do this excessive call,
     // how can we reset both just one switch, or both switches with minimal portal calls?
-    if (g_settings_get_boolean(self->settings, "enable-autostart")) {
-        util::debug("portal: requesting both background access and autostart file since autostart is enabled");
-        self->is_autostart_switch = false;
-        update_background_portal(true, self);
+    if (!self->reset_shutdown) {
+        if (g_settings_get_boolean(self->settings, "enable-autostart")) {
+            util::debug("portal: requesting both background access and autostart file since autostart is enabled");
+            self->is_autostart_switch = false;
+            update_background_portal(true, self);
+        }
+        else {
+            util::debug("portal: requesting only background access, not creating autostart file");
+            self->is_autostart_switch = false;
+            update_background_portal(false, self);
+        }
     }
-    else {
-        util::debug("portal: requesting only background access, not creating autostart file");
-        self->is_autostart_switch = false;
-        update_background_portal(false, self);
-    }
+
     return true;
 
 }
@@ -233,11 +245,13 @@ void preferences_general_init(PreferencesGeneral* self) {
   // sanity checks in case switch(es) was somehow already set previously.
   if (!gtk_switch_get_active(self->shutdown_on_window_close) && !gtk_switch_get_active(self->enable_autostart)) {
     util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are disabled"));
+    // self->reset_shutdown = true;
     on_shutdown_on_window_close_called(self->shutdown_on_window_close, false, self);
   }
 
   else if (gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
     util::warning(std::string("portal: Running portal sanity check, autostart and shutdown switches are enabled"));
+    // self->reset_autostart = true;
     on_enable_autostart(self->enable_autostart, true, self);
   }
 
@@ -246,7 +260,8 @@ void preferences_general_init(PreferencesGeneral* self) {
   else if (!gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
     util::warning(std::string("portal: Running portal sanity check, autostart switch is enabled and shutdown switch is disabled"));
     // bool passed to update_background_portal should not matter
-    self->reset_all_service_switches = true;
+   // self->reset_shutdown = true;
+   // self->reset_autostart = true;
     update_background_portal(true, self);
   }
 }
