@@ -247,7 +247,6 @@ void preferences_general_init(PreferencesGeneral* self) {
 
   else if (!gtk_switch_get_active(self->shutdown_on_window_close) && gtk_switch_get_active(self->enable_autostart)) {
     util::debug(std::string("portal: Running portal sanity check, autostart switch is enabled and shutdown switch is disabled"));
-    // bool passed to update_background_portal should not matter
     update_background_portal(true, self);
   }
 }
