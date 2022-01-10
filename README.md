@@ -5,8 +5,7 @@
 
 Audio effects for PipeWire applications.
 
-This application was formerly known as PulseEffects, but it was renamed to EasyEffects after it started to use GTK4 and
-GStreamer usage was replaced by native PipeWire filters.
+This application was formerly known as PulseEffects, but it was renamed to EasyEffects after it started to use GTK4 and GStreamer usage was replaced by native PipeWire filters.
 
 ![GitHub Light](images/easyeffects-light-screenshot-1.png#gh-light-mode-only)
 ![GitHub Light](images/easyeffects-light-screenshot-2.png#gh-light-mode-only)
@@ -17,6 +16,39 @@ GStreamer usage was replaced by native PipeWire filters.
 ![GitHub Dark](images/easyeffects-dark-screenshot-3.png#gh-dark-mode-only)
 
 ## Effects available
+
+Commit notes (todo remove):
+- Reorganized 
+- Did not remove significant information, simply reorgnized it into a table.
+- Remove Expander (is not in the app?)
+
+
+EasyEffects includes many audio plugins. See the Manual provided in the app (hamburger menu) with detailed instructions on how to use each plugin..
+
+| Plugin         | Description     | Provided by |
+|--------------|-----------|-----------|
+| Auto Gain | Changes the audio volume to a perceived loudness target that can be customized by the user. | [libebur128](https://github.com/jiixyj/libebur128)        |
+| Bass Enhancer      | Produce very low sound that is not present in the original signal. |  [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Bass Loudness      | Allows the bass level to be adjusted measuring the "equal-loudness contour".  | MDA Plugins |
+| Compressor      | Reduces the dynamic range or, in other words, the difference in level between the quietest and the loudest parts of an audio signal.  | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
+| Convolver      | Creates a simulation of an audio environment using a pre-recorded audio sample of the impulse response of the space being modeled.  | [zita-convolver](https://kokkinizita.linuxaudio.org/linuxaudio/) |
+| Crossfeed      | Improves headphone listening of stereo audio records by mixing the left and right channel in a way that simulates a stereo speaker setup.  | [libbs2b](https://sourceforge.net/projects/bs2b/files/libbs2b/) |
+| Crystalizer      | Adds a little of dynamic range to songs that were overly compressed.  | N/A |
+| De-esser      | Dynamically reduce high frequencies, commonly used to reduce "sssss" and "shhhh" in vocal tracks.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Echo Canceller      |  Improve voice quality by preventing Echo from being created or removing it after it has been added to the source signal. | [speexdsp](https://www.speex.org/) |
+| Equalizer      | Allows adjusting the volume of different frequency bands within an audio signal. | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
+| Exciter      | Produces high sound that is not present in the original signal.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Filter | Used to amplify (boost), pass or attenuate (cut) defined parts of a frequency spectrum.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Gate      | Attenuates signals that register below a Threshold, often used to reduce disturbing noise between useful signals.  |  [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Limiter      | Type of downward Compressor which does not allow the signal to overtake a predetermined Threshold.  | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
+| Loudness      | Applies the "equal-loudness contour" corrections to the input signal.  | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
+| Multiband Compressor      | An alternative advanced Multiband Compressor, see also "Compressor".  | [Linux Studio plugins](http://lsp-plug.in/?page=home) |
+| Multiband Gate      | An alternative advanced Multiband Gate, see also "Gate". | [Calf Studio Gear](https://calf-studio-gear.org/)
+| Noise Reduction      | Used to attenuate the disturbing noise from a signal, such as background noise in a voice call.  | [RNNoise](https://github.com/xiph/rnnoise) |
+| Pitch      | Used to raise or lower the original pitch of a sound.  | [Rubber Band](https://www.breakfastquay.com/rubberband/) |
+| Reverberation      | Simulates the phenomenon of persistence of sound after the source has been stopped, <br> as a result of multiple reflections of the waves over objects within a closed surface. | [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Stereo Tools      | Provides some handy utilities to manage Stereo streams handling Left and Right channels, <br> in conjunction with Mid and Side signals.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
+
 
 - Auto gain
 - Bass enhancer
@@ -45,7 +77,7 @@ GStreamer usage was replaced by native PipeWire filters.
 The user has full control over the effects order. Just use the up/down arrows
 next to the effect labels on the left side.
 
-To be able to use all of the effects, you must have the following installed on your system:
+Some packages do not provide all plugin packages by default. To be able to use all of the effects, you must have the following installed on your system:
 
 - [Linux Studio plugins](http://lsp-plug.in/?page=home). Version 1.1.24 or higher.
 - [Calf Studio plugins](https://calf-studio-gear.org/). Version 0.90.1 or higher.
@@ -54,6 +86,12 @@ To be able to use all of the effects, you must have the following installed on y
 - [zita-convolver](https://kokkinizita.linuxaudio.org/linuxaudio/). For Convolver.
 - [rubberband](https://www.breakfastquay.com/rubberband/). For Pitch Shift.
 - [RNNoise](https://github.com/xiph/rnnoise). For Noise Reduction.
+
+Note the Flathub package includes support for all available plugins by default.
+
+
+todo these can probably be removed or moved (they are hard runtime requirements?):
+
 - [libsamplerate](http://www.mega-nerd.com/SRC/index.html)
 - [libsndfile](http://www.mega-nerd.com/libsndfile/)
 - [libbs2b](https://sourceforge.net/projects/bs2b/files/libbs2b/)
