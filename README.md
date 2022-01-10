@@ -20,10 +20,12 @@ This application was formerly known as PulseEffects, but it was renamed to EasyE
 Commit notes (todo remove):
 - Reorganized 
 - Did not remove significant information, simply reorgnized it into a table.
-- Remove Expander (is not in the app?)
+- Remove Expander (is not in the app and not mentioned anywhere else)
+- Todo, resolve the todos
+- Figure out why to hide description collumn somehow.
 
 
-EasyEffects includes many audio plugins. See the Manual provided in the app (hamburger menu) with detailed instructions on how to use each plugin..
+EasyEffects includes many audio plugins. See the Manual provided in the app (hamburger menu) with detailed instructions on how to use each plugin.
 
 | Plugin         | Description     | Provided by |
 |--------------|-----------|-----------|
@@ -42,42 +44,22 @@ EasyEffects includes many audio plugins. See the Manual provided in the app (ham
 | Gate      | Attenuates signals that register below a Threshold, often used to reduce disturbing noise between useful signals.  |  [Calf Studio Gear](https://calf-studio-gear.org/) |
 | Limiter      | Type of downward Compressor which does not allow the signal to overtake a predetermined Threshold.  | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
 | Loudness      | Applies the "equal-loudness contour" corrections to the input signal.  | [Linux Studio Plugins](http://lsp-plug.in/?page=home) |
+| Maximizer      |  Type of Limiter that does not only prevent the signal to exceed a specified target level, but also adjusts the average Loudness of the audio track. | [ZamAudio plugins](http://www.zamaudio.com/) |
 | Multiband Compressor      | An alternative advanced Multiband Compressor, see also "Compressor".  | [Linux Studio plugins](http://lsp-plug.in/?page=home) |
-| Multiband Gate      | An alternative advanced Multiband Gate, see also "Gate". | [Calf Studio Gear](https://calf-studio-gear.org/)
+| Multiband Gate      | An alternative advanced Multiband Gate, see also "Gate". | [Calf Studio Gear](https://calf-studio-gear.org/) |
 | Noise Reduction      | Used to attenuate the disturbing noise from a signal, such as background noise in a voice call.  | [RNNoise](https://github.com/xiph/rnnoise) |
 | Pitch      | Used to raise or lower the original pitch of a sound.  | [Rubber Band](https://www.breakfastquay.com/rubberband/) |
-| Reverberation      | Simulates the phenomenon of persistence of sound after the source has been stopped, <br> as a result of multiple reflections of the waves over objects within a closed surface. | [Calf Studio Gear](https://calf-studio-gear.org/) |
-| Stereo Tools      | Provides some handy utilities to manage Stereo streams handling Left and Right channels, <br> in conjunction with Mid and Side signals.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
-
-
-- Auto gain
-- Bass enhancer
-- Bass loudness
-- Compressor
-- Convolver
-- Crossfeed
-- Crystalizer
-- De-esser
-- Echo Canceller
-- Equalizer
-- Exciter
-- Expander
-- Filter (low-pass, high-pass, band-pass and band-reject modes)
-- Gate
-- Limiter
-- Loudness
-- Maximizer
-- Multiband compressor
-- Multiband gate
-- Noise reduction
-- Pitch
-- Reverberation
-- Stereo tools
+| Reverberation      | Simulates the phenomenon of persistence of sound after the source has been stopped, as a result of multiple reflections of the waves over objects within a closed surface. | [Calf Studio Gear](https://calf-studio-gear.org/) |
+| Stereo Tools      | Provides some handy utilities to manage Stereo streams handling Left and Right channels, in conjunction with Mid and Side signals.  | [Calf Studio Gear](https://calf-studio-gear.org/) |
 
 The user has full control over the effects order. Just use the up/down arrows
 next to the effect labels on the left side.
 
 Some packages do not provide all plugin packages by default. To be able to use all of the effects, you must have the following installed on your system:
+Todo figure out which ones I actually need to list here.
+
+Note: the Flathub package includes support for all available plugins by default.
+
 
 - [Linux Studio plugins](http://lsp-plug.in/?page=home). Version 1.1.24 or higher.
 - [Calf Studio plugins](https://calf-studio-gear.org/). Version 0.90.1 or higher.
@@ -86,8 +68,6 @@ Some packages do not provide all plugin packages by default. To be able to use a
 - [zita-convolver](https://kokkinizita.linuxaudio.org/linuxaudio/). For Convolver.
 - [rubberband](https://www.breakfastquay.com/rubberband/). For Pitch Shift.
 - [RNNoise](https://github.com/xiph/rnnoise). For Noise Reduction.
-
-Note the Flathub package includes support for all available plugins by default.
 
 
 todo these can probably be removed or moved (they are hard runtime requirements?):
