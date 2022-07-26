@@ -41,6 +41,9 @@ jobs:
       uses: vchernin/pkgbuild-action@master
       with:
         namcapExcludeRules: unusedsodepends
+    - name: test
+      run: |
+        git status
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
