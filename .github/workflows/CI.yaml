@@ -14,7 +14,6 @@ jobs:
     - uses: actions/checkout@v3.0.2
     - name: Get hash
       run: | 
-        git log $GITHUB_SHA^2 -1
         git config --global --add safe.directory /__w/easyeffects/easyeffects
         echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
@@ -31,15 +30,13 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get Hash
-      run: | 
-        git log $GITHUB_SHA^1 -1
-        echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
+      run: echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86_64
+        name: easyeffects-archlinux-${{ github.env.GIT_HASH }}-x86_64
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
