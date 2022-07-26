@@ -1,7 +1,6 @@
 # Contributor: Wellington <wellingtonwallace@gmail.com>
 
 pkgname=easyeffects-git
-pkgver=6.1.4.r19.gc63c5dd3
 pkgrel=1
 pkgdesc='Audio Effects for PipeWire Applications'
 arch=(x86_64)
@@ -15,7 +14,6 @@ optdepends=('calf: limiter, exciter, bass enhancer and others'
             'zam-plugins: maximizer'
             'mda.lv2: bass loudness'
             'yelp: in-app help')
-source=("easyeffects::git+https://github.com/wwmm/easyeffects.git")
 conflicts=(easyeffects)
 provides=(easyeffects)
 replaces=('pulseeffects')
