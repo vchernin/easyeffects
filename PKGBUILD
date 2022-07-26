@@ -25,7 +25,7 @@ pkgver() {
 }
 
 build() {
-  arch-meson easyeffects build
+  arch-meson . build
 
   ninja -C build
 }
