@@ -5,15 +5,39 @@ on:
 name: CI
 jobs:
   flatpak:
-    name: "Flatpak"
-    runs-on: ubuntu-latest
+    name: Flatpak
+    runs-on: ubuntu-20.04
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-42
       options: --privileged
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.0.2
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
         bundle: easyeffects.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
-        cache-key: flatpak-builder-${{ github.sha }}
+        cache-key: flatpak-builder-${{ github.sha }}   
+  arch:
+    name: Arch
+    runs-on: ubuntu-20.04
+    container:
+      image: archlinux
+    
+    steps:
+    - uses: actions/checkout@v3.0.2
+    - name: prepare
+      run: |
+        makepkg -si
+       # useradd build -m
+      #  cd /home/build
+          
+      
+    # - name: who knows
+    #   run: |
+    #     # becuase makepkg complains when being run as root, workaround with https://bbs.archlinux.org/viewtopic.php?pid=1729990#p1729990
+    #     source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
+    #     su build
+    #     makepkg -si
+
+      
+      
