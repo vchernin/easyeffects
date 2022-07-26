@@ -12,6 +12,8 @@ jobs:
       options: --privileged
     steps:
     - uses: actions/checkout@v3.0.2
+      with:
+        fetch-depth: 0
     - name: Get hash
       run: echo "GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
