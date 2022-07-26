@@ -37,6 +37,6 @@ jobs:
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86-64
+        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86_64
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
