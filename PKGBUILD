@@ -15,11 +15,10 @@ optdepends=('calf: limiter, exciter, bass enhancer and others'
             'zam-plugins: maximizer'
             'mda.lv2: bass loudness'
             'yelp: in-app help')
-source=('src')
 conflicts=(easyeffects)
 provides=(easyeffects)
 replaces=('pulseeffects')
-sha512sums=('SKIP')
+sha512sums=()
 
 pkgver() {
   git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
