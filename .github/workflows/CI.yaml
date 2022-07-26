@@ -30,7 +30,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get Hash
-      run: echo "GIT_HASH=$(git rev-parse --short HEAD^)" >> $GITHUB_ENV
+      run: echo "GIT_HASH=$(git rev-parse --short)" >> $GITHUB_ENV
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
