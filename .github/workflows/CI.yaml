@@ -26,13 +26,13 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get Hash
-      run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
+      run: echo "GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: easyeffects-archlinux-${{ env.hash }}-x86-64
+        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86-64
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
