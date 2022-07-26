@@ -1,14 +1,15 @@
 # Contributor: Wellington <wellingtonwallace@gmail.com>
+# Maintainer: Upstream https://github.com/wwmm/easyeffects 
 
-pkgname=easyeffects-upstream
+pkgname=easyeffects-git
 pkgver=pkgvernotupdated
 pkgrel=1
 pkgdesc='Audio Effects for PipeWire Applications'
 arch=(x86_64)
 url='https://github.com/wwmm/easyeffects'
 license=('GPL3')
-depends=('gtk4' 'libadwaita' 'glib2' 'pipewire-pulse' 'lilv' 'lv2' 'libsigc++-3.0' 'libsndfile' 'libsamplerate' 'zita-convolver' 
-         'libebur128' 'rnnoise' 'rubberband' 'fftw' 'libbs2b' 'speexdsp' 'nlohmann-json' 'tbb' 'fmt')
+depends=('libadwaita' 'pipewire-pulse' 'lilv' 'libsigc++-3.0' 'libsamplerate' 'zita-convolver' 
+         'libebur128' 'rnnoise' 'rubberband' 'libbs2b' 'nlohmann-json' 'tbb' 'fmt')
 makedepends=('meson' 'itstool' 'appstream-glib' 'git')
 optdepends=('calf: limiter, exciter, bass enhancer and others'
             'lsp-plugins: equalizer, compressor, delay, loudness'
