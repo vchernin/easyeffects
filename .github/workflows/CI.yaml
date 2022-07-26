@@ -37,6 +37,8 @@ jobs:
         pwd
         git clone https://github.com/wwmm/easyeffects
         cd easyeffects
+        ls
+        cat PKGBUILD
         # becuase makepkg complains when being run as root, workaround with https://bbs.archlinux.org/viewtopic.php?pid=1729990#p1729990
         source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
         su build
