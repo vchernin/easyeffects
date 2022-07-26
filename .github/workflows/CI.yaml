@@ -25,14 +25,9 @@ jobs:
       uses: actions/checkout@v3.0.2
     - name: Makepkg Build and Check
       id: makepkg
-      uses: edlanglois/pkgbuild-action@v1.1.7
+      uses: vchernin/pkgbuild-action
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
-        
-        
-
-      
-      
