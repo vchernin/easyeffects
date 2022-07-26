@@ -1,6 +1,7 @@
 # Contributor: Wellington <wellingtonwallace@gmail.com>
 
 pkgname=easyeffects-git
+pkgver=notupdated
 pkgrel=1
 pkgdesc='Audio Effects for PipeWire Applications'
 arch=(x86_64)
