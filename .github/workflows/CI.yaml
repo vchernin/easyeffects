@@ -14,9 +14,10 @@ jobs:
     - uses: actions/checkout@v3.0.2
       with:
         fetch-depth: 0
-    - name: Get hash
+    - name: Checkout head branch latest commit
       run: | 
         git config --global --add safe.directory /__w/easyeffects/easyeffects
+        git checkout $(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)
         echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
@@ -31,8 +32,10 @@ jobs:
       uses: actions/checkout@v3.0.2
       with:
         fetch-depth: 0
-    - name: Get Hash
-      run: echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
+    - name: Checkout head branch latest commit
+      run: | 
+        git checkout $(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)
+        echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
