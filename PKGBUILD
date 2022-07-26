@@ -18,7 +18,7 @@ optdepends=('calf: limiter, exciter, bass enhancer and others'
 conflicts=(easyeffects)
 provides=(easyeffects)
 replaces=('pulseeffects')
-sha512sums=('SKIP')
+sha512sums=(SKIP)
 
 pkgver() {
   git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
