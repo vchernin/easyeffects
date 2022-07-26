@@ -25,11 +25,13 @@ pkgver() {
 }
 
 build() {
+  cd ..
   arch-meson . build
 
   ninja -C build
 }
 
 package() {
+  cd ..
   DESTDIR="${pkgdir}" ninja install -C build
 }
