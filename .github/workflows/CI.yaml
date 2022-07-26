@@ -18,7 +18,7 @@ jobs:
         echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
-        bundle: easyeffects-flatpak-${{ env.GIT_HASH }}.flatpak
+        bundle: easyeffects-flatpak-${{ github.env.GIT_HASH }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}   
   arch:
@@ -37,6 +37,6 @@ jobs:
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: easyeffects-archlinux-${{ github.env.GIT_HASH }}-x86_64
+        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86_64
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
