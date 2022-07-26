@@ -12,13 +12,15 @@ jobs:
       options: --privileged
     steps:
     - uses: actions/checkout@v3.0.2
+      with:
+        fetch-depth: 0
     - name: Get hash
       run: | 
         git config --global --add safe.directory /__w/easyeffects/easyeffects
         echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
-        bundle: easyeffects-flatpak-${{ github.env.GIT_HASH }}.flatpak
+        bundle: easyeffects-flatpak-${{ env.GIT_HASH }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}   
   arch:
