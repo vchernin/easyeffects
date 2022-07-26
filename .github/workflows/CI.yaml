@@ -45,6 +45,7 @@ jobs:
       run: |
         git status
         git diff
+        git describe --long
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
