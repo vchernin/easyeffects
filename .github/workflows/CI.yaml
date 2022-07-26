@@ -24,20 +24,21 @@ jobs:
       image: archlinux
     
     steps:
-    - uses: actions/checkout@v3.0.2
     - name: prepare
       run: |
-        makepkg -si
-       # useradd build -m
-      #  cd /home/build
+        pacman -Syu --noconfirm git
+        useradd build -m
+        cd /home/build
+       # su build
           
-      
-    # - name: who knows
-    #   run: |
-    #     # becuase makepkg complains when being run as root, workaround with https://bbs.archlinux.org/viewtopic.php?pid=1729990#p1729990
-    #     source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
-    #     su build
-    #     makepkg -si
+    - uses: actions/checkout@v3.0.2
+    
+    - name: build
+      run: |
+        # becuase makepkg complains when being run as root, workaround with https://bbs.archlinux.org/viewtopic.php?pid=1729990#p1729990
+        source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
+        su build
+        makepkg -si
 
       
       
