@@ -37,7 +37,7 @@ jobs:
       id: makepkg
       uses: vchernin/pkgbuild-action@master
       with:
-        namcapExcludeRules: dependency-not-needed
+        namcapRules: unusedsodepends
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
