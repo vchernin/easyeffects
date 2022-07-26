@@ -21,7 +21,7 @@ replaces=('pulseeffects')
 sha512sums=('SKIP')
 
 pkgver() {
-  cd easyeffects
+  cd easyeffects || true
 
   git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
