@@ -15,6 +15,7 @@ optdepends=('calf: limiter, exciter, bass enhancer and others'
             'zam-plugins: maximizer'
             'mda.lv2: bass loudness'
             'yelp: in-app help')
+source=('.')
 conflicts=(easyeffects)
 provides=(easyeffects)
 replaces=('pulseeffects')
