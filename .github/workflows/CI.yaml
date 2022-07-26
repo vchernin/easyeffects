@@ -18,7 +18,7 @@ jobs:
       run: echo "GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
-        bundle: easyeffects-flatpak-${{ env.GIT_HASH }}.flatpak
+        bundle: easyeffects-flatpak-${{ github.env.GIT_HASH }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}   
   arch:
