@@ -44,6 +44,7 @@ jobs:
     - name: test
       run: |
         git status
+        git diff
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
