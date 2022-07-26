@@ -26,22 +26,12 @@ jobs:
     steps:
     - name: prepare
       run: |
-        pacman -Syu --noconfirm git
-        useradd build -m
-        cd /home/build
-       # su build
-              
+        useradd build
+        echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        su build
+    - uses: actions/checkout@v3.0.2
     - name: build
       run: |
-        ls
-        pwd
-        git clone https://github.com/wwmm/easyeffects
-        cd easyeffects
-        ls
-        cat PKGBUILD
-        # becuase makepkg complains when being run as root, workaround with https://bbs.archlinux.org/viewtopic.php?pid=1729990#p1729990
-        source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
-        su build
         makepkg -si
 
       
