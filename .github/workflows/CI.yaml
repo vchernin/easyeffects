@@ -175,6 +175,8 @@ jobs:
     name: AppStream and News validate
     runs-on: ubuntu-20.04
     container:
+      # normally we'd use archlinux for up-to-date builds, but appstream-util 0.8.0 doesn't work
+      # https://github.com/hughsie/appstream-glib/issues/449
       image: fedora:35
     steps:
       - name: Checkout code
