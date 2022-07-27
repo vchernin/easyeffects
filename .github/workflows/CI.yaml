@@ -82,8 +82,8 @@ jobs:
         test -f app-info/icons/flatpak/128x128/com.github.wwmm.easyeffects.png || { echo "Missing 128x128 icon in app-info" ; exit 1; }
         test -f app-info/xmls/com.github.wwmm.easyeffects.xml.gz || { echo "Missing com.github.wwmm.easyeffects.xml.gz in app-info" ; exit 1; }
 
-  arch:
-    name: Arch
+  arch-linux:
+    name: Arch Linux
     runs-on: ubuntu-20.04
     needs: prepare
     steps:
