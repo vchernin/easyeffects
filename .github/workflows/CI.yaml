@@ -144,7 +144,7 @@ jobs:
 
     - name: Install deps
       run: |
-        pacman -Syu --noconfirm ninja gcc
+        pacman -Syu --noconfirm ninja gcc pkgconf
         source ./PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
      
      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
