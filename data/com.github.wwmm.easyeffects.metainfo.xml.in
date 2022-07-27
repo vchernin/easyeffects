@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component type="desktop-application">
   <id>com.github.wwmm.easyeffects.desktop</id>
-  <name>EasyEffects</name>
   <summary>Audio Effects for PipeWire Applications</summary>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>GPL-3.0</project_license>
+  <project_license>GPL-3</project_license>
   <developer_name>Wellington Wallace</developer_name>
   <description>
     <p>EasyEffects is an advanced audio manipulation tool. It includes an equalizer, limiter, compressor and a reverberation tool, just to mention a few. To complement this there is also a built in spectrum analyzer.</p>
@@ -80,7 +79,7 @@
         <ul>
           <li>Features:</li>
           <li>The interface of the pitch plugin was improved</li>
-          <li>Our application icon is now compatible with desktops that uses QT</li>
+          <li>Our application https://thisisurl.com icon is now compatible with desktops that uses QT</li>
           <li>Our blocklist code will use the `application.id` tag if the stream sets it</li>
           <li>In order to avoid problems with the mouse scroll the entries in the applications list shown in our `Players/Recorders` tab do not show a volume scale anymore. More details about the problem and the solution for it can be found on issue 1211 and issue 1427</li>
           <li>When no application is available for display in the `Players/Recorders` a message will be shown to the user</li>
