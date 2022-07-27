@@ -22,7 +22,7 @@ replaces=('pulseeffects')
 sha512sums=()
 
 pkgver() {
-  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' | sed 's/\(.*\)\..*/\1/'
 
   # if in github actions environment
   if [ -f "../GITHUB_COMMIT_DESC" ]; then 
@@ -33,7 +33,7 @@ pkgver() {
     
     printf "%s" ".${github_commit_desc_no_hyphen}"
   else
-    printf "%s" "$description"
+    git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
   fi
 }
 
