@@ -54,17 +54,12 @@ jobs:
       uses: actions/checkout@v3.0.2
     - name: Set env var
       run: |
-        echo "GITHUB_COMMIT_DESC=${{ needs.prepare.outputs.github_commit_desc }}" >> $GITHUB_ENV
+        echo ${{ needs.prepare.outputs.github_commit_desc }} >> GITHUB_COMMIT_DESC
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
       with:
         namcapExcludeRules: unusedsodepends
-    - name: test
-      run: |
-        git status
-        git diff
-        git describe --long
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
