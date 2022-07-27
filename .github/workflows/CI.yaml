@@ -52,14 +52,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.0.2
-    - name: Set env var
-      run: |
-        echo ${{ needs.prepare.outputs.github_commit_desc }} >> GITHUB_COMMIT_DESC
+
+    - name: Save commit description to file
+      run: echo ${{ needs.prepare.outputs.github_commit_desc }} >> GITHUB_COMMIT_DESC
+
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
       with:
         namcapExcludeRules: unusedsodepends
+
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
