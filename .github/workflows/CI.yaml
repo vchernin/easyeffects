@@ -142,7 +142,10 @@ jobs:
          # queries: security-extended,security-and-quality
 
     - name: Install deps
-      run: apt update && apt upgrade -y && apt install meson -y
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade -y
+        sudo apt-get install meson -y
      
      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
      # If this step fails, then you should remove it and run the build manually (see below)
