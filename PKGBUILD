@@ -26,8 +26,10 @@ pkgver() {
   
   # if not in github actions environment
   if [ -z ${GITHUB_COMMIT_DESC+x} ]; then 
+    echo "not in github actions"
     echo "$description"
   else 
+    echo "in github actions"
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
     sed -r 's/(.*)\..*/\1/' description
