@@ -132,7 +132,7 @@ jobs:
 
     - name: Install deps
       run: |
-        pacman -Syu --noconfirm ninja gcc pkgconf python3 which
+        pacman -Syu --noconfirm ninja gcc pkgconf python3 python-pip which
         source ./PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
 
      # Initializes the CodeQL tools for scanning.
