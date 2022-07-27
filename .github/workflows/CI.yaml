@@ -144,6 +144,9 @@ jobs:
 
     - name: Install deps
       run: |
+        ls
+        pwd
+        exit 1
         pacman -Syu --noconfirm meson
         source PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
      
