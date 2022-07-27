@@ -143,8 +143,6 @@ jobs:
 
     - name: Install deps
       run: |
-        sudo apt-get update
-        sudo apt-get upgrade -y
         sudo apt-get install meson -y
      
      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
