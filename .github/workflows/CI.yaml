@@ -45,6 +45,13 @@ jobs:
       run: |
         git status
         git diff
+        # this keeps looking from the original merge commit, i want the head one
+        # i should probably switch to on push everything
+        # is there any actual disadanvtage to switching to on push?
+        
+        # will on push work well with comment bot?
+        # seeing as now that I have the right code with on PRs, I think it's fine to revert back
+        # just need to delete last commit
         git describe --long
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
