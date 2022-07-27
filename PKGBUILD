@@ -29,7 +29,7 @@ pkgver() {
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
     description_no_commit=$(echo "$description" | sed -r 's/(.*)\..*/\1/')
-    github_commit_desc_no_hyphen=$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)
+    github_commit_desc_no_hyphen=$(sed 's/-//g' ../GITHUB_COMMIT_DESC)
     
     combined="${description_no_commit}.${github_commit_desc_no_hyphen}"
     printf "%s" "$combined"
