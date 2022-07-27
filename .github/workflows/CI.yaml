@@ -22,9 +22,9 @@ jobs:
       - id: get_commit_desc
         run: | 
           if [[ ${{ inputs.is_pr }} == 'true' ]]; then
-            echo "::set-output name=github_commit_desc::merge-${{ GITHUB_HEAD_SHA }}-into-${{ GITHUB_BASE_SHA }}"
+            echo "::set-output name=github_commit_desc::merge-${{ env.GITHUB_HEAD_SHA }}-into-${{ env.GITHUB_BASE_SHA }}"
           else
-            echo "::set-output name=github_commit_desc::master-${{ GITHUB_HEAD_SHA }}"
+            echo "::set-output name=github_commit_desc::master-${{ env.GITHUB_HEAD_SHA }}"
           fi
   
   flatpak:
