@@ -22,7 +22,17 @@ replaces=('pulseeffects')
 sha512sums=()
 
 pkgver() {
-  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  description=$(git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g';)
+  
+  # if not in github actions environment
+  if [ -z ${GITHUB_COMMIT_DESC+x} ]; then 
+    echo "$description"
+  else 
+    # remove last commit from git describe output (which may sometimes be a merge commit),
+    # and replace it with a human friendly version
+    sed -r 's/(.*)\..*/\1/' description
+    echo "$GITHUB_COMMIT_DESC"
+  fi
 }
 
 build() {

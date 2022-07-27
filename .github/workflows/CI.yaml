@@ -4,38 +4,53 @@ on:
   pull_request:
 name: CI
 jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-20.04
+    outputs:
+      github_commit_desc: ${{ steps.get_commit_desc.outputs.github_commit_desc }}
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+      - name: Get head branch latest commit
+        run: echo "GITHUB_HEAD_SHA=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
+      - name: Get base branch latest commit
+        run: echo "GITHUB_BASE_SHA=base_sha_pretend" >> $GITHUB_ENV
+      - name: Get latest commit
+        run: echo "GITHUB_HEAD_SHA=$(git log --pretty=format:'%h' -1)" >> $GITHUB_ENV
+      - id: get_commit_desc
+        run: | 
+          if [[ ${{ inputs.is_pr }} == 'true' ]]; then
+            echo "::set-output name=github_commit_desc::merge-${{ GITHUB_HEAD_SHA }}-into-${{ GITHUB_BASE_SHA }}"
+          else
+            echo "::set-output name=github_commit_desc::master-${{ GITHUB_HEAD_SHA }}"
+          fi
+  
   flatpak:
     name: Flatpak
     runs-on: ubuntu-20.04
+    needs: prepare
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-42
       options: --privileged
     steps:
     - uses: actions/checkout@v3.0.2
-      with:
-        fetch-depth: 0
-    - name: Checkout head branch latest commit
-      run: | 
-        git config --global --add safe.directory /__w/easyeffects/easyeffects
-        git checkout $(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)
-        echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
-        bundle: easyeffects-flatpak-${{ env.GIT_HASH }}.flatpak
+        bundle: easyeffects-flatpak-${{ needs.prepare.outputs.github_commit_desc }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}   
   arch:
     name: Arch
     runs-on: ubuntu-20.04
+    needs: prepare
     steps:
     - name: Checkout
       uses: actions/checkout@v3.0.2
-      with:
-        fetch-depth: 0
-    - name: Checkout head branch latest commit
-      run: | 
-        git checkout $(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)
-        echo "GIT_HASH=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
+    - name: Set env var
+      run: |
+        echo "GITHUB_COMMIT_DESC=${{ needs.prepare.outputs.github_commit_desc }}" >> $GITHUB_ENV
     - name: Makepkg Build and Check
       id: makepkg
       uses: vchernin/pkgbuild-action@master
@@ -45,17 +60,10 @@ jobs:
       run: |
         git status
         git diff
-        # this keeps looking from the original merge commit, i want the head one
-        # i should probably switch to on push everything
-        # is there any actual disadanvtage to switching to on push?
-        
-        # will on push work well with comment bot?
-        # seeing as now that I have the right code with on PRs, I think it's fine to revert back
-        # just need to delete last commit
         git describe --long
     - name: Upload Package Archive
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: easyeffects-archlinux-${{ env.GIT_HASH }}-x86_64
+        name: easyeffects-archlinux-${{ needs.prepare.outputs.github_commit_desc }}-x86_64
         path: ${{ steps.makepkg.outputs.pkgfile0 }}
         if-no-files-found: error
