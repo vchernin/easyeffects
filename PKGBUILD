@@ -35,7 +35,7 @@ pkgver() {
     
     printf "%s" "${description_short}.${github_commit_desc_no_hyphen}"
   else
-    git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+    printf "%s" "$description"
   fi
 }
 
