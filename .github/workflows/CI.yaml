@@ -162,6 +162,7 @@ jobs:
         echo "Run, Build Application using script"
         meson builddir && cd builddir
         meson compile
+        cd ..
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
