@@ -23,12 +23,12 @@ sha512sums=()
 
 pkgver() {
   description=$(git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
-  
+
   # if in github actions environment
   if [ -f "../GITHUB_COMMIT_DESC" ]; then 
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
-    description_no_commit=$(echo "$description" | sed -r 's/(.*)\..*/\1/')
+    description_no_commit=$(git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' | sed -r 's/(.*)\..*/\1/')
     github_commit_desc_no_hyphen=$(sed 's/-//g' ../GITHUB_COMMIT_DESC)
     
     printf "%s" "${description_no_commit}.${github_commit_desc_no_hyphen}"
