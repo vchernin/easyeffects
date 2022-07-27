@@ -31,7 +31,7 @@ pkgver() {
     github_commit_desc_no_hyphen=$(sed 's/-//g' ../GITHUB_COMMIT_DESC)
     description_no_commit=$(sed -r 's/(.*)\..*/\1/' <<< "$description")
     
-    printf "%s" "${description_no_commit}.${github_commit_desc_no_hyphen}"
+    printf "%s" "${description}.${github_commit_desc_no_hyphen}"
   else     
     printf "%s" "$description"
   fi
