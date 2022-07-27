@@ -72,9 +72,9 @@ jobs:
       shell: bash
       working-directory: ${{ env.FLATPAK_BUILD_PATH }}
       run: |
-        dnf -y install flatpak
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         flatpak -y install org.freedesktop.appstream-glib
+        cat appdata/com.github.wwmm.easyeffects.appdata.xml
         flatpak run org.freedesktop.appstream-glib validate appdata/com.github.wwmm.easyeffects.appdata.xml
     
     - name: Verify icon and metadata in app-info
