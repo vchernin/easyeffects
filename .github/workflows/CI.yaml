@@ -144,10 +144,7 @@ jobs:
 
     - name: Install deps
       run: |
-        ls
-        pwd
-        
-        pacman -Syu --noconfirm meson
+        pacman -Syu --noconfirm ninja
         cat PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
      
      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
