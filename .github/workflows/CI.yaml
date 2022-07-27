@@ -21,7 +21,7 @@ jobs:
         run: echo "GITHUB_HEAD_SHA=$(git log --pretty=format:'%h' -1)" >> $GITHUB_ENV
       - id: get_commit_desc
         run: | 
-          if [[ ${{ inputs.is_pr }} == 'true' ]]; then
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             echo "::set-output name=github_commit_desc::merge-${{ env.GITHUB_HEAD_SHA }}-into-${{ env.GITHUB_BASE_SHA }}"
           else
             echo "::set-output name=github_commit_desc::master-${{ env.GITHUB_HEAD_SHA }}"
