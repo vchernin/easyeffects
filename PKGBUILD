@@ -28,7 +28,7 @@ pkgver() {
   if [ -f "../GITHUB_COMMIT_DESC" ]; then 
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
-    printf "%s%s" "$(sed -r 's/(.*)\..*/\1/' "$description")" "$(cat "GITHUB_COMMIT_DESC")"
+    printf "%s%s" "$(sed -r 's/(.*)\..*/\1/' "$description")" "$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)"
   else     
     
     printf "%s" "$description"
