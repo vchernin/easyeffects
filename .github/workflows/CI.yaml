@@ -117,7 +117,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
-
+    container:
+      image: archlinux
     strategy:
       fail-fast: false
       matrix:
@@ -143,7 +144,7 @@ jobs:
 
     - name: Install deps
       run: |
-        sudo apt-get install meson -y
+        pacman -Syu --noprompt meson
      
      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
      # If this step fails, then you should remove it and run the build manually (see below)
