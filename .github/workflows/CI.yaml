@@ -18,7 +18,7 @@ jobs:
         run: echo "GITHUB_PR_HEAD_SHA=$(git log --pretty=format:'%h' $GITHUB_SHA^2 -1)" >> $GITHUB_ENV
 
       - name: Get base branch latest commit
-        run: echo "GITHUB_PR_BASE_SHA=base_sha_pretend" >> $GITHUB_ENV
+        run: echo "GITHUB_PR_BASE_SHA=$(git log --pretty=format:'%h' $GITHUB_SHA^1 -1)" >> $GITHUB_ENV
 
       - name: Get latest commit
         run: echo "GITHUB_HEAD_SHA=$(git log --pretty=format:'%h' -1)" >> $GITHUB_ENV
