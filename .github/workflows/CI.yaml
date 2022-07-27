@@ -36,6 +36,8 @@ jobs:
   flatpak:
     name: Flatpak
     runs-on: ubuntu-20.04
+    env:
+      FLATPAK_BUILD_PATH: flatpak_app/files/share
     needs: prepare
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-42
@@ -65,7 +67,20 @@ jobs:
         cache-key: flatpak-builder-${{ github.sha }}
         arch: ${{ matrix.arch }}
     
-    # todo flathub metainfo checks and aarch64.
+    - name: Validate AppStream
+      shell: bash
+      working-directory: ${{ env.FLATPAK_BUILD_PATH }}
+      run: |
+        dnf -y install flatpak
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        flatpak run org.freedesktop.appstream-glib validate appdata/com.github.wwmm.easyeffects.appdata.xml
+    
+    - name: Verify icon and metadata in app-info
+      shell: bash
+      working-directory: ${{ env.FLATPAK_BUILD_PATH }}
+      run: |
+        test -f app-info/icons/flatpak/128x128/com.github.wwmm.easyeffects.png || { echo "Missing 128x128 icon in app-info" ; exit 1; }
+        test -f app-info/xmls/com.github.wwmm.easyeffects.xml.gz || { echo "Missing com.github.wwmm.easyeffects.xml.gz in app-info" ; exit 1; }
 
   arch:
     name: Arch
