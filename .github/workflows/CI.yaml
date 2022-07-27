@@ -66,6 +66,7 @@ jobs:
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}
         arch: ${{ matrix.arch }}
+        run-tests: true
     
     - name: Validate AppStream
       shell: bash
