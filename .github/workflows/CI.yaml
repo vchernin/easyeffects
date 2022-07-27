@@ -69,6 +69,8 @@ jobs:
         arch: ${{ matrix.arch }}
         run-tests: true
     
+    # we also validate appstream in the appstream-news-validate job, 
+    # but we still should specifically ensure the flatpak outputs it properly
     - name: Validate AppStream
       shell: bash
       working-directory: ${{ env.FLATPAK_BUILD_PATH }}
