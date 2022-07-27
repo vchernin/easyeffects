@@ -32,7 +32,7 @@ pkgver() {
     github_commit_desc_no_hyphen=$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)
     
     combined="${description_no_commit}.${github_commit_desc_no_hyphen}"
-    printf "%s" "$combined}"
+    printf "%s" "$combined"
   else     
     printf "%s" "$description"
   fi
