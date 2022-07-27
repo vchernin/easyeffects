@@ -172,9 +172,14 @@ jobs:
   appstream-news-validate:
     name: AppStream and News validate
     runs-on: ubuntu-20.04
+    container:
+      image: archlinux
     steps:
       - name: Checkout code
         uses: actions/checkout@v3.0.2
+      
+      - name: Install deps
+        run: sudo pacman -Syu xmllint xsltproc appstreamcli appstream-util
         
       - name: Validate existing files
         run: ./util/update-release-files.sh --no-new-release
