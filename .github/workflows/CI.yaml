@@ -167,6 +167,6 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-      with:
-        sha: ${{ github.sha }} 
-        ref: ${{ github.ref }}
+     # with:
+       # sha: ${{ github.sha }} 
+       # ref: ${{ github.ref }}
