@@ -2,6 +2,7 @@ on:
   push:
     branches: [ master ]
   pull_request:
+
 name: CI
 jobs:
   prepare:
@@ -48,6 +49,8 @@ jobs:
         bundle: easyeffects-flatpak-${{ needs.prepare.outputs.github_commit_desc }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
         cache-key: flatpak-builder-${{ github.sha }}
+    
+    # todo flathub metainfo checks and aarch64.
 
   arch:
     name: Arch
@@ -67,6 +70,7 @@ jobs:
       id: makepkg
       uses: vchernin/pkgbuild-action@master
       with:
+        # todo this doesn't work
         namcapExcludeRules: unusedsodepends
 
     - name: Upload Package Archive
