@@ -57,6 +57,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3.0.2
       with:
+        # needed for getting git describe info for pkgver() in pkgbuild
         fetch-depth: 0
 
     - name: Save commit description to file
