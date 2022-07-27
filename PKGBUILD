@@ -30,7 +30,7 @@ pkgver() {
     # and replace it with a human friendly version
     
     git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' # | sed 's/\(.*\)\..*/\1/'
-    github_commit_desc_no_hyphen=$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)
+    # github_commit_desc_no_hyphen=$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)
     
     # printf "%s" ".${github_commit_desc_no_hyphen}"
   else
