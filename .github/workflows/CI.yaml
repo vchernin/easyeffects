@@ -10,7 +10,8 @@ jobs:
     outputs:
       github_commit_desc: ${{ steps.get_commit_desc.outputs.github_commit_desc }}
     steps:
-      - uses: actions/checkout@v3.0.2
+      - name: Checkout
+        uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
 
@@ -30,7 +31,7 @@ jobs:
           else
             echo "::set-output name=github_commit_desc::master-${{ env.GITHUB_HEAD_SHA }}"
           fi
-  
+
   flatpak:
     name: Flatpak
     runs-on: ubuntu-20.04
@@ -39,12 +40,15 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:gnome-42
       options: --privileged
     steps:
-    - uses: actions/checkout@v3.0.2
+    - name: Checkout
+      uses: actions/checkout@v3.0.2
+
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
         bundle: easyeffects-flatpak-${{ needs.prepare.outputs.github_commit_desc }}.flatpak
         manifest-path: util/flatpak/com.github.wwmm.easyeffects.json
-        cache-key: flatpak-builder-${{ github.sha }}   
+        cache-key: flatpak-builder-${{ github.sha }}
+
   arch:
     name: Arch
     runs-on: ubuntu-20.04
