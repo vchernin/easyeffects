@@ -24,7 +24,8 @@ sha512sums=()
 pkgver() {
   description=$(git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
   # if in github actions environment
-  ls
+  
+  cd ..
   if [ -f "GITHUB_COMMIT_DESC" ]; then 
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
