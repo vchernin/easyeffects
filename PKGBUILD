@@ -22,17 +22,18 @@ replaces=('pulseeffects')
 sha512sums=()
 
 pkgver() {
-
+  
+  description=$(git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
   # if in github actions environment
   if test -f "../GITHUB_COMMIT_DESC"; then 
     
     # remove last commit from git describe output (which may sometimes be a merge commit),
     # and replace it with a human friendly version
     
-    git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' | sed 's/\(.*\)\..*/\1/'
+    description_short=$(echo "$description" | sed 's/\(.*\)\..*/\1/')
     github_commit_desc_no_hyphen=$(sed 's/-/./g' ../GITHUB_COMMIT_DESC)
     
-    printf "%s" ".${github_commit_desc_no_hyphen}"
+    printf "%s" "${description_short}.${github_commit_desc_no_hyphen}"
   else
     git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
   fi
