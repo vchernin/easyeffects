@@ -28,10 +28,23 @@ jobs:
       - name: Check if workflow concluded
         if: ${{github.event.workflow_run.conclusion != '' }}
         run: echo "CONCLUSION=${{github.event.workflow_run.conclusion }}" >> $GITHUB_ENV
+      
+      - name: Get the PR number
+        run: |
+          # Query the issue search API to get the PR associated with it
+          PR_RAW=$(curl 'https://api.github.com/search/issues?q=${{ github.event.workflow_run.head_commit.id }}')
+          # Get the event number from the search results, which will be the PR number
+          PR_NUM=$(echo $PR_RAW | jq '.items[].number')
+          
+          echo "PR_NUM=${PR_NUM}" >> ${GITHUB_ENV}
+          echo "PR_HEAD_SHA=${{ github.event.workflow_run.head_commit.id }}" >> ${GITHUB_ENV}
 
-      - uses: actions/github-script@v6.1.0
+      
+      - name: Comment on PR
+      - uses: actions/github-script@v6.1.0https://github.com/oprypin/nightly.link/pull/38/files
         with:
           # adapted from https://github.com/oprypin/nightly.link/blob/master/.github/workflows/pr-comment.yml
+          # and https://github.com/oprypin/nightly.link/pull/38
           script: |
             async function upsertComment(owner, repo, issue_number, purpose, ref) {
               const { data: comments } = await github.rest.issues.listComments(
@@ -100,12 +113,7 @@ jobs:
             }
             const { owner, repo } = context.repo;
             const run_id = ${{ github.event.workflow_run.id }};
-            const pull_requests = ${{ toJSON(github.event.workflow_run.pull_requests) }};
-            if (!pull_requests.length) {
-              return core.error("This workflow doesn't match any pull requests!");
-            }
+          
+            await upsertComment(owner, repo, ${{ env.PR_NUM }},
+              "ci-artifacts-comment", ${{ env.PR_HEAD_SHA }});
 
-            for (const pr of pull_requests) {
-              await upsertComment(owner, repo, pr.number,
-                "ci-artifacts-comment", pr.head.sha);
-            }
