@@ -31,7 +31,7 @@ GStreamer usage was replaced by native PipeWire filters.
 - Equalizer
 - Exciter
 - Filter (low-pass, high-pass, band-pass and band-reject modes)
-- Gate
+- Gate 
 - Limiter
 - Loudness
 - Maximizer
