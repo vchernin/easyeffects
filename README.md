@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/wwmm/easyeffects.svg?style=shield)](https://circleci.com/gh/wwmm/easyeffects)
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/wwmm/donate)
 [![Translation Status](https://hosted.weblate.org/widgets/easyeffects/-/287x66-grey.png)](https://hosted.weblate.org/engage/easyeffects/)
-
+ 
 Audio effects for PipeWire applications.
 
 This application was formerly known as PulseEffects, but it was renamed to EasyEffects after it started to use GTK4 and
