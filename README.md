@@ -21,7 +21,7 @@ GStreamer usage was replaced by native PipeWire filters.
 
 - Auto gain
 - Bass enhancer
-- Bass loudness
+- Bass loudness 
 - Compressor
 - Convolver
 - Crossfeed
