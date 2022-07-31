@@ -20,7 +20,7 @@ GStreamer usage was replaced by native PipeWire filters.
 ## Effects available
 
 - Auto gain
-- Bass enhancer
+- Bass enhancer 
 - Bass loudness
 - Compressor
 - Convolver
