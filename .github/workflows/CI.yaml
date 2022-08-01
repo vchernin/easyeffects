@@ -151,6 +151,13 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+      
+    - name: Upload
+      if: always() && matrix.language == 'cpp'
+      uses: actions/upload-artifact@v3
+      with:
+        name: debug-artifacts-cpp
+        path: ${{ runner.temp }}/codeql_databases/cpp
 
   appstream-news-validate:
     name: AppStream and News validate
