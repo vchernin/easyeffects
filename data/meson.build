@@ -80,7 +80,8 @@ conf_glade.set('PROJECT_VERSION', meson.project_version())
 gresources = gnome_mod.compile_resources(
 	'easyeffects-resources',
 	'easyeffects.gresource.xml',
-	c_name: meson.project_name()
+	c_name: meson.project_name(),
+        xml-stripblanks: true
 )
 
 dbusconf = configuration_data()
