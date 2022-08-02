@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <gresource prefix="/com/github/wwmm/easyeffects">
-        <file compressed="true" preprocess="xml-stripblanks">ui/custom.css</file>
+        <file compressed="true">ui/custom.css</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/application_window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/app_info.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/apps_box.ui</file>
