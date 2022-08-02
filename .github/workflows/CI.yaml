@@ -127,7 +127,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'python' ] # cpp should also be here, but the codeql analysis fails due to a strange internal semmle error https://github.com/github/codeql/issues/9929
+        language: [ 'cpp' ] # cpp should also be here, but the codeql analysis fails due to a strange internal semmle error https://github.com/github/codeql/issues/9929
 
     steps:
     - name: Checkout repository
