@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <gresource prefix="/com/github/wwmm/easyeffects">
-        <file compressed="true">ui/custom.css</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/application_window.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/app_info.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/apps_box.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/autogain.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/autoload_row.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/bass_enhancer.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/bass_loudness.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/blocklist_menu.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/chart.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/compressor.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/convolver.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/convolver_menu_impulses.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/convolver_menu_combine.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/crossfeed.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/crystalizer.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/crystalizer_band.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/deesser.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/delay.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/echo_canceller.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/effects_box.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/equalizer.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/equalizer_band.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/exciter.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_clients_listview.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_input_device_dropdown.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_modules_listview.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_output_device_dropdown.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_presets_dropdown.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/factory_rnnoise_listview.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/filter.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/gate.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/limiter.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/loudness.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/maximizer.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/multiband_compressor.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/multiband_compressor_band.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/multiband_gate.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/pipe_manager_box.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/pitch.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/plugin_row.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/plugins_box.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/plugins_menu.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/preferences_general.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/preferences_spectrum.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/preferences_window.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/preset_row.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/presets_menu.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/reverb.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/rnnoise.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/shortcuts.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/stereo_tools.ui</file>
+        <file>ui/custom.css</file>
+        <file preprocess="xml-stripblanks">ui/application_window.ui</file>
+        <file preprocess="xml-stripblanks">ui/app_info.ui</file>
+        <file preprocess="xml-stripblanks">ui/apps_box.ui</file>
+        <file preprocess="xml-stripblanks">ui/autogain.ui</file>
+        <file preprocess="xml-stripblanks">ui/autoload_row.ui</file>
+        <file preprocess="xml-stripblanks">ui/bass_enhancer.ui</file>
+        <file preprocess="xml-stripblanks">ui/bass_loudness.ui</file>
+        <file preprocess="xml-stripblanks">ui/blocklist_menu.ui</file>
+        <file preprocess="xml-stripblanks">ui/chart.ui</file>
+        <file preprocess="xml-stripblanks">ui/compressor.ui</file>
+        <file preprocess="xml-stripblanks">ui/convolver.ui</file>
+        <file preprocess="xml-stripblanks">ui/convolver_menu_impulses.ui</file>
+        <file preprocess="xml-stripblanks">ui/convolver_menu_combine.ui</file>
+        <file preprocess="xml-stripblanks">ui/crossfeed.ui</file>
+        <file preprocess="xml-stripblanks">ui/crystalizer.ui</file>
+        <file preprocess="xml-stripblanks">ui/crystalizer_band.ui</file>
+        <file preprocess="xml-stripblanks">ui/deesser.ui</file>
+        <file preprocess="xml-stripblanks">ui/delay.ui</file>
+        <file preprocess="xml-stripblanks">ui/echo_canceller.ui</file>
+        <file preprocess="xml-stripblanks">ui/effects_box.ui</file>
+        <file preprocess="xml-stripblanks">ui/equalizer.ui</file>
+        <file preprocess="xml-stripblanks">ui/equalizer_band.ui</file>
+        <file preprocess="xml-stripblanks">ui/exciter.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_clients_listview.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_input_device_dropdown.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_modules_listview.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_output_device_dropdown.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_presets_dropdown.ui</file>
+        <file preprocess="xml-stripblanks">ui/factory_rnnoise_listview.ui</file>
+        <file preprocess="xml-stripblanks">ui/filter.ui</file>
+        <file preprocess="xml-stripblanks">ui/gate.ui</file>
+        <file preprocess="xml-stripblanks">ui/limiter.ui</file>
+        <file preprocess="xml-stripblanks">ui/loudness.ui</file>
+        <file preprocess="xml-stripblanks">ui/maximizer.ui</file>
+        <file preprocess="xml-stripblanks">ui/multiband_compressor.ui</file>
+        <file preprocess="xml-stripblanks">ui/multiband_compressor_band.ui</file>
+        <file preprocess="xml-stripblanks">ui/multiband_gate.ui</file>
+        <file preprocess="xml-stripblanks">ui/pipe_manager_box.ui</file>
+        <file preprocess="xml-stripblanks">ui/pitch.ui</file>
+        <file preprocess="xml-stripblanks">ui/plugin_row.ui</file>
+        <file preprocess="xml-stripblanks">ui/plugins_box.ui</file>
+        <file preprocess="xml-stripblanks">ui/plugins_menu.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences_general.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences_spectrum.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences_window.ui</file>
+        <file preprocess="xml-stripblanks">ui/preset_row.ui</file>
+        <file preprocess="xml-stripblanks">ui/presets_menu.ui</file>
+        <file preprocess="xml-stripblanks">ui/reverb.ui</file>
+        <file preprocess="xml-stripblanks">ui/rnnoise.ui</file>
+        <file preprocess="xml-stripblanks">ui/shortcuts.ui</file>
+        <file preprocess="xml-stripblanks">ui/stereo_tools.ui</file>
         <file>icons/scalable/emblems/ee-arrow-down-symbolic.svg</file>
         <file>icons/scalable/emblems/ee-spectrum-symbolic.svg</file>
         <file>icons/scalable/emblems/ee-drag-handle-symbolic.svg</file>
