@@ -18,7 +18,7 @@ jobs:
 
         CWD=$(pwd)
 
-        podman run --rm --privileged \
+        docker run --rm --privileged \
           -v $HOME:$HOME:rslave \
           -v $CWD:$CWD:rslave \
           -w $CWD \
