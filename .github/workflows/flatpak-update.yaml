@@ -13,9 +13,6 @@ jobs:
     
     - name: Run flatpak-external-data-checker
       run: |
-        GIT_USER_NAME=$(git config user.name)
-        GIT_USER_EMAIL=$(git config user.email)
-
         CWD=$(pwd)
 
         docker run --rm --privileged \
