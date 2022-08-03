@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v3.0.2
       with:
         fetch-depth: 0
+        persist-credentials: false
     
     - name: Run flatpak-external-data-checker
       run: |
