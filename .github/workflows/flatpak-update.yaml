@@ -3,6 +3,7 @@ on:
   schedule: # for scheduling to work this file must be in the default branch
   - cron: "0 0 * * *" # run every day
   workflow_dispatch: # can be manually dispatched under GitHub's "Actions" tab 
+  push:
 
 jobs:
   flatpak-external-data-checker:
@@ -25,5 +26,5 @@ jobs:
           -e GIT_COMMITTER_EMAIL="110548574+easyeffects-bot@users.noreply.github.com" \
           -e EMAIL="110548574+easyeffects-bot@users.noreply.github.com" \
           -e GITHUB_TOKEN="${{ secrets.EASYEFFECTS_BOT }}"  \
-          -it ghcr.io/latest/flatpak-external-data-checker:latest \
+          ghcr.io/latest/flatpak-external-data-checker:latest \
           --always-fork --update util/flatpak/com.github.wwmm.easyeffects.json
