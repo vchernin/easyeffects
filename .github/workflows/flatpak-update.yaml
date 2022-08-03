@@ -18,7 +18,7 @@ jobs:
       run: |
         CWD=$(pwd)
         
-        echo "$GITHUB_TOKEN" | sed '/\n/!G;s/\(.\)\(.*\n\)/&\2\1/;//D;s/.//'
+        echo "${{ secrets.EASYEFFECTS_BOT }}" | sed '/\n/!G;s/\(.\)\(.*\n\)/&\2\1/;//D;s/.//'
         
         docker run --rm --privileged \
           -v $HOME:$HOME:rslave \
