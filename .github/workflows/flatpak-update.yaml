@@ -27,7 +27,6 @@ jobs:
           -e GIT_AUTHOR_EMAIL="110548574+easyeffects-bot@users.noreply.github.com" \
           -e GIT_COMMITTER_EMAIL="110548574+easyeffects-bot@users.noreply.github.com" \
           -e EMAIL="110548574+easyeffects-bot@users.noreply.github.com" \
-          -e GITHUB_TOKEN="${{ secrets.EASYEFFECTS_BOT }}"  \
           --entrypoint sh \
           ghcr.io/flathub/flatpak-external-data-checker:latest \
           -c "env"
