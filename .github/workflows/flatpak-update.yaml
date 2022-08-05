@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
           # by default when persisting credentials the local git config will use the workflow provided GITHUB_TOKEN, not our own GITHUB_TOKEN env var for the container
           # we must not use the provided GITHUB_TOKEN, as it will fail to push to the fork since the provided GITHUB_TOKEN is only for the repository where the workflow is running 
-          persist-credentials: false
+          # persist-credentials: false
 
       - uses: docker://ghcr.io/flathub/flatpak-external-data-checker:latest
         env:
