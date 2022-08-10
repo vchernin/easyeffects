@@ -1,0 +1,247 @@
+[1msrc/application.cpp:83:99: [31mperformance:[39m Parameter 'name' is passed by value. It could be passed as a const reference which is usually faster and recommended in C++. [passedByValue][0m
+  self->data->connections.push_back(self->pm->new_default_sink_name.connect([=](const std::string name) {
+                                                                                                  ^
+[1msrc/application.cpp:91:101: [31mperformance:[39m Parameter 'name' is passed by value. It could be passed as a const reference which is usually faster and recommended in C++. [passedByValue][0m
+  self->data->connections.push_back(self->pm->new_default_source_name.connect([=](const std::string name) {
+                                                                                                    ^
+[1msrc/application.cpp:247:14: [31mstyle:[39m Consider using std::accumulate algorithm instead of a raw loop. [useStlAlgorithm][0m
+        list += name + ",";
+             ^
+[1msrc/application.cpp:255:14: [31mstyle:[39m Consider using std::accumulate algorithm instead of a raw loop. [useStlAlgorithm][0m
+        list += name + ",";
+             ^
+[1msrc/application_ui.cpp:166:78: [31mperformance:[39m Parameter 'title' is passed by value. It could be passed as a const reference which is usually faster and recommended in C++. [passedByValue][0m
+          ->presets_manager->preset_load_error.connect([=](const std::string title, const std::string descr) {
+                                                                             ^
+[1msrc/application_ui.cpp:166:103: [31mperformance:[39m Parameter 'descr' is passed by value. It could be passed as a const reference which is usually faster and recommended in C++. [passedByValue][0m
+          ->presets_manager->preset_load_error.connect([=](const std::string title, const std::string descr) {
+                                                                                                      ^
+[1msrc/compressor.cpp:222:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/compressor_ui.cpp:136:21: [31mstyle:[39m Local variable 'serial' shadows outer variable [shadowVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/compressor_ui.cpp:122:8: [2mnote:[0m Shadowed declaration
+  auto serial = get_new_filter_serial();
+       ^
+[1msrc/compressor_ui.cpp:136:21: [2mnote:[0m Shadow variable
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/equalizer_ui.cpp:105:10: [31mstyle:[39m The scope of the variable 'freq1' can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for 'i' can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it's safe to move 'int i = 0;' here
+        for (int n = 0; n < 10; ++n) {
+            // it is possible but not safe to move 'int i = 0;' here
+            do_something(&i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level. [variableScope][0m
+  double freq1 = 0.0;
+         ^
+[1msrc/equalizer_ui.cpp:105:16: [31mstyle:[39m Variable 'freq1' is assigned a value that is never used. [unreadVariable][0m
+  double freq1 = 0.0;
+               ^
+[1msrc/gate.cpp:227:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/gate_ui.cpp:121:21: [31mstyle:[39m Local variable 'serial' shadows outer variable [shadowVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/gate_ui.cpp:107:8: [2mnote:[0m Shadowed declaration
+  auto serial = get_new_filter_serial();
+       ^
+[1msrc/gate_ui.cpp:121:21: [2mnote:[0m Shadow variable
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/limiter.cpp:199:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/limiter_ui.cpp:107:21: [31mstyle:[39m Local variable 'serial' shadows outer variable [shadowVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/limiter_ui.cpp:93:8: [2mnote:[0m Shadowed declaration
+  auto serial = get_new_filter_serial();
+       ^
+[1msrc/limiter_ui.cpp:107:21: [2mnote:[0m Shadow variable
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/lv2_wrapper.cpp:358:65: [31mstyle:[39m Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm][0m
+    if (p.type == PortType::TYPE_CONTROL && p.symbol == symbol) {
+                                                                ^
+[1msrc/multiband_compressor.cpp:190:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/multiband_compressor_ui.cpp:157:21: [31mstyle:[39m Local variable 'serial' shadows outer variable [shadowVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/multiband_compressor_ui.cpp:139:8: [2mnote:[0m Shadowed declaration
+  auto serial = get_new_filter_serial();
+       ^
+[1msrc/multiband_compressor_ui.cpp:157:21: [2mnote:[0m Shadow variable
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/multiband_gate.cpp:199:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/multiband_gate_ui.cpp:157:21: [31mstyle:[39m Local variable 'serial' shadows outer variable [shadowVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/multiband_gate_ui.cpp:139:8: [2mnote:[0m Shadowed declaration
+  auto serial = get_new_filter_serial();
+       ^
+[1msrc/multiband_gate_ui.cpp:157:21: [2mnote:[0m Shadow variable
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/pipe_manager.cpp:173:24: [31mwarning:[39m Opposite inner 'if' condition leads to a dead code block (outer condition is '!PipeManager::exiting' and inner condition is 'PipeManager::exiting'). [oppositeInnerCondition][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:168:7: [2mnote:[0m outer condition: !PipeManager::exiting
+  if (!PipeManager::exiting) {
+      ^
+[1msrc/pipe_manager.cpp:173:24: [2mnote:[0m opposite inner condition: PipeManager::exiting
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:183:24: [31mwarning:[39m Opposite inner 'if' condition leads to a dead code block (outer condition is '!PipeManager::exiting' and inner condition is 'PipeManager::exiting'). [oppositeInnerCondition][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:168:7: [2mnote:[0m outer condition: !PipeManager::exiting
+  if (!PipeManager::exiting) {
+      ^
+[1msrc/pipe_manager.cpp:183:24: [2mnote:[0m opposite inner condition: PipeManager::exiting
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:193:24: [31mwarning:[39m Opposite inner 'if' condition leads to a dead code block (outer condition is '!PipeManager::exiting' and inner condition is 'PipeManager::exiting'). [oppositeInnerCondition][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:168:7: [2mnote:[0m outer condition: !PipeManager::exiting
+  if (!PipeManager::exiting) {
+      ^
+[1msrc/pipe_manager.cpp:193:24: [2mnote:[0m opposite inner condition: PipeManager::exiting
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:203:24: [31mwarning:[39m Opposite inner 'if' condition leads to a dead code block (outer condition is '!PipeManager::exiting' and inner condition is 'PipeManager::exiting'). [oppositeInnerCondition][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:168:7: [2mnote:[0m outer condition: !PipeManager::exiting
+  if (!PipeManager::exiting) {
+      ^
+[1msrc/pipe_manager.cpp:203:24: [2mnote:[0m opposite inner condition: PipeManager::exiting
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:270:24: [31mwarning:[39m Identical condition 'PipeManager::exiting', second condition is always false [identicalConditionAfterEarlyExit][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:219:18: [2mnote:[0m If condition 'PipeManager::exiting' is true, the function will return/exit
+  if (PipeManager::exiting) {
+                 ^
+[1msrc/pipe_manager.cpp:270:24: [2mnote:[0m Testing identical condition 'PipeManager::exiting'
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:280:24: [31mwarning:[39m Identical condition 'PipeManager::exiting', second condition is always false [identicalConditionAfterEarlyExit][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:219:18: [2mnote:[0m If condition 'PipeManager::exiting' is true, the function will return/exit
+  if (PipeManager::exiting) {
+                 ^
+[1msrc/pipe_manager.cpp:280:24: [2mnote:[0m Testing identical condition 'PipeManager::exiting'
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:290:24: [31mwarning:[39m Identical condition 'PipeManager::exiting', second condition is always false [identicalConditionAfterEarlyExit][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:219:18: [2mnote:[0m If condition 'PipeManager::exiting' is true, the function will return/exit
+  if (PipeManager::exiting) {
+                 ^
+[1msrc/pipe_manager.cpp:290:24: [2mnote:[0m Testing identical condition 'PipeManager::exiting'
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:302:24: [31mwarning:[39m Identical condition 'PipeManager::exiting', second condition is always false [identicalConditionAfterEarlyExit][0m
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:219:18: [2mnote:[0m If condition 'PipeManager::exiting' is true, the function will return/exit
+  if (PipeManager::exiting) {
+                 ^
+[1msrc/pipe_manager.cpp:302:24: [2mnote:[0m Testing identical condition 'PipeManager::exiting'
+        if (PipeManager::exiting) {
+                       ^
+[1msrc/pipe_manager.cpp:490:13: [31m[35mwarning: inconclusive:[39m Possible null pointer dereference: pod_prop [nullPointer][0m
+    switch (pod_prop->key) {
+            ^
+[1msrc/pipe_manager.cpp:482:28: [2mnote:[0m Assignment 'pod_prop=nullptr', assigned value is 0
+  spa_pod_prop* pod_prop = nullptr;
+                           ^
+[1msrc/pipe_manager.cpp:490:13: [2mnote:[0m Null pointer dereference
+    switch (pod_prop->key) {
+            ^
+[1msrc/pipe_manager.cpp:712:32: [31mstyle:[39m Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm][0m
+    if (module.id == info->id) {
+                               ^
+[1msrc/pipe_manager.cpp:738:32: [31mstyle:[39m Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm][0m
+    if (client.id == info->id) {
+                               ^
+[1msrc/pipe_manager.cpp:1561:79: [31mstyle:[39m Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm][0m
+      if (link.output_node_id == id && link.input_node_id == ee_sink_node.id) {
+                                                                              ^
+[1msrc/pipe_manager.cpp:1567:81: [31mstyle:[39m Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm][0m
+      if (link.output_node_id == ee_source_node.id && link.input_node_id == id) {
+                                                                                ^
+[1msrc/pipe_manager.cpp:1645:7: [31mstyle:[39m Consider using std::count_if algorithm instead of a raw loop. [useStlAlgorithm][0m
+      count++;
+      ^
+[1msrc/pipe_manager.cpp:1023:33: [31mwarning:[39m String literal "ee_" doesn't match length argument for substr(). [incorrectStringCompare][0m
+                if (description.substr(0, 2) == "ee_") {
+                                ^
+[1msrc/pipe_manager.cpp:1496:23: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+    for (const auto& [serial, node] : node_map) {
+                      ^
+[1msrc/pipe_manager.cpp:1549:15: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (auto& [serial, node] : node_map) {
+              ^
+[1msrc/pipe_manager_box.cpp:207:12: [31mstyle:[39m Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm][0m
+    values.push_back(ui::holders::create(info));
+           ^
+[1msrc/pipe_manager_box.cpp:222:12: [31mstyle:[39m Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm][0m
+    values.push_back(ui::holders::create(info));
+           ^
+[1msrc/plugins_menu.cpp:28:3: [31mwarning:[39m Member variable 'Data::schedule_signal_idle' is not initialized in the constructor. [uninitMemberVar][0m
+  Data() { this->translated = tags::plugin_name::get_translated(); }
+  ^
+[1msrc/plugins_menu.cpp:28:3: [31mwarning:[39m Member variable 'Data::application' is not initialized in the constructor. [uninitMemberVar][0m
+  Data() { this->translated = tags::plugin_name::get_translated(); }
+  ^
+[1msrc/presets_manager.cpp:259:20: [31mstyle:[39m Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm][0m
+    if (p == name) {
+                   ^
+[1msrc/presets_manager.cpp:467:27: [31mstyle:[39m Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm][0m
+              if (v == p) {
+                          ^
+[1msrc/presets_manager.cpp:519:27: [31mstyle:[39m Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm][0m
+              if (v == p) {
+                          ^
+[1msrc/presets_manager.cpp:297:28: [31mstyle:[39m Unused variable: blocklist [unusedVariable][0m
+  std::vector<std::string> blocklist;
+                           ^
+[1msrc/rnnoise.cpp:42:0: [31merror:[39m failed to expand 'g_signal_connect', it is invalid to use a preprocessor directive as macro parameter [preprocessorErrorDirective][0m
+#ifdef RNNOISE_AVAILABLE
+^
+[1msrc/rnnoise.cpp:0:0: [31minformation:[39m This file is not analyzed. Cppcheck failed to extract a valid configuration. The tested configurations have these preprocessor errors:
+'' : [src/rnnoise.cpp:42] failed to expand 'g_signal_connect', it is invalid to use a preprocessor directive as macro parameter
+RNNOISE_AVAILABLE : [src/rnnoise.cpp:42] failed to expand 'g_signal_connect', it is invalid to use a preprocessor directive as macro parameter [noValidConfiguration][0m
+
+^
+[1msrc/stream_input_effects.cpp:193:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/stream_output_effects.cpp:189:21: [31mstyle:[39m Unused variable: serial [unusedVariable][0m
+  for (const auto& [serial, node] : pm->node_map) {
+                    ^
+[1msrc/util.cpp:217:12: [31mstyle:[39m Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm][0m
+    output.push_back(v.c_str());
+           ^
+[1mnofile:0:0: [31minformation:[39m Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project's include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config. [missingInclude][0m
+
