@@ -365,7 +365,7 @@ auto Lv2Wrapper::get_control_port_value(const std::string& symbol) -> float {
   return 0.0F;
 }
 
-auto Lv2Wrapper::has_instance() -> bool {
+const auto Lv2Wrapper::has_instance() -> bool {
   return instance != nullptr;
 }
 

@@ -237,7 +237,7 @@ class PipeManager {
 
   auto node_map_at_id(const uint& id) -> NodeInfo&;
 
-  auto stream_is_connected(const uint& id, const std::string& media_class) -> bool;
+  const auto stream_is_connected(const uint& id, const std::string& media_class) -> bool;
 
   void connect_stream_output(const uint& id) const;
 
@@ -249,7 +249,7 @@ class PipeManager {
 
   static void set_node_mute(pw_proxy* proxy, const bool& state);
 
-  auto count_node_ports(const uint& node_id) -> uint;
+  const auto count_node_ports(const uint& node_id) -> uint;
 
   /*
     Links the output ports of the node output_node_id to the input ports of the node input_node_id

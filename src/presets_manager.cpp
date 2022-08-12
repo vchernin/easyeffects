@@ -234,7 +234,7 @@ auto PresetsManager::get_names(const PresetType& preset_type) -> std::vector<std
   return names;
 }
 
-auto PresetsManager::search_names(std::filesystem::directory_iterator& it) -> std::vector<std::string> {
+const auto PresetsManager::search_names(std::filesystem::directory_iterator& it) -> std::vector<std::string> {
   std::vector<std::string> names;
 
   try {
@@ -556,7 +556,7 @@ auto PresetsManager::load_preset_file(const PresetType& preset_type, const std::
   return false;
 }
 
-auto PresetsManager::read_plugins_preset(const PresetType& preset_type,
+const auto PresetsManager::read_plugins_preset(const PresetType& preset_type,
                                          const std::vector<std::string>& plugins,
                                          const nlohmann::json& json) -> bool {
   for (const auto& name : plugins) {
@@ -580,7 +580,7 @@ auto PresetsManager::read_plugins_preset(const PresetType& preset_type,
   return true;
 }
 
-void PresetsManager::import(const PresetType& preset_type, const std::string& file_path) {
+const void PresetsManager::import(const PresetType& preset_type, const std::string& file_path) {
   std::filesystem::path p{file_path};
 
   if (std::filesystem::is_regular_file(p)) {
@@ -705,7 +705,7 @@ void PresetsManager::autoload(const PresetType& preset_type,
   }
 }
 
-auto PresetsManager::get_autoload_profiles(const PresetType& preset_type) -> std::vector<nlohmann::json> {
+const auto PresetsManager::get_autoload_profiles(const PresetType& preset_type) -> std::vector<nlohmann::json> {
   std::filesystem::path autoload_dir;
   std::vector<nlohmann::json> list;
 

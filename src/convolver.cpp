@@ -459,7 +459,7 @@ void Convolver::setup_zita() {
   util::debug(log_tag + name + ": zita is ready");
 }
 
-auto Convolver::get_zita_buffer_size() -> uint {
+const auto Convolver::get_zita_buffer_size() -> uint {
   if (n_samples_is_power_of_2) {
     return n_samples;
   }

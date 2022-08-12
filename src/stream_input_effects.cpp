@@ -124,7 +124,7 @@ void StreamInputEffects::on_app_added(const NodeInfo &node_info) {
   }
 }
 
-auto StreamInputEffects::apps_want_to_play() -> bool {
+const auto StreamInputEffects::apps_want_to_play() -> bool {
   for (const auto& link : pm->list_links) {
     if (link.output_node_id == pm->ee_source_node.id) {
       if (link.state == PW_LINK_STATE_ACTIVE) {

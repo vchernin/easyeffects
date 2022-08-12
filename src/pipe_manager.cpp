@@ -1555,7 +1555,7 @@ auto PipeManager::node_map_at_id(const uint& id) -> NodeInfo& {
   throw std::out_of_range("");
 }
 
-auto PipeManager::stream_is_connected(const uint& id, const std::string& media_class) -> bool {
+const auto PipeManager::stream_is_connected(const uint& id, const std::string& media_class) -> bool {
   if (media_class == tags::pipewire::media_class::output_stream) {
     for (const auto& link : list_links) {
       if (link.output_node_id == id && link.input_node_id == ee_sink_node.id) {
@@ -1637,7 +1637,7 @@ void PipeManager::set_node_mute(pw_proxy* proxy, const bool& state) {
                                                          SPA_PROP_mute, SPA_POD_Bool(state)));
 }
 
-auto PipeManager::count_node_ports(const uint& node_id) -> uint {
+const auto PipeManager::count_node_ports(const uint& node_id) -> uint {
   uint count = 0;
 
   for (const auto& port : list_ports) {

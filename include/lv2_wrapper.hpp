@@ -96,7 +96,7 @@ class Lv2Wrapper {
 
   auto get_control_port_value(const std::string& symbol) -> float;
 
-  auto has_instance() -> bool;
+  const auto has_instance() -> bool;
 
   template <StringLiteralWrapper key_wrapper, StringLiteralWrapper gkey_wrapper>
   void bind_key_bool(GSettings* settings) {

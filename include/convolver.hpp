@@ -80,7 +80,7 @@ class Convolver : public PluginBase {
 
   void setup_zita();
 
-  auto get_zita_buffer_size() -> uint;
+  const auto get_zita_buffer_size() -> uint;
 
   void prepare_kernel();
 

@@ -77,7 +77,7 @@ class PresetsManager {
 
   auto get_names(const PresetType& preset_type) -> std::vector<std::string>;
 
-  auto search_names(std::filesystem::directory_iterator& it) -> std::vector<std::string>;
+  const auto search_names(std::filesystem::directory_iterator& it) -> std::vector<std::string>;
 
   void add(const PresetType& preset_type, const std::string& name);
 
@@ -95,7 +95,7 @@ class PresetsManager {
                            const std::vector<std::string>& plugins,
                            const nlohmann::json& json) -> bool;
 
-  void import(const PresetType& preset_type, const std::string& file_path);
+  const void import(const PresetType& preset_type, const std::string& file_path);
 
   void add_autoload(const PresetType& preset_type,
                     const std::string& preset_name,
@@ -113,7 +113,7 @@ class PresetsManager {
 
   void autoload(const PresetType& preset_type, const std::string& device_name, const std::string& device_profile);
 
-  auto get_autoload_profiles(const PresetType& preset_type) -> std::vector<nlohmann::json>;
+  const auto get_autoload_profiles(const PresetType& preset_type) -> std::vector<nlohmann::json>;
 
   auto preset_file_exists(const PresetType& preset_type, const std::string& name) -> bool;
 

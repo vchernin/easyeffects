@@ -39,7 +39,7 @@ class StreamOutputEffects : public EffectsBase {
 
   void disconnect_filters();
 
-  auto apps_want_to_play() -> bool;
+  const auto apps_want_to_play() -> bool;
 
   void on_app_added(const NodeInfo &node_info);
 
