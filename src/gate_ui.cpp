@@ -286,7 +286,7 @@ void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_
     });
   }));
 
-  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo &info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
@@ -307,7 +307,7 @@ void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_
     g_object_unref(holder);
   }));
 
-  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo &info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
