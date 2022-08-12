@@ -24,7 +24,7 @@
 
 class EqualizerPreset : public PluginPresetBase {
  public:
-  EqualizerPreset(PresetType preset_type, const int& index = 0);
+ explicit EqualizerPreset(PresetType preset_type, const int& index = 0);
   ~EqualizerPreset();
 
  private:
