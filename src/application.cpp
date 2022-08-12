@@ -80,7 +80,7 @@ void on_startup(GApplication* gapp) {
     PipeManager::set_node_volume(self->pm->ee_sink_node.proxy, self->pm->ee_sink_node.n_volume_channels, 1.0);
   }
 
-  self->data->connections.push_back(self->pm->new_default_sink_name.connect([=](const std::string name) {
+  self->data->connections.push_back(self->pm->new_default_sink_name.connect([=](const std::string &name) {
     util::debug("new default output device: " + name);
 
     if (g_settings_get_boolean(self->soe_settings, "use-default-output-device") != 0) {
@@ -88,7 +88,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->new_default_source_name.connect([=](const std::string name) {
+  self->data->connections.push_back(self->pm->new_default_source_name.connect([=](const std::string &name) {
     util::debug("new default input device: " + name);
 
     if (g_settings_get_boolean(self->sie_settings, "use-default-input-device") != 0) {
