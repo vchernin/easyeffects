@@ -35,7 +35,7 @@ StreamInputEffects::StreamInputEffects(PipeManager* pipe_manager)
     }
   }
 
-  connections.push_back(pm->source_added.connect([=, this](const NodeInfo node) {
+  connections.push_back(pm->source_added.connect([=, this](const NodeInfo& node) {
     if (node.name == util::gsettings_get_string(settings, "input-device")) {
       pm->input_device = node;
 
@@ -49,7 +49,7 @@ StreamInputEffects::StreamInputEffects(PipeManager* pipe_manager)
     }
   }));
 
-  connections.push_back(pm->source_removed.connect([=, this](const NodeInfo node) {
+  connections.push_back(pm->source_removed.connect([=, this](const NodeInfo& node) {
     if (g_settings_get_boolean(settings, "use-default-input-device") == 0) {
       if (node.name == util::gsettings_get_string(settings, "input-device")) {
         pm->input_device.id = SPA_ID_INVALID;
@@ -136,7 +136,7 @@ auto StreamInputEffects::apps_want_to_play() -> bool {
   return false;
 }
 
-void StreamInputEffects::on_link_changed(const LinkInfo link_info) {
+void StreamInputEffects::on_link_changed(const LinkInfo& link_info) {
   // We are not interested in the other link states
 
   if (link_info.state != PW_LINK_STATE_ACTIVE && link_info.state != PW_LINK_STATE_PAUSED) {

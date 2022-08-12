@@ -131,7 +131,7 @@ auto str_to_num(const std::string& str, T& num) -> bool {
 }
 
 template <typename T>
-auto to_string(const T& num, const std::string def = "0") -> std::string {
+auto to_string(const T& num, const std::string& def = "0") -> std::string {
   // This is used to replace `std::to_string` as a locale independent
   // number conversion using `std::to_chars`.
   // An additional string parameter could be eventually provided with a

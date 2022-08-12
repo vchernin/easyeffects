@@ -96,7 +96,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->device_input_route_changed.connect([=](const DeviceInfo device) {
+  self->data->connections.push_back(self->pm->device_input_route_changed.connect([=](const DeviceInfo &device) {
     if (device.input_route_available == SPA_PARAM_AVAILABILITY_no) {
       return;
     }
@@ -128,7 +128,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->device_output_route_changed.connect([=](const DeviceInfo device) {
+  self->data->connections.push_back(self->pm->device_output_route_changed.connect([=](const DeviceInfo &device) {
     if (device.output_route_available == SPA_PARAM_AVAILABILITY_no) {
       return;
     }
