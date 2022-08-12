@@ -141,7 +141,7 @@ void on_app_removed(AppsBox* self, const uint64_t serial) {
   update_empty_list_overlay(self);
 }
 
-void on_app_changed(AppsBox* self, const NodeInfo node_info) {
+void on_app_changed(AppsBox* self, const NodeInfo &node_info) {
   for (guint n = 0; n < g_list_model_get_n_items(G_LIST_MODEL(self->apps_model)); n++) {
     auto* holder = static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->apps_model), n));
 
@@ -208,7 +208,7 @@ void setup_listview(AppsBox* self) {
 
         // A call to holder->info_updated.clear() will be made in the unbind signal
 
-        holder->info_updated.connect([=](const NodeInfo node_info) { ui::app_info::update(app_info, node_info); });
+        holder->info_updated.connect([=](const NodeInfo &node_info) { ui::app_info::update(app_info, node_info); });
       }),
       self);
 
@@ -256,7 +256,7 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
           [=](const uint64_t serial) { on_app_removed(self, serial); }));
 
       self->data->connections.push_back(application->sie->pm->stream_input_changed.connect(
-          [=](const NodeInfo node_info) { on_app_changed(self, node_info); }));
+          [=](const NodeInfo &node_info) { on_app_changed(self, node_info); }));
 
       break;
     }
@@ -278,7 +278,7 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
           [=](const uint64_t serial) { on_app_removed(self, serial); }));
 
       self->data->connections.push_back(application->soe->pm->stream_output_changed.connect(
-          [=](const NodeInfo node_info) { on_app_changed(self, node_info); }));
+          [=](const NodeInfo &node_info) { on_app_changed(self, node_info); }));
 
       break;
     }

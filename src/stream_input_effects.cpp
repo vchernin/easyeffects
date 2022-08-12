@@ -112,7 +112,7 @@ StreamInputEffects::~StreamInputEffects() {
   util::debug("destroyed");
 }
 
-void StreamInputEffects::on_app_added(const NodeInfo node_info) {
+void StreamInputEffects::on_app_added(const NodeInfo &node_info) {
   const auto blocklist = util::gchar_array_to_vector(g_settings_get_strv(settings, "blocklist"));
 
   auto is_blocklisted = std::ranges::find(blocklist, node_info.application_id) != blocklist.end();
