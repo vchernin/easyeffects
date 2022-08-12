@@ -23,7 +23,7 @@
 
 class FirFilterBandpass : public FirFilterBase {
  public:
-  FirFilterBandpass(std::string tag);
+  explicit FirFilterBandpass(std::string tag);
   FirFilterBandpass(const FirFilterBandpass&) = delete;
   auto operator=(const FirFilterBandpass&) -> FirFilterBandpass& = delete;
   FirFilterBandpass(const FirFilterBandpass&&) = delete;

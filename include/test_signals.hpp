@@ -29,7 +29,7 @@ enum class TestSignalType { sine_wave, gaussian, pink };
 
 class TestSignals {
  public:
-  TestSignals(PipeManager* pipe_manager);
+  explicit TestSignals(PipeManager* pipe_manager);
   TestSignals(const TestSignals&) = delete;
   auto operator=(const TestSignals&) -> TestSignals& = delete;
   TestSignals(const TestSignals&&) = delete;
