@@ -1,0 +1,18 @@
+clang-tidy stuff
+run with clang-tidy --config-file=.clang-tidy --fix --fix-errors --fix-notes ./src/* ./include/*
+
+and we get 75 file changes, many obv wrong
+
+should remove boost from .clang-tidy 
+
+clang-tidy --config-file=.clang-tidy ./src/*
+
+clang-tidy --config-file=.clang-tidy ./src/* ./include/* > allc-t.out
+
+cert and bugprone are intensive
+
+run-clang-tidy.py -header-filter='.*' --config-file=.clang-tidy -fix
+
+./run-clang-tidy.py -p=build -header-filter=easyeffects/build/../include -config-file=./.clang-tidy -fix > chicanery
+
+maybe should use cpplint and cppcheck, make a build target (ninja -t targets all).
