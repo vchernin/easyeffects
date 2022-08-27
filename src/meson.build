@@ -147,6 +147,7 @@ easyeffects_deps = [
 	dependency('nlohmann_json', include_type: 'system'),
 	dependency('fmt', version: '>=8.0.0', include_type: 'system'),
 	dependency('threads'),
+	dependency('libportal'),
 	tbb,
 	zita_convolver,
 	rnnoise,

@@ -7,6 +7,9 @@
         <key name="process-all-inputs" type="b">
             <default>false</default>
         </key>
+        <key name="enable-autostart" type="b">
+            <default>false</default>
+        </key>
         <key name="use-dark-theme" type="b">
             <default>false</default>
         </key>
@@ -32,7 +35,7 @@
             <default>false</default>
         </key>
         <key name="shutdown-on-window-close" type="b">
-            <default>false</default>
+            <default>true</default>
         </key>
         <key name="use-cubic-volumes" type="b">
             <default>false</default>

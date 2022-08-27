@@ -20,12 +20,14 @@
 #pragma once
 
 #include <adwaita.h>
-#include <filesystem>
 #include <fstream>
 #include <string>
 #include "tags_resources.hpp"
 #include "ui_helpers.hpp"
 #include "util.hpp"
+#include "libportal/portal.h"
+#include "libportal-gtk4/portal-gtk4.h"
+
 
 namespace ui::preferences::general {
 
