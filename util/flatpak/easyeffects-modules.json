@@ -126,8 +126,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://breakfastquay.com/files/releases/rubberband-3.0.0.tar.bz2",
-                            "sha256": "df6530b403c8300a23973df22f36f3c263f010d53792063e411f633cebb9ed85",
+                            "url": "https://breakfastquay.com/files/releases/rubberband-3.1.1.tar.bz2",
+                            "sha256": "a442551fe7d26fb4a54dd1c34178733dc9c76ac9ce051a02325f5cb35d154381",
                             "x-checker-data": {
                                 "type": "html",
                                 "url": "https://www.breakfastquay.com/rubberband/",
@@ -232,8 +232,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.5.0.tar.gz",
-                    "sha256": "e5b57537c741400cf6134b428fc1689a649d7d38d9bb9c1b6d64f092ea28178a",
+                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.7.0.tar.gz",
+                    "sha256": "2cae2a80cda7d45dc7c072e4295c675fff5ad8316691f26f40539f7e7e54c0cc",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 227581,
