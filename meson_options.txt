@@ -11,3 +11,5 @@ option(
   type: 'boolean',
   value: false
 )
+# option('other_one', type : 'boolean', value : false, description: Whether to build with sanitizers )
+option('sanitizers', type: 'boolean', value: false, description: 'If this is a build with sanitizers')

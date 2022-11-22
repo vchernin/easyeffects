@@ -15,6 +15,7 @@ project(
 	meson_version: '>= 0.59.0'
 )
 
+
 # see https://github.com/wwmm/easyeffects/pull/1739 for more info
 cxx = meson.get_compiler('cpp')
 assert(cxx.get_id() == 'gcc', 'This project only supports the gcc compiler due to usage of c++20 features.')
@@ -28,6 +29,22 @@ add_project_arguments (
   suppressed_warnings,
   language: [ 'c', 'cpp' ],
   )
+
+if get_option('sanitizers')
+  
+  # figure out how to set env vars:
+  # export ASAN_OPTIONS=abort_on_error=1:fast_unwind_on_malloc=0:detect_leaks=1 UBSAN_OPTIONS=print_stacktrace=1 G_SLICE=always-malloc G_DEBUG=gc-friendly
+  # note i changed detect_leaks to on, but it dosent seem to work
+  
+  # todo add supressions argument
+  # for debug symbols to show up properly flatpak unfortunately needs to set no-debuginfo, debug extension seems rather empty...
+  args = ['-fsanitize=address,undefined,float-divide-by-zero,float-cast-overflow','-fno-sanitize-recover=all', '-fno-sanitize=null,alignment', '-fno-omit-frame-pointer']
+  add_project_arguments(args, language : 'c')
+  add_project_arguments(args, language : 'cpp')
+
+  add_project_link_arguments(args, language : 'c')
+  add_project_link_arguments(args, language : 'cpp')
+endif
 
 add_global_arguments('-DG_LOG_DOMAIN="easyeffects"', language : [ 'c', 'cpp' ])
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()),
@@ -105,3 +122,19 @@ gnome_mod.post_install(
 )
 
 message('\n  '.join(status))
+
+testscript = find_program('./test/test.sh', required: true)
+test('Run integration tests', testscript,
+ # args: ['validate-relax', '--nonet', metainfo_file]
+)
+
+
+# experiment with tests
+# systemctl = find_program('systemctl', 'status', '--user', required: false)
+# # if systemctl.found()
+#   test('check for systemctl', systemctl,
+#     args: ['pipewire']
+#   )
+# # endif
+
+# todo use meson test to run tests

@@ -89,10 +89,17 @@
                     ]
                 }
             ],
+            "build-options": {
+                "no-debuginfo": true
+            },
+            "config-opts": [
+                "-Dsanitizers=true"
+            ],
             "post-install": [
                 "install -Dm644 -t $FLATPAK_DEST/share/licenses/$FLATPAK_ID ../LICENSE",
                 "mkdir -pm755 $FLATPAK_DEST/extensions/Plugins"
             ],
+            "run-tests": true,
             "modules": [
                 "easyeffects-modules.json"
             ]
