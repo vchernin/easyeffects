@@ -10,8 +10,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/libsigc++/3.2/libsigc++-3.2.0.tar.xz",
-                    "sha256": "8cdcb986e3f0a7c5b4474aa3c833d676e62469509f4899110ddf118f04082651",
+                    "url": "https://download.gnome.org/sources/libsigc++/3.4/libsigc++-3.4.0.tar.xz",
+                    "sha256": "02e2630ffb5ce93cd52c38423521dfe7063328863a6e96d41d765a6116b8707e",
                     "x-checker-data": {
                         "type": "gnome",
                         "name": "libsigc++",
@@ -129,8 +129,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://breakfastquay.com/files/releases/rubberband-3.1.1.tar.bz2",
-                            "sha256": "a442551fe7d26fb4a54dd1c34178733dc9c76ac9ce051a02325f5cb35d154381",
+                            "url": "https://breakfastquay.com/files/releases/rubberband-3.1.2.tar.bz2",
+                            "sha256": "dda7e257b14c59a1f59c5ccc4d6f19412039f77834275955aa0ff511779b98d2",
                             "x-checker-data": {
                                 "type": "html",
                                 "url": "https://www.breakfastquay.com/rubberband/",
@@ -240,8 +240,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.7.0.tar.gz",
-                    "sha256": "2cae2a80cda7d45dc7c072e4295c675fff5ad8316691f26f40539f7e7e54c0cc",
+                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.8.0.tar.gz",
+                    "sha256": "eee380323bb7ce864355ed9431f85c43955faaae9e9bce35c62b372d7ffd9f8b",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 227581,
