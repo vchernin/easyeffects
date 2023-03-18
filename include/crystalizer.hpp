@@ -64,15 +64,15 @@ class Crystalizer : public PluginBase {
   std::vector<float> data_L;
   std::vector<float> data_R;
 
-  std::array<bool, nbands> band_mute;
-  std::array<bool, nbands> band_bypass;
+  std::array<bool, nbands> band_mute{};
+  std::array<bool, nbands> band_bypass{};
 
-  std::array<float, nbands + 1U> frequencies;
-  std::array<float, nbands> band_intensity;
-  std::array<float, nbands> band_last_L;
-  std::array<float, nbands> band_last_R;
-  std::array<float, nbands> band_next_L;
-  std::array<float, nbands> band_next_R;
+  std::array<float, nbands + 1U> frequencies{};
+  std::array<float, nbands> band_intensity{};
+  std::array<float, nbands> band_last_L{};
+  std::array<float, nbands> band_last_R{};
+  std::array<float, nbands> band_next_L{};
+  std::array<float, nbands> band_next_R{};
 
   std::array<std::vector<float>, nbands> band_data_L;
   std::array<std::vector<float>, nbands> band_data_R;

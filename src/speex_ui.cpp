@@ -29,7 +29,7 @@ struct Data {
 
   uint serial = 0;
 
-  app::Application* application;
+  app::Application* application{};
 
   std::shared_ptr<Speex> speex;
 
@@ -61,12 +61,12 @@ struct _SpeexBox {
 
 G_DEFINE_TYPE(SpeexBox, speex_box, GTK_TYPE_BOX)
 
-void on_reset(SpeexBox* self, GtkButton* btn) {
+void on_reset(SpeexBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
 void setup(SpeexBox* self,
-           std::shared_ptr<Speex> speex,
+           const std::shared_ptr<Speex>& speex,
            const std::string& schema_path,
            app::Application* application) {
   self->data->speex = speex;

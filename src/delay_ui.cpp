@@ -54,11 +54,11 @@ struct _DelayBox {
 
 G_DEFINE_TYPE(DelayBox, delay_box, GTK_TYPE_BOX)
 
-void on_reset(DelayBox* self, GtkButton* btn) {
+void on_reset(DelayBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void setup(DelayBox* self, std::shared_ptr<Delay> delay, const std::string& schema_path) {
+void setup(DelayBox* self, const std::shared_ptr<Delay>& delay, const std::string& schema_path) {
   self->data->delay = delay;
 
   auto serial = get_new_filter_serial();

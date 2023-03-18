@@ -65,7 +65,7 @@ PresetsManager::PresetsManager()
   user_output_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(user_output_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile* file, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   gpointer user_data) {
                      auto self = static_cast<PresetsManager*>(user_data);
 
@@ -97,7 +97,7 @@ PresetsManager::PresetsManager()
   user_input_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(user_input_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile* file, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   gpointer user_data) {
                      auto self = static_cast<PresetsManager*>(user_data);
 
@@ -129,7 +129,7 @@ PresetsManager::PresetsManager()
   autoload_input_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(autoload_input_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile*  /*file*/, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   gpointer user_data) {
                      auto self = static_cast<PresetsManager*>(user_data);
 
@@ -148,7 +148,7 @@ PresetsManager::PresetsManager()
   autoload_output_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(autoload_output_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile*  /*file*/, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   gpointer user_data) {
                      auto self = static_cast<PresetsManager*>(user_data);
 
@@ -294,7 +294,7 @@ void PresetsManager::save_blocklist(const PresetType& preset_type, nlohmann::jso
 }
 
 auto PresetsManager::load_blocklist(const PresetType& preset_type, const nlohmann::json& json) -> bool {
-  std::vector<std::string> blocklist;
+  std::vector<std::string> const blocklist;
 
   switch (preset_type) {
     case PresetType::input: {
@@ -603,7 +603,7 @@ auto PresetsManager::read_plugins_preset(const PresetType& preset_type,
 }
 
 void PresetsManager::import(const PresetType& preset_type, const std::string& file_path) {
-  std::filesystem::path p{file_path};
+  std::filesystem::path const p{file_path};
 
   if (std::filesystem::is_regular_file(p)) {
     if (p.extension().c_str() == json_ext) {

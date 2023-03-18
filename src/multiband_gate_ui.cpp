@@ -67,11 +67,11 @@ struct _MultibandGateBox {
 
 G_DEFINE_TYPE(MultibandGateBox, multiband_gate_box, GTK_TYPE_BOX)
 
-void on_reset(MultibandGateBox* self, GtkButton* btn) {
+void on_reset(MultibandGateBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void on_listbox_row_selected(MultibandGateBox* self, GtkListBoxRow* row, GtkListBox* listbox) {
+void on_listbox_row_selected(MultibandGateBox* self, GtkListBoxRow*  /*row*/, GtkListBox* listbox) {
   if (auto* selected_row = gtk_list_box_get_selected_row(listbox); selected_row != nullptr) {
     if (auto index = gtk_list_box_row_get_index(selected_row); index != -1) {
       gtk_stack_set_visible_child_name(self->stack, ("band" + util::to_string(index)).c_str());
@@ -103,7 +103,7 @@ void create_bands(MultibandGateBox* self) {
 
     self->data->gconnections.push_back(g_signal_connect(
         self->settings, ("changed::"s + tags::multiband_gate::band_external_sidechain[n].data()).c_str(),
-        G_CALLBACK(+[](GSettings* settings, char* key, MultibandGateBox* self) {
+        G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, MultibandGateBox* self) {
           set_dropdown_input_devices_sensitivity(self);
         }),
         self));
@@ -114,7 +114,7 @@ void setup_dropdown_input_device(MultibandGateBox* self) {
   auto* selection = gtk_single_selection_new(G_LIST_MODEL(self->input_devices_model));
 
   g_signal_connect(self->dropdown_input_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, MultibandGateBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, MultibandGateBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -129,7 +129,7 @@ void setup_dropdown_input_device(MultibandGateBox* self) {
 }
 
 void setup(MultibandGateBox* self,
-           std::shared_ptr<MultibandGate> multiband_gate,
+           const std::shared_ptr<MultibandGate>& multiband_gate,
            const std::string& schema_path,
            PipeManager* pm) {
   self->data->multiband_gate = multiband_gate;
@@ -255,7 +255,7 @@ void setup(MultibandGateBox* self,
         });
       }));
 
-  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
@@ -276,7 +276,7 @@ void setup(MultibandGateBox* self,
     g_object_unref(holder);
   }));
 
-  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));

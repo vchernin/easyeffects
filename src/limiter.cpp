@@ -32,7 +32,7 @@ Limiter::Limiter(const std::string& tag,
   }
 
   gconnections.push_back(g_signal_connect(settings, "changed::external-sidechain",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, const char* key, gpointer user_data) {
                                             auto self = static_cast<Limiter*>(user_data);
 
                                             self->update_sidechain_links(key);
@@ -40,7 +40,7 @@ Limiter::Limiter(const std::string& tag,
                                           this));
 
   gconnections.push_back(g_signal_connect(settings, "changed::sidechain-input-device",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, const char* key, gpointer user_data) {
                                             auto self = static_cast<Limiter*>(user_data);
 
                                             self->update_sidechain_links(key);
@@ -179,7 +179,7 @@ void Limiter::process(std::span<float>& left_in,
   }
 }
 
-void Limiter::update_sidechain_links(const std::string& key) {
+void Limiter::update_sidechain_links(const std::string&  /*key*/) {
   if (g_settings_get_boolean(settings, "external-sidechain") == 0) {
     pm->destroy_links(list_proxies);
 

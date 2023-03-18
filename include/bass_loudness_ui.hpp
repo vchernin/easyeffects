@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> BassLoudnessBox*;
 
-void setup(BassLoudnessBox* self, std::shared_ptr<BassLoudness> bass_loudness, const std::string& schema_path);
+void setup(BassLoudnessBox* self, const std::shared_ptr<BassLoudness>& bass_loudness, const std::string& schema_path);
 
 }  // namespace ui::bass_loudness_box

@@ -24,12 +24,12 @@ namespace lv2 {
 constexpr auto min_quantum = 32;
 constexpr auto max_quantum = 8192;
 
-auto lv2_printf(LV2_Log_Handle handle, LV2_URID type, const char* format, ...) -> int {
+auto lv2_printf(LV2_Log_Handle  /*handle*/, LV2_URID  /*type*/, const char* format, ...) -> int {
   va_list args;
 
   va_start(args, format);
 
-  int r = std::vprintf(format, args);
+  int const r = std::vprintf(format, args);
 
   va_end(args);
 
@@ -182,7 +182,7 @@ auto Lv2Wrapper::create_instance(const uint& rate) -> bool {
     instance = nullptr;
   }
 
-  LV2_Log_Log lv2_log = {this, &lv2_printf, [](LV2_Log_Handle handle, LV2_URID type, const char* fmt, va_list ap) {
+  LV2_Log_Log lv2_log = {this, &lv2_printf, [](LV2_Log_Handle  /*handle*/, LV2_URID  /*type*/, const char* fmt, va_list ap) {
                            return std::vprintf(fmt, ap);
                          }};
 
@@ -214,7 +214,7 @@ auto Lv2Wrapper::create_instance(const uint& rate) -> bool {
         &n_samples},
        {LV2_OPTIONS_INSTANCE, 0, 0, 0, 0, nullptr}});
 
-  LV2_Feature feature_options = {.URI = LV2_OPTIONS__options, .data = options.data()};
+  LV2_Feature const feature_options = {.URI = LV2_OPTIONS__options, .data = options.data()};
 
   const auto features = std::to_array<const LV2_Feature*>(
       {&lv2_log_feature, &lv2_map_feature, &lv2_unmap_feature, &feature_options, static_features.data(), nullptr});

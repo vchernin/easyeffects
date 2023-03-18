@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> CrossfeedBox*;
 
-void setup(CrossfeedBox* self, std::shared_ptr<Crossfeed> crossfeed, const std::string& schema_path);
+void setup(CrossfeedBox* self, const std::shared_ptr<Crossfeed>& crossfeed, const std::string& schema_path);
 
 }  // namespace ui::crossfeed_box

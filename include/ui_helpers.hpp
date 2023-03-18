@@ -81,12 +81,12 @@ void prepare_spinbutton(GtkSpinButton* button) {
     return;
   }
 
-  g_signal_connect(button, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer user_data) {
+  g_signal_connect(button, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer  /*user_data*/) {
                      return parse_spinbutton_output(button, sl_wrapper.msg.data(), lower_bound);
                    }),
                    nullptr);
 
-  g_signal_connect(button, "input", G_CALLBACK(+[](GtkSpinButton* button, gdouble* new_value, gpointer user_data) {
+  g_signal_connect(button, "input", G_CALLBACK(+[](GtkSpinButton* button, gdouble* new_value, gpointer  /*user_data*/) {
                      return parse_spinbutton_input(button, new_value, lower_bound);
                    }),
                    nullptr);
@@ -108,7 +108,7 @@ void prepare_scale(GtkScale* scale) {
   gtk_scale_set_format_value_func(
       scale,
       (GtkScaleFormatValueFunc) +
-          [](GtkScale* scale, double value, gpointer user_data) {
+          [](GtkScale* scale, double value, gpointer  /*user_data*/) {
             if (scale == nullptr) {
               return g_strdup("");
             }

@@ -37,6 +37,6 @@ G_END_DECLS
 
 auto create() -> LimiterBox*;
 
-void setup(LimiterBox* self, std::shared_ptr<Limiter> limiter, const std::string& schema_path, PipeManager* pm);
+void setup(LimiterBox* self, const std::shared_ptr<Limiter>& limiter, const std::string& schema_path, PipeManager* pm);
 
 }  // namespace ui::limiter_box

@@ -35,7 +35,7 @@ Convolver::Convolver(const std::string& tag,
       do_autogain(g_settings_get_boolean(settings, "autogain") != 0),
       ir_width(g_settings_get_int(settings, "ir-width")) {
   gconnections.push_back(g_signal_connect(settings, "changed::ir-width",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, char* key, gpointer user_data) {
                                             auto self = static_cast<Convolver*>(user_data);
 
                                             self->ir_width = g_settings_get_int(self->settings, key);
@@ -53,7 +53,7 @@ Convolver::Convolver(const std::string& tag,
                                           this));
 
   gconnections.push_back(g_signal_connect(settings, "changed::kernel-path",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
                                             auto self = static_cast<Convolver*>(user_data);
 
                                             self->prepare_kernel();
@@ -84,7 +84,7 @@ Convolver::~Convolver() {
 
   mythreads.clear();
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   ready = false;
 
@@ -145,7 +145,7 @@ void Convolver::setup() {
       setup_zita();
     }
 
-    std::scoped_lock<std::mutex> lock(data_mutex);
+    std::scoped_lock<std::mutex> const lock(data_mutex);
 
     ready = kernel_is_initialized && zita_ready;
   });
@@ -155,7 +155,7 @@ void Convolver::process(std::span<float>& left_in,
                         std::span<float>& right_in,
                         std::span<float>& left_out,
                         std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

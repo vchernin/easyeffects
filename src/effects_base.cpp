@@ -46,7 +46,7 @@ EffectsBase::EffectsBase(std::string tag, const std::string& schema, PipeManager
   create_filters_if_necessary();
 
   gconnections.push_back(g_signal_connect(settings, "changed::plugins",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
                                             auto self = static_cast<EffectsBase*>(user_data);
 
                                             self->create_filters_if_necessary();

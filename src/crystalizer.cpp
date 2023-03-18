@@ -141,7 +141,7 @@ void Crystalizer::process(std::span<float>& left_in,
                           std::span<float>& right_in,
                           std::span<float>& left_out,
                           std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !filters_are_ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());
@@ -195,7 +195,7 @@ void Crystalizer::process(std::span<float>& left_in,
         deque_out_R.pop_front();
       }
     } else {
-      uint offset = 2U * (left_out.size() - deque_out_L.size());
+      uint const offset = 2U * (left_out.size() - deque_out_L.size());
 
       if (offset != latency_n_frames) {
         latency_n_frames = offset + 1U;  // the second derivative forces us to delay at least one sample

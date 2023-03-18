@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> FilterBox*;
 
-void setup(FilterBox* self, std::shared_ptr<Filter> filter, const std::string& schema_path);
+void setup(FilterBox* self, const std::shared_ptr<Filter>& filter, const std::string& schema_path);
 
 }  // namespace ui::filter_box

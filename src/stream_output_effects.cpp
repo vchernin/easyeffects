@@ -35,7 +35,7 @@ StreamOutputEffects::StreamOutputEffects(PipeManager* pipe_manager)
     }
   }
 
-  connections.push_back(pm->sink_added.connect([=, this](const NodeInfo node) {
+  connections.push_back(pm->sink_added.connect([=, this](const NodeInfo& node) {
     if (node.name == util::gsettings_get_string(settings, "output-device")) {
       pm->output_device = node;
 
@@ -49,7 +49,7 @@ StreamOutputEffects::StreamOutputEffects(PipeManager* pipe_manager)
     }
   }));
 
-  connections.push_back(pm->sink_removed.connect([=, this](const NodeInfo node) {
+  connections.push_back(pm->sink_removed.connect([=, this](const NodeInfo& node) {
     if (g_settings_get_boolean(settings, "use-default-output-device") == 0) {
       if (node.name == util::gsettings_get_string(settings, "output-device")) {
         pm->output_device.id = SPA_ID_INVALID;
@@ -92,7 +92,7 @@ StreamOutputEffects::StreamOutputEffects(PipeManager* pipe_manager)
                                           this));
 
   gconnections.push_back(g_signal_connect(settings, "changed::plugins",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
                                             auto self = static_cast<StreamOutputEffects*>(user_data);
 
                                             if (g_settings_get_boolean(self->global_settings, "bypass") != 0) {
@@ -112,7 +112,7 @@ StreamOutputEffects::~StreamOutputEffects() {
   util::debug("destroyed");
 }
 
-void StreamOutputEffects::on_app_added(const NodeInfo node_info) {
+void StreamOutputEffects::on_app_added(const NodeInfo& node_info) {
   const auto blocklist = util::gchar_array_to_vector(g_settings_get_strv(settings, "blocklist"));
 
   auto is_blocklisted = std::ranges::find(blocklist, node_info.application_id) != blocklist.end();
@@ -130,7 +130,7 @@ auto StreamOutputEffects::apps_want_to_play() -> bool {
   });
 }
 
-void StreamOutputEffects::on_link_changed(const LinkInfo link_info) {
+void StreamOutputEffects::on_link_changed(const LinkInfo& link_info) {
   // We are not interested in the other link states
 
   if (link_info.state != PW_LINK_STATE_ACTIVE && link_info.state != PW_LINK_STATE_PAUSED) {
@@ -152,7 +152,7 @@ void StreamOutputEffects::on_link_changed(const LinkInfo link_info) {
       connect_filters();
     }
   } else {
-    int inactivity_timeout = g_settings_get_int(global_settings, "inactivity-timeout");
+    int const inactivity_timeout = g_settings_get_int(global_settings, "inactivity-timeout");
 
     g_timeout_add_seconds(inactivity_timeout, GSourceFunc(+[](StreamOutputEffects* self) {
                             if (!self->apps_want_to_play() && !self->list_proxies.empty()) {

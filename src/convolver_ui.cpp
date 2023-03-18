@@ -33,7 +33,7 @@ struct Data {
 
   uint serial = 0;
 
-  app::Application* application;
+  app::Application* application{};
 
   std::shared_ptr<Convolver> convolver;
 
@@ -86,7 +86,7 @@ struct _ConvolverBox {
 
 G_DEFINE_TYPE(ConvolverBox, convolver_box, GTK_TYPE_BOX)
 
-void on_reset(ConvolverBox* self, GtkButton* btn) {
+void on_reset(ConvolverBox* self, GtkButton*  /*btn*/) {
   gtk_toggle_button_set_active(self->autogain, 0);
 
   util::reset_all_keys_except(self->settings);
@@ -155,7 +155,7 @@ void on_show_channel(ConvolverBox* self, GtkCheckButton* btn) {
   }
 }
 
-void on_enable_log_scale(ConvolverBox* self, GtkToggleButton* btn) {
+void on_enable_log_scale(ConvolverBox* self, GtkToggleButton*  /*btn*/) {
   plot_fft(self);
 }
 
@@ -432,7 +432,7 @@ void get_irs_info(ConvolverBox* self) {
 }
 
 void setup(ConvolverBox* self,
-           std::shared_ptr<Convolver> convolver,
+           const std::shared_ptr<Convolver>& convolver,
            const std::string& schema_path,
            app::Application* application) {
   self->data->convolver = convolver;
@@ -475,7 +475,7 @@ void setup(ConvolverBox* self,
   }));
 
   self->data->gconnections.push_back(g_signal_connect(
-      self->settings, "changed::kernel-path", G_CALLBACK(+[](GSettings* settings, char* key, ConvolverBox* self) {
+      self->settings, "changed::kernel-path", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, ConvolverBox* self) {
         self->data->mythreads.emplace_back([=]() {
           std::scoped_lock<std::mutex> lock(self->data->lock_guard_irs_info);
 
@@ -623,7 +623,7 @@ void convolver_box_init(ConvolverBox* self) {
   self->folder_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(self->folder_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile* file, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   ConvolverBox* self) {
                      const auto irs_filename = util::remove_filename_extension(g_file_get_basename(file));
 
@@ -656,7 +656,7 @@ void convolver_box_init(ConvolverBox* self) {
 
   g_object_unref(gfile);
 
-  g_signal_connect(GTK_WIDGET(self), "realize", G_CALLBACK(+[](GtkWidget* widget, ConvolverBox* self) {
+  g_signal_connect(GTK_WIDGET(self), "realize", G_CALLBACK(+[](GtkWidget*  /*widget*/, ConvolverBox* self) {
                      /*
                        Reading the current configured irs file. We do this here because we need some widgets to be ready
                        when the impulse response file information is available

@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> DeesserBox*;
 
-void setup(DeesserBox* self, std::shared_ptr<Deesser> deesser, const std::string& schema_path);
+void setup(DeesserBox* self, const std::shared_ptr<Deesser>& deesser, const std::string& schema_path);
 
 }  // namespace ui::deesser_box

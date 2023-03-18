@@ -39,7 +39,7 @@ G_END_DECLS
 auto create() -> MultibandCompressorBox*;
 
 void setup(MultibandCompressorBox* self,
-           std::shared_ptr<MultibandCompressor> multiband_compressor,
+           const std::shared_ptr<MultibandCompressor>& multiband_compressor,
            const std::string& schema_path,
            PipeManager* pm);
 

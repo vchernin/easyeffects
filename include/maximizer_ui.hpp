@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> MaximizerBox*;
 
-void setup(MaximizerBox* self, std::shared_ptr<Maximizer> maximizer, const std::string& schema_path);
+void setup(MaximizerBox* self, const std::shared_ptr<Maximizer>& maximizer, const std::string& schema_path);
 
 }  // namespace ui::maximizer_box

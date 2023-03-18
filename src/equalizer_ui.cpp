@@ -88,13 +88,13 @@ struct _EqualizerBox {
 
 G_DEFINE_TYPE(EqualizerBox, equalizer_box, GTK_TYPE_BOX)
 
-void on_reset(EqualizerBox* self, GtkButton* btn) {
+void on_reset(EqualizerBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
   util::reset_all_keys_except(self->settings_left);
   util::reset_all_keys_except(self->settings_right);
 }
 
-void on_flat_response(EqualizerBox* self, GtkButton* btn) {
+void on_flat_response(EqualizerBox* self, GtkButton*  /*btn*/) {
   const auto& max_bands = self->data->equalizer->max_bands;
   for (uint n = 0U; n < max_bands; n++) {
     g_settings_reset(self->settings_left, band_gain[n].data());
@@ -103,7 +103,7 @@ void on_flat_response(EqualizerBox* self, GtkButton* btn) {
   }
 }
 
-void on_calculate_frequencies(EqualizerBox* self, GtkButton* btn) {
+void on_calculate_frequencies(EqualizerBox* self, GtkButton*  /*btn*/) {
   constexpr double min_freq = 20.0;
   constexpr double max_freq = 20000.0;
 
@@ -282,7 +282,7 @@ auto parse_apo_config_line(const std::string& line, struct APO_Band& filter) -> 
 }
 
 auto import_apo_preset(EqualizerBox* self, const std::string& file_path) -> bool {
-  std::filesystem::path p{file_path};
+  std::filesystem::path const p{file_path};
 
   if (!std::filesystem::is_regular_file(p)) {
     return false;
@@ -361,7 +361,7 @@ auto import_apo_preset(EqualizerBox* self, const std::string& file_path) -> bool
   return true;
 }
 
-void on_import_apo_preset_clicked(EqualizerBox* self, GtkButton* btn) {
+void on_import_apo_preset_clicked(EqualizerBox* self, GtkButton*  /*btn*/) {
   auto* active_window = gtk_application_get_active_window(GTK_APPLICATION(self->data->application));
 
   auto* dialog = gtk_file_chooser_native_new(_("Import APO Preset File"), active_window, GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -483,7 +483,7 @@ auto parse_graphiceq_config(const std::string& str, std::vector<struct GraphicEQ
 }
 
 auto import_graphiceq_preset(EqualizerBox* self, const std::string& file_path) -> bool {
-  std::filesystem::path p{file_path};
+  std::filesystem::path const p{file_path};
 
   if (!std::filesystem::is_regular_file(p)) {
     return false;
@@ -555,7 +555,7 @@ auto import_graphiceq_preset(EqualizerBox* self, const std::string& file_path) -
   return true;
 }
 
-void on_import_geq_preset_clicked(EqualizerBox* self, GtkButton* btn) {
+void on_import_geq_preset_clicked(EqualizerBox* self, GtkButton*  /*btn*/) {
   auto* active_window = gtk_application_get_active_window(GTK_APPLICATION(self->data->application));
 
   auto* dialog = gtk_file_chooser_native_new(_("Import GraphicEQ Preset File"), active_window,
@@ -598,7 +598,7 @@ void on_import_geq_preset_clicked(EqualizerBox* self, GtkButton* btn) {
 
 // ### End GraphicEQ Section ###
 
-auto sort_band_widgets(EqualizerBox* self, const int nbands, GSettings* settings, const bool& sort_by_freq)
+auto sort_band_widgets(EqualizerBox*  /*self*/, const int nbands, GSettings* settings, const bool& sort_by_freq)
     -> std::vector<std::string> {
   std::vector<int> list(nbands);
 
@@ -643,7 +643,7 @@ void build_all_bands(EqualizerBox* self, const bool& sort_by_freq = false) {
   }
 }
 
-void on_sort_bands(EqualizerBox* self, GtkButton* btn) {
+void on_sort_bands(EqualizerBox* self, GtkButton*  /*btn*/) {
   self->data->equalizer->sort_bands();
 }
 
@@ -654,7 +654,7 @@ void setup_listview(EqualizerBox* self) {
   // setting the factory callbacks
 
   g_signal_connect(factory, "setup",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, EqualizerBox* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, EqualizerBox* self) {
                      auto* band_box = ui::equalizer_band_box::create();
 
                      gtk_list_item_set_activatable(item, 0);
@@ -671,7 +671,7 @@ void setup_listview(EqualizerBox* self) {
                    self);
 
   g_signal_connect(
-      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, EqualizerBox* self) {
+      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, EqualizerBox*  /*self*/) {
         auto* band_box =
             static_cast<ui::equalizer_band_box::EqualizerBandBox*>(g_object_get_data(G_OBJECT(item), "band-box"));
 
@@ -696,7 +696,7 @@ void setup_listview(EqualizerBox* self) {
 }
 
 void setup(EqualizerBox* self,
-           std::shared_ptr<Equalizer> equalizer,
+           const std::shared_ptr<Equalizer>& equalizer,
            const std::string& schema_path,
            app::Application* application) {
   self->data->equalizer = equalizer;
@@ -768,10 +768,10 @@ void setup(EqualizerBox* self,
 
   self->data->gconnections.push_back(g_signal_connect(
       self->settings, "changed::num-bands",
-      G_CALLBACK(+[](GSettings* settings, char* key, EqualizerBox* self) { build_all_bands(self); }), self));
+      G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, EqualizerBox* self) { build_all_bands(self); }), self));
 
   self->data->gconnections.push_back(g_signal_connect(
-      self->settings, "changed::split-channels", G_CALLBACK(+[](GSettings* settings, char* key, EqualizerBox* self) {
+      self->settings, "changed::split-channels", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, EqualizerBox* self) {
         gtk_stack_set_visible_child_name(self->stack, "page_left_channel");
 
         build_all_bands(self);

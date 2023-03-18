@@ -23,7 +23,7 @@
 
 class StreamInputEffects : public EffectsBase {
  public:
-  StreamInputEffects(PipeManager* pipe_manager);
+  explicit StreamInputEffects(PipeManager* pipe_manager);
   StreamInputEffects(const StreamInputEffects&) = delete;
   auto operator=(const StreamInputEffects&) -> StreamInputEffects& = delete;
   StreamInputEffects(const StreamInputEffects&&) = delete;
@@ -43,7 +43,7 @@ class StreamInputEffects : public EffectsBase {
 
   auto apps_want_to_play() -> bool;
 
-  void on_app_added(NodeInfo node_info);
+  void on_app_added(const NodeInfo& node_info);
 
-  void on_link_changed(LinkInfo link_info);
+  void on_link_changed(const LinkInfo& link_info);
 };

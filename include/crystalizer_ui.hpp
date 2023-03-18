@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> CrystalizerBox*;
 
-void setup(CrystalizerBox* self, std::shared_ptr<Crystalizer> crystalizer, const std::string& schema_path);
+void setup(CrystalizerBox* self, const std::shared_ptr<Crystalizer>& crystalizer, const std::string& schema_path);
 
 }  // namespace ui::crystalizer_box

@@ -25,7 +25,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  app::Application* application;
+  app::Application* application{};
 
   std::unordered_map<uint, bool> enabled_app_list;
 
@@ -138,7 +138,7 @@ void on_app_removed(AppsBox* self, const uint64_t serial) {
   update_empty_list_overlay(self);
 }
 
-void on_app_changed(AppsBox* self, const NodeInfo node_info) {
+void on_app_changed(AppsBox* self, const NodeInfo& node_info) {
   for (guint n = 0; n < g_list_model_get_n_items(G_LIST_MODEL(self->apps_model)); n++) {
     auto* holder = static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->apps_model), n));
 
@@ -175,7 +175,7 @@ void setup_listview(AppsBox* self) {
   // setting the factory callbacks
 
   g_signal_connect(factory, "setup",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, AppsBox* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, AppsBox* self) {
                      auto app_info = ui::app_info::create();
 
                      ui::app_info::setup(app_info, self->data->application, self->settings, self->icon_theme,
@@ -189,7 +189,7 @@ void setup_listview(AppsBox* self) {
                    self);
 
   g_signal_connect(
-      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, AppsBox* self) {
+      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, AppsBox* self) {
         auto* app_info = static_cast<ui::app_info::AppInfo*>(g_object_get_data(G_OBJECT(item), "app-info"));
 
         auto child_item = gtk_list_item_get_item(item);
@@ -210,7 +210,7 @@ void setup_listview(AppsBox* self) {
       self);
 
   g_signal_connect(factory, "unbind",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* self, GtkListItem* item, gpointer user_data) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*self*/, GtkListItem* item, gpointer  /*user_data*/) {
                      auto* holder = static_cast<ui::holders::NodeInfoHolder*>(gtk_list_item_get_item(item));
 
                      holder->info_updated.clear();
@@ -247,13 +247,13 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
       }
 
       self->data->connections.push_back(
-          application->sie->pm->stream_input_added.connect([=](const NodeInfo info) { on_app_added(self, info); }));
+          application->sie->pm->stream_input_added.connect([=](const NodeInfo& info) { on_app_added(self, info); }));
 
       self->data->connections.push_back(application->sie->pm->stream_input_removed.connect(
           [=](const uint64_t serial) { on_app_removed(self, serial); }));
 
       self->data->connections.push_back(application->sie->pm->stream_input_changed.connect(
-          [=](const NodeInfo node_info) { on_app_changed(self, node_info); }));
+          [=](const NodeInfo& node_info) { on_app_changed(self, node_info); }));
 
       break;
     }
@@ -269,13 +269,13 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
       }
 
       self->data->connections.push_back(
-          pm->stream_output_added.connect([=](const NodeInfo info) { on_app_added(self, info); }));
+          pm->stream_output_added.connect([=](const NodeInfo& info) { on_app_added(self, info); }));
 
       self->data->connections.push_back(application->soe->pm->stream_output_removed.connect(
           [=](const uint64_t serial) { on_app_removed(self, serial); }));
 
       self->data->connections.push_back(application->soe->pm->stream_output_changed.connect(
-          [=](const NodeInfo node_info) { on_app_changed(self, node_info); }));
+          [=](const NodeInfo& node_info) { on_app_changed(self, node_info); }));
 
       break;
     }
@@ -284,7 +284,7 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
   // updating the list when changes are made to the blocklist
 
   self->data->gconnections.push_back(g_signal_connect(
-      self->settings, "changed::blocklist", G_CALLBACK(+[](GSettings* settings, char* key, AppsBox* self) {
+      self->settings, "changed::blocklist", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, AppsBox* self) {
         const auto show_blocklisted_apps = g_settings_get_boolean(self->settings, "show-blocklisted-apps") != 0;
 
         g_list_store_remove_all(self->apps_model);
@@ -332,7 +332,7 @@ void setup(AppsBox* self, app::Application* application, PipelineType pipeline_t
       self));
 
   self->data->gconnections.push_back(g_signal_connect(
-      self->settings, "changed::show-blocklisted-apps", G_CALLBACK(+[](GSettings* settings, char* key, AppsBox* self) {
+      self->settings, "changed::show-blocklisted-apps", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, AppsBox* self) {
         const auto show_blocklisted_apps = g_settings_get_boolean(self->settings, "show-blocklisted-apps") != 0;
 
         g_list_store_remove_all(self->apps_model);

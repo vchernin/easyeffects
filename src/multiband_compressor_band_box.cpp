@@ -25,7 +25,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  int index;
+  int index{};
 
   std::vector<gulong> gconnections;
 };
@@ -54,20 +54,20 @@ struct _MultibandCompressorBandBox {
 
 G_DEFINE_TYPE(MultibandCompressorBandBox, multiband_compressor_band_box, GTK_TYPE_BOX)
 
-gboolean set_boost_threshold_sensitive(MultibandCompressorBandBox* self, const char* active_id) {
+auto set_boost_threshold_sensitive(MultibandCompressorBandBox*  /*self*/, const char* active_id) -> gboolean {
   if (g_strcmp0(active_id, "Downward") == 0 || g_strcmp0(active_id, "Boosting") == 0) {
     return 0;
-  } else if (g_strcmp0(active_id, "Upward") == 0) {
+  } if (g_strcmp0(active_id, "Upward") == 0) {
     return 1;
   }
 
   return 1;
 }
 
-gboolean set_boost_amount_sensitive(MultibandCompressorBandBox* self, const char* active_id) {
+auto set_boost_amount_sensitive(MultibandCompressorBandBox*  /*self*/, const char* active_id) -> gboolean {
   if (g_strcmp0(active_id, "Downward") == 0 || g_strcmp0(active_id, "Upward") == 0) {
     return 0;
-  } else if (g_strcmp0(active_id, "Boosting") == 0) {
+  } if (g_strcmp0(active_id, "Boosting") == 0) {
     return 1;
   }
 

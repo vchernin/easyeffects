@@ -41,7 +41,7 @@ G_END_DECLS
 auto create() -> EqualizerBox*;
 
 void setup(EqualizerBox* self,
-           std::shared_ptr<Equalizer> equalizer,
+           const std::shared_ptr<Equalizer>& equalizer,
            const std::string& schema_path,
            app::Application* application);
 

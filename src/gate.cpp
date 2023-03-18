@@ -29,7 +29,7 @@ Gate::Gate(const std::string& tag, const std::string& schema, const std::string&
   }
 
   gconnections.push_back(g_signal_connect(settings, "changed::sidechain-input",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, const char* key, gpointer user_data) {
                                             auto self = static_cast<Gate*>(user_data);
 
                                             self->update_sidechain_links(key);
@@ -37,7 +37,7 @@ Gate::Gate(const std::string& tag, const std::string& schema, const std::string&
                                           this));
 
   gconnections.push_back(g_signal_connect(settings, "changed::sidechain-input-device",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, const char* key, gpointer user_data) {
                                             auto self = static_cast<Gate*>(user_data);
 
                                             self->update_sidechain_links(key);
@@ -207,7 +207,7 @@ void Gate::process(std::span<float>& left_in,
   }
 }
 
-void Gate::update_sidechain_links(const std::string& key) {
+void Gate::update_sidechain_links(const std::string&  /*key*/) {
   if (util::gsettings_get_string(settings, "sidechain-input") != "External") {
     pm->destroy_links(list_proxies);
 

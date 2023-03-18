@@ -38,7 +38,7 @@ G_END_DECLS
 auto create() -> CompressorBox*;
 
 void setup(CompressorBox* self,
-           std::shared_ptr<Compressor> compressor,
+           const std::shared_ptr<Compressor>& compressor,
            const std::string& schema_path,
            PipeManager* pm);
 

@@ -60,7 +60,7 @@ Crossfeed::~Crossfeed() {
 }
 
 void Crossfeed::setup() {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   data.resize(2U * static_cast<size_t>(n_samples));
 
@@ -73,7 +73,7 @@ void Crossfeed::process(std::span<float>& left_in,
                         std::span<float>& right_in,
                         std::span<float>& left_out,
                         std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

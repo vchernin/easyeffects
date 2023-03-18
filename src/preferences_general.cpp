@@ -38,14 +38,14 @@ G_DEFINE_TYPE(PreferencesGeneral, preferences_general, ADW_TYPE_PREFERENCES_PAGE
 
 #ifndef USE_LIBPORTAL
 
-auto on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) -> gboolean {
-  std::filesystem::path autostart_dir{g_get_user_config_dir() + "/autostart"s};
+auto on_enable_autostart(GtkSwitch*  /*obj*/, gboolean state, gpointer  /*user_data*/) -> gboolean {
+  std::filesystem::path const autostart_dir{g_get_user_config_dir() + "/autostart"s};
 
   if (!std::filesystem::is_directory(autostart_dir)) {
     std::filesystem::create_directories(autostart_dir);
   }
 
-  std::filesystem::path autostart_file{g_get_user_config_dir() + "/autostart/easyeffects-service.desktop"s};
+  std::filesystem::path const autostart_file{g_get_user_config_dir() + "/autostart/easyeffects-service.desktop"s};
 
   if (state != 0) {
     if (!std::filesystem::exists(autostart_file)) {

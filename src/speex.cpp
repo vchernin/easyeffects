@@ -155,7 +155,7 @@ Speex::~Speex() {
     disconnect_from_pw();
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
 #ifdef SPEEX_AVAILABLE
   free_speex();
@@ -165,7 +165,7 @@ Speex::~Speex() {
 }
 
 void Speex::setup() {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   latency_n_frames = 0U;
 
@@ -222,7 +222,7 @@ void Speex::process(std::span<float>& left_in,
                     std::span<float>& right_in,
                     std::span<float>& left_out,
                     std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !speex_ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

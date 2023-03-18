@@ -84,7 +84,7 @@ void add_plugins_to_stack(PluginsBox* self) {
 
   // saving the current visible page name for later usage
 
-  std::string visible_page_name =
+  std::string const visible_page_name =
       (gtk_stack_get_visible_child_name(self->stack) != nullptr) ? gtk_stack_get_visible_child_name(self->stack) : "";
 
   // removing all plugins
@@ -92,7 +92,7 @@ void add_plugins_to_stack(PluginsBox* self) {
   for (auto* child = gtk_widget_get_first_child(GTK_WIDGET(self->stack)); child != nullptr;) {
     auto* next_child = gtk_widget_get_next_sibling(child);
 
-    uint serial = GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(child), "serial"));
+    uint const serial = GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(child), "serial"));
 
     set_ignore_filter_idle_add(serial, true);
 
@@ -439,7 +439,7 @@ void setup_listview(PluginsBox* self) {
   // setting the factory callbacks
 
   g_signal_connect(
-      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PluginsBox* self) {
+      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PluginsBox* self) {
         auto builder = gtk_builder_new_from_resource(tags::resources::plugin_row_ui);
 
         auto* top_box = gtk_builder_get_object(builder, "top_box");
@@ -468,7 +468,7 @@ void setup_listview(PluginsBox* self) {
         g_object_set_data(G_OBJECT(controller), "drag_handle", drag_handle);
 
         g_signal_connect(controller, "enter",
-                         G_CALLBACK(+[](GtkEventControllerMotion* controller, gdouble x, gdouble y, PluginsBox* self) {
+                         G_CALLBACK(+[](GtkEventControllerMotion* controller, gdouble  /*x*/, gdouble  /*y*/, PluginsBox*  /*self*/) {
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "remove")), 1.0);
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "enable")), 1.0);
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "drag_handle")),
@@ -476,7 +476,7 @@ void setup_listview(PluginsBox* self) {
                          }),
                          self);
 
-        g_signal_connect(controller, "leave", G_CALLBACK(+[](GtkEventControllerMotion* controller, PluginsBox* self) {
+        g_signal_connect(controller, "leave", G_CALLBACK(+[](GtkEventControllerMotion* controller, PluginsBox*  /*self*/) {
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "remove")), 0.0);
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "enable")), 0.0);
                            gtk_widget_set_opacity(GTK_WIDGET(g_object_get_data(G_OBJECT(controller), "drag_handle")),
@@ -495,7 +495,7 @@ void setup_listview(PluginsBox* self) {
         g_object_set_data(G_OBJECT(drag_source), "top_box", top_box);
 
         g_signal_connect(
-            drag_source, "prepare", G_CALLBACK(+[](GtkDragSource* source, double x, double y, PluginsBox* self) {
+            drag_source, "prepare", G_CALLBACK(+[](GtkDragSource* source, double  /*x*/, double  /*y*/, PluginsBox*  /*self*/) {
               auto* top_box = static_cast<GtkBox*>(g_object_get_data(G_OBJECT(source), "top_box"));
 
               auto* paintable = gtk_widget_paintable_new(GTK_WIDGET(top_box));
@@ -517,7 +517,7 @@ void setup_listview(PluginsBox* self) {
 
         g_signal_connect(
             drop_target, "drop",
-            G_CALLBACK(+[](GtkDropTarget* target, const GValue* value, double x, double y, PluginsBox* self) {
+            G_CALLBACK(+[](GtkDropTarget* target, const GValue* value, double  /*x*/, double  /*y*/, PluginsBox* self) {
               if (!G_VALUE_HOLDS(value, G_TYPE_STRING)) {
                 return false;
               }
@@ -575,7 +575,7 @@ void setup_listview(PluginsBox* self) {
       self);
 
   g_signal_connect(
-      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PluginsBox* self) {
+      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PluginsBox* self) {
         auto* top_box = static_cast<GtkBox*>(g_object_get_data(G_OBJECT(item), "top_box"));
         auto* label = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "name"));
         auto* remove = static_cast<GtkButton*>(g_object_get_data(G_OBJECT(item), "remove"));
@@ -635,7 +635,7 @@ void setup(PluginsBox* self, app::Application* application, PipelineType pipelin
       add_plugins_to_stack<PipelineType::input>(self);
 
       self->data->gconnections.push_back(g_signal_connect(
-          self->settings, "changed::plugins", G_CALLBACK(+[](GSettings* settings, char* key, PluginsBox* self) {
+          self->settings, "changed::plugins", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, PluginsBox* self) {
             add_plugins_to_stack<PipelineType::input>(self);
           }),
           self));
@@ -656,7 +656,7 @@ void setup(PluginsBox* self, app::Application* application, PipelineType pipelin
       add_plugins_to_stack<PipelineType::output>(self);
 
       self->data->gconnections.push_back(g_signal_connect(
-          self->settings, "changed::plugins", G_CALLBACK(+[](GSettings* settings, char* key, PluginsBox* self) {
+          self->settings, "changed::plugins", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, PluginsBox* self) {
             add_plugins_to_stack<PipelineType::output>(self);
           }),
           self));
@@ -714,7 +714,7 @@ void dispose(GObject* object) {
   for (auto* child = gtk_widget_get_first_child(GTK_WIDGET(self->stack)); child != nullptr;) {
     auto* next_child = gtk_widget_get_next_sibling(child);
 
-    uint serial = GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(child), "serial"));
+    uint const serial = GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(child), "serial"));
 
     set_ignore_filter_idle_add(serial, true);
 

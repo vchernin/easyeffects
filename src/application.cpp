@@ -73,7 +73,7 @@ void on_startup(GApplication* gapp) {
 
   PipeManager::exclude_monitor_stream = g_settings_get_boolean(self->settings, "exclude-monitor-streams") != 0;
 
-  self->data->connections.push_back(self->pm->new_default_sink_name.connect([=](const std::string name) {
+  self->data->connections.push_back(self->pm->new_default_sink_name.connect([=](const std::string& name) {
     util::debug("new default output device: " + name);
 
     if (g_settings_get_boolean(self->soe_settings, "use-default-output-device") != 0) {
@@ -81,7 +81,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->new_default_source_name.connect([=](const std::string name) {
+  self->data->connections.push_back(self->pm->new_default_source_name.connect([=](const std::string& name) {
     util::debug("new default input device: " + name);
 
     if (g_settings_get_boolean(self->sie_settings, "use-default-input-device") != 0) {
@@ -89,7 +89,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->device_input_route_changed.connect([=](const DeviceInfo device) {
+  self->data->connections.push_back(self->pm->device_input_route_changed.connect([=](const DeviceInfo& device) {
     if (device.input_route_available == SPA_PARAM_AVAILABILITY_no) {
       return;
     }
@@ -121,7 +121,7 @@ void on_startup(GApplication* gapp) {
     }
   }));
 
-  self->data->connections.push_back(self->pm->device_output_route_changed.connect([=](const DeviceInfo device) {
+  self->data->connections.push_back(self->pm->device_output_route_changed.connect([=](const DeviceInfo& device) {
     if (device.output_route_available == SPA_PARAM_AVAILABILITY_no) {
       return;
     }
@@ -194,7 +194,7 @@ void on_startup(GApplication* gapp) {
       self));
 
   self->data->gconnections.push_back(g_signal_connect(
-      self->settings, "changed::bypass", G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+      self->settings, "changed::bypass", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
         auto self = static_cast<Application*>(user_data);
 
         update_bypass_state(self);
@@ -203,7 +203,7 @@ void on_startup(GApplication* gapp) {
 
   self->data->gconnections.push_back(
       g_signal_connect(self->settings, "changed::exclude-monitor-streams",
-                       G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                       G_CALLBACK(+[](GSettings* settings, char* key, gpointer  /*user_data*/) {
                          PipeManager::exclude_monitor_stream = g_settings_get_boolean(settings, key) != 0;
                        }),
                        self));
@@ -403,7 +403,7 @@ void application_init(Application* self) {
   std::array<GActionEntry, 8> entries{};
 
   entries[0] = {"quit",
-                [](GSimpleAction* action, GVariant* parameter, gpointer app) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer app) {
                   util::debug("The user pressed <Ctrl>Q or executed a similar action. Our process will exit.");
 
                   g_application_quit(G_APPLICATION(app));
@@ -411,7 +411,7 @@ void application_init(Application* self) {
                 nullptr, nullptr, nullptr};
 
   entries[1] = {"help",
-                [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
                   auto* parent = gtk_application_get_active_window(GTK_APPLICATION(gapp));
 
                   auto* launcher = gtk_uri_launcher_new("help:easyeffects");
@@ -424,7 +424,7 @@ void application_init(Application* self) {
 
   entries[2] = {
       "about",
-      [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+      [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
         std::array<const char*, 4> developers = {"Wellington Wallace <wellingtonwallace@gmail.com>",
                                                  "Giusy Digital <kurmikon@libero.it>", "Vincent Chernin", nullptr};
 
@@ -443,7 +443,7 @@ void application_init(Application* self) {
       nullptr, nullptr, nullptr};
 
   entries[3] = {"fullscreen",
-                [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
                   auto* self = EE_APP(gapp);
 
                   auto state = g_settings_get_boolean(self->settings, "window-fullscreen") != 0;
@@ -461,7 +461,7 @@ void application_init(Application* self) {
                 nullptr, nullptr, nullptr};
 
   entries[4] = {"preferences",
-                [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
                   auto* preferences = ui::preferences::window::create();
 
                   gtk_window_set_transient_for(GTK_WINDOW(preferences),
@@ -472,7 +472,7 @@ void application_init(Application* self) {
                 nullptr, nullptr, nullptr};
 
   entries[5] = {"reset",
-                [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
                   auto* self = EE_APP(gapp);
 
                   util::reset_all_keys_except(self->settings);
@@ -483,7 +483,7 @@ void application_init(Application* self) {
                 nullptr, nullptr, nullptr};
 
   entries[6] = {"shortcuts",
-                [](GSimpleAction* action, GVariant* parameter, gpointer gapp) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer gapp) {
                   auto* builder = gtk_builder_new_from_resource(tags::resources::shortcuts_ui);
 
                   auto* window = GTK_SHORTCUTS_WINDOW(gtk_builder_get_object(builder, "window"));
@@ -498,7 +498,7 @@ void application_init(Application* self) {
                 nullptr, nullptr, nullptr};
 
   entries[7] = {"hide_windows",
-                [](GSimpleAction* action, GVariant* parameter, gpointer app) {
+                [](GSimpleAction*  /*action*/, GVariant*  /*parameter*/, gpointer app) {
                   util::debug("The user pressed <Ctrl>W or executed a similar action. Hiding our window.");
 
                   hide_all_windows(G_APPLICATION(app));

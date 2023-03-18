@@ -36,7 +36,7 @@ using namespace std::string_literals;
 
 XdpPortal* portal = nullptr;
 
-void on_request_background_called(GObject* source, GAsyncResult* result, gpointer widgets_ptr) {
+void on_request_background_called(GObject*  /*source*/, GAsyncResult* result, gpointer  /*widgets_ptr*/) {
   if (enable_autostart == nullptr || shutdown_on_window_close == nullptr) {
     util::error("Programming error. When using libportal its pointers to our settings widgets must be initialized.");
   }
@@ -135,7 +135,7 @@ void update_background_portal(const bool& use_autostart) {
   g_free(reason);
 }
 
-void on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) {
+void on_enable_autostart(GtkSwitch*  /*obj*/, gboolean state, gpointer  /*user_data*/) {
   // this callback could be triggered when the settings are reset by other code due to an error calling the portal, in
   // that case we must not call the portal again.
   if (!resetting_autostart) {
@@ -146,7 +146,7 @@ void on_enable_autostart(GtkSwitch* obj, gboolean state, gpointer user_data) {
   }
 }
 
-void on_shutdown_on_window_close(GtkSwitch* btn, gboolean state, gpointer user_data) {
+void on_shutdown_on_window_close(GtkSwitch*  /*btn*/, gboolean state, gpointer  /*user_data*/) {
   // this callback could be triggered when the settings are reset by other code due to an error calling the portal, in
   // that case we must not call the portal again.
   if (!resetting_shutdown) {

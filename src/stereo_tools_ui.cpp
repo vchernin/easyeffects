@@ -57,11 +57,11 @@ struct _StereoToolsBox {
 
 G_DEFINE_TYPE(StereoToolsBox, stereo_tools_box, GTK_TYPE_BOX)
 
-void on_reset(StereoToolsBox* self, GtkButton* btn) {
+void on_reset(StereoToolsBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void setup(StereoToolsBox* self, std::shared_ptr<StereoTools> stereo_tools, const std::string& schema_path) {
+void setup(StereoToolsBox* self, const std::shared_ptr<StereoTools>& stereo_tools, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

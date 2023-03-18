@@ -56,11 +56,11 @@ struct _LoudnessBox {
 
 G_DEFINE_TYPE(LoudnessBox, loudness_box, GTK_TYPE_BOX)
 
-void on_reset(LoudnessBox* self, GtkButton* btn) {
+void on_reset(LoudnessBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void setup(LoudnessBox* self, std::shared_ptr<Loudness> loudness, const std::string& schema_path) {
+void setup(LoudnessBox* self, const std::shared_ptr<Loudness>& loudness, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

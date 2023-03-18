@@ -81,7 +81,7 @@ Equalizer::Equalizer(const std::string& tag,
 
   gconnections.push_back(g_signal_connect(
       settings, "changed::split-channels",
-      G_CALLBACK(+[](GSettings* settings, char* key, Equalizer* self) { self->on_split_channels(); }), this));
+      G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, Equalizer* self) { self->on_split_channels(); }), this));
 
   setup_input_output_gain();
 }

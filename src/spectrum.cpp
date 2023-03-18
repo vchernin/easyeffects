@@ -46,7 +46,7 @@ Spectrum::~Spectrum() {
     disconnect_from_pw();
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   fftw_ready = false;
 
@@ -81,7 +81,7 @@ void Spectrum::process(std::span<float>& left_in,
                        std::span<float>& right_in,
                        std::span<float>& left_out,
                        std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   std::copy(left_in.begin(), left_in.end(), left_out.begin());
   std::copy(right_in.begin(), right_in.end(), right_out.begin());

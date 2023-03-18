@@ -25,7 +25,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  app::Application* application;
+  app::Application* application{};
 
   std::vector<sigc::connection> connections;
 
@@ -52,7 +52,7 @@ struct _BlocklistMenu {
 
 G_DEFINE_TYPE(BlocklistMenu, blocklist_menu, GTK_TYPE_POPOVER)
 
-void on_add_to_blocklist(BlocklistMenu* self, GtkButton* button) {
+void on_add_to_blocklist(BlocklistMenu* self, GtkButton*  /*button*/) {
   auto status = util::add_new_blocklist_entry(self->settings, gtk_editable_get_text(GTK_EDITABLE(self->app_name)));
 
   if (status) {
@@ -66,7 +66,7 @@ void setup_listview(BlocklistMenu* self) {
   // setting the factory callbacks
 
   g_signal_connect(
-      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, BlocklistMenu* self) {
+      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, BlocklistMenu* self) {
         auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
         auto* label = gtk_label_new(nullptr);
         auto* button = gtk_button_new_from_icon_name("user-trash-symbolic");
@@ -105,7 +105,7 @@ void setup_listview(BlocklistMenu* self) {
       self);
 
   g_signal_connect(factory, "bind",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, BlocklistMenu* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, BlocklistMenu*  /*self*/) {
                      auto* label = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "name"));
                      auto* btn_remove = static_cast<GtkButton*>(g_object_get_data(G_OBJECT(item), "remove"));
 

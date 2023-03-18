@@ -37,6 +37,6 @@ G_END_DECLS
 
 auto create() -> GateBox*;
 
-void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_path, PipeManager* pm);
+void setup(GateBox* self, const std::shared_ptr<Gate>& gate, const std::string& schema_path, PipeManager* pm);
 
 }  // namespace ui::gate_box

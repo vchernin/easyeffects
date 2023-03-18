@@ -103,7 +103,7 @@ auto parse_spinbutton_output(GtkSpinButton* button, const char* unit, const bool
   auto precision = gtk_spin_button_get_digits(button);
   auto str_unit = (unit != nullptr) ? (" "s + unit) : ""s;
 
-  bool minus_infinity = (!lower_bound && value <= util::minimum_db_d_level);
+  bool const minus_infinity = (!lower_bound && value <= util::minimum_db_d_level);
 
   auto text = (minus_infinity) ? (_("-inf") + str_unit)
                                // format string: 0 = value, 1 = precision, 2 = unit

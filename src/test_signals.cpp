@@ -49,8 +49,8 @@ void on_process(void* userdata, spa_io_position* position) {
     return;
   }
 
-  std::span left_out(out_left, n_samples);
-  std::span right_out(out_right, n_samples);
+  std::span const left_out(out_left, n_samples);
+  std::span const right_out(out_right, n_samples);
 
   const auto phase_delta = pi_x_2 * d->ts->sine_frequency / static_cast<float>(rate);
 

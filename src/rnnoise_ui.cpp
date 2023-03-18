@@ -39,7 +39,7 @@ struct Data {
 
   uint serial = 0;
 
-  app::Application* application;
+  app::Application* application{};
 
   std::shared_ptr<RNNoise> rnnoise;
 
@@ -75,7 +75,7 @@ struct _RNNoiseBox {
 
 G_DEFINE_TYPE(RNNoiseBox, rnnoise_box, GTK_TYPE_BOX)
 
-void on_reset(RNNoiseBox* self, GtkButton* btn) {
+void on_reset(RNNoiseBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
@@ -90,16 +90,16 @@ void update_model_state(RNNoiseBox* self, const bool& load_error) {
   }
 }
 
-gboolean set_model_delete_button_visibility(GtkListItem* item, const char* name) {
+auto set_model_delete_button_visibility(GtkListItem*  /*item*/, const char* name) -> gboolean {
   const std::string default_model_name = _("Standard Model");
 
   return (name == default_model_name) ? 0 : 1;
 }
 
-void on_remove_model_file(GtkListItem* item, GtkButton* btn) {
-  std::string name = gtk_string_object_get_string(GTK_STRING_OBJECT(gtk_list_item_get_item(item)));
+void on_remove_model_file(GtkListItem* item, GtkButton*  /*btn*/) {
+  std::string const name = gtk_string_object_get_string(GTK_STRING_OBJECT(gtk_list_item_get_item(item)));
 
-  const auto model_file = model_dir / std::filesystem::path{name.c_str() + rnnn_ext};
+  const auto model_file = model_dir / std::filesystem::path{name + rnnn_ext};
 
   if (std::filesystem::exists(model_file)) {
     std::filesystem::remove(model_file);
@@ -109,7 +109,7 @@ void on_remove_model_file(GtkListItem* item, GtkButton* btn) {
 }
 
 void import_model_file(const std::string& file_path) {
-  std::filesystem::path p{file_path};
+  std::filesystem::path const p{file_path};
 
   if (std::filesystem::is_regular_file(p)) {
     auto out_path = model_dir / p.filename();
@@ -124,7 +124,7 @@ void import_model_file(const std::string& file_path) {
   }
 }
 
-void on_import_model_clicked(RNNoiseBox* self, GtkButton* btn) {
+void on_import_model_clicked(RNNoiseBox* self, GtkButton*  /*btn*/) {
   auto* active_window = gtk_application_get_active_window(GTK_APPLICATION(self->data->application));
 
   auto* dialog = gtk_file_chooser_native_new(_("Import Model File"), active_window, GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -137,7 +137,7 @@ void on_import_model_clicked(RNNoiseBox* self, GtkButton* btn) {
 
   gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
-  g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkNativeDialog* dialog, int response, RNNoiseBox* self) {
+  g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkNativeDialog* dialog, int response, RNNoiseBox*  /*self*/) {
                      if (response == GTK_RESPONSE_ACCEPT) {
                        auto* chooser = GTK_FILE_CHOOSER(dialog);
                        auto* file = gtk_file_chooser_get_file(chooser);
@@ -169,7 +169,7 @@ void setup_listview(RNNoiseBox* self) {
 }
 
 void setup(RNNoiseBox* self,
-           std::shared_ptr<RNNoise> rnnoise,
+           const std::shared_ptr<RNNoise>& rnnoise,
            const std::string& schema_path,
            app::Application* application) {
   self->data->rnnoise = rnnoise;
@@ -231,7 +231,7 @@ void setup(RNNoiseBox* self,
   g_settings_bind_with_mapping(
       self->settings, "model-path", self->selection_model, "selected", G_SETTINGS_BIND_DEFAULT,
       +[](GValue* value, GVariant* variant, gpointer user_data) {
-        auto self = EE_RNNOISE_BOX(user_data);
+        auto *self = EE_RNNOISE_BOX(user_data);
 
         const auto* v = g_variant_get_string(variant, nullptr);
 
@@ -244,7 +244,7 @@ void setup(RNNoiseBox* self,
         int standard_model_id = 0;
 
         for (guint n = 0; n < g_list_model_get_n_items(G_LIST_MODEL(self->selection_model)); n++) {
-          auto item = g_list_model_get_item(G_LIST_MODEL(self->selection_model), n);
+          auto *item = g_list_model_get_item(G_LIST_MODEL(self->selection_model), n);
 
           const std::string model_name = gtk_string_object_get_string(GTK_STRING_OBJECT(item));
 
@@ -263,10 +263,10 @@ void setup(RNNoiseBox* self,
 
         return 1;
       },
-      +[](const GValue* value, const GVariantType* expected_type, gpointer user_data) {
-        auto self = EE_RNNOISE_BOX(user_data);
+      +[](const GValue*  /*value*/, const GVariantType*  /*expected_type*/, gpointer user_data) {
+        auto *self = EE_RNNOISE_BOX(user_data);
 
-        auto string_object =
+        auto *string_object =
             GTK_STRING_OBJECT(gtk_single_selection_get_selected_item(GTK_SINGLE_SELECTION(self->selection_model)));
 
         const std::string name = gtk_string_object_get_string(string_object);
@@ -377,12 +377,12 @@ void rnnoise_box_init(RNNoiseBox* self) {
     util::debug("model directory already exists: " + model_dir.string());
   }
 
-  auto gfile = g_file_new_for_path(model_dir.c_str());
+  auto *gfile = g_file_new_for_path(model_dir.c_str());
 
   self->folder_monitor = g_file_monitor_directory(gfile, G_FILE_MONITOR_NONE, nullptr, nullptr);
 
   g_signal_connect(self->folder_monitor, "changed",
-                   G_CALLBACK(+[](GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type,
+                   G_CALLBACK(+[](GFileMonitor*  /*monitor*/, GFile* file, GFile*  /*other_file*/, GFileMonitorEvent event_type,
                                   RNNoiseBox* self) {
                      const auto rnn_filename = util::remove_filename_extension(g_file_get_basename(file));
 

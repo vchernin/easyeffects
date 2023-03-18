@@ -58,7 +58,7 @@ void remove_from_string_list(ConvolverMenuImpulses* self, const std::string& irs
 }
 
 auto import_irs_file(const std::string& file_path) -> ImpulseImportState {
-  std::filesystem::path p{file_path};
+  std::filesystem::path const p{file_path};
 
   if (!std::filesystem::is_regular_file(p)) {
     util::warning(p.string() + " is not a file!");
@@ -121,7 +121,7 @@ void notify_import_error(const ImpulseImportState& import_state, ConvolverMenuIm
   ui::show_simple_message_dialog(GTK_WIDGET(active_window), _("Impulse File Not Imported"), descr);
 }
 
-void on_import_irs_clicked(ConvolverMenuImpulses* self, GtkButton* btn) {
+void on_import_irs_clicked(ConvolverMenuImpulses* self, GtkButton*  /*btn*/) {
   auto* active_window = gtk_application_get_active_window(GTK_APPLICATION(self->application));
 
   auto* dialog = gtk_file_chooser_native_new(_("Import Impulse File"), active_window, GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -177,7 +177,7 @@ void setup_listview(ConvolverMenuImpulses* self) {
   // setting the factory callbacks
 
   g_signal_connect(factory, "setup",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, ConvolverMenuImpulses* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, ConvolverMenuImpulses* self) {
                      auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
                      auto* label = gtk_label_new(nullptr);
                      auto* load = gtk_button_new_with_label(_("Load"));
@@ -212,7 +212,7 @@ void setup_listview(ConvolverMenuImpulses* self) {
                                       }),
                                       self);
 
-                     g_signal_connect(remove, "clicked", G_CALLBACK(+[](GtkButton* btn, ConvolverMenuImpulses* self) {
+                     g_signal_connect(remove, "clicked", G_CALLBACK(+[](GtkButton* btn, ConvolverMenuImpulses*  /*self*/) {
                                         if (auto* string_object =
                                                 GTK_STRING_OBJECT(g_object_get_data(G_OBJECT(btn), "string-object"));
                                             string_object != nullptr) {
@@ -226,7 +226,7 @@ void setup_listview(ConvolverMenuImpulses* self) {
                    self);
 
   g_signal_connect(factory, "bind",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, ConvolverMenuImpulses* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, ConvolverMenuImpulses*  /*self*/) {
                      auto* label = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "name"));
                      auto* load = static_cast<GtkButton*>(g_object_get_data(G_OBJECT(item), "load"));
                      auto* remove = static_cast<GtkButton*>(g_object_get_data(G_OBJECT(item), "remove"));

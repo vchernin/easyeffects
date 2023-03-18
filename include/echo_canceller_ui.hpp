@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> EchoCancellerBox*;
 
-void setup(EchoCancellerBox* self, std::shared_ptr<EchoCanceller> echo_canceller, const std::string& schema_path);
+void setup(EchoCancellerBox* self, const std::shared_ptr<EchoCanceller>& echo_canceller, const std::string& schema_path);
 
 }  // namespace ui::echo_canceller_box

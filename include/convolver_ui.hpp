@@ -47,7 +47,7 @@ G_END_DECLS
 auto create() -> ConvolverBox*;
 
 void setup(ConvolverBox* self,
-           std::shared_ptr<Convolver> convolver,
+           const std::shared_ptr<Convolver>& convolver,
            const std::string& schema_path,
            app::Application* application);
 

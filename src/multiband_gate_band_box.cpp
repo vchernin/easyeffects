@@ -25,7 +25,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  int index;
+  int index{};
 
   std::vector<gulong> gconnections;
 };

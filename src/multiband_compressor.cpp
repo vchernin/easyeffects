@@ -38,7 +38,7 @@ MultibandCompressor::MultibandCompressor(const std::string& tag,
   }
 
   gconnections.push_back(g_signal_connect(settings, "changed::sidechain-input-device",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, const char* key, gpointer user_data) {
                                             auto self = static_cast<MultibandCompressor*>(user_data);
 
                                             self->update_sidechain_links(key);
@@ -162,7 +162,7 @@ void MultibandCompressor::process(std::span<float>& left_in,
   }
 }
 
-void MultibandCompressor::update_sidechain_links(const std::string& key) {
+void MultibandCompressor::update_sidechain_links(const std::string&  /*key*/) {
   auto external_sidechain_enabled = false;
 
   for (uint n = 0U; !external_sidechain_enabled && n < n_bands; n++) {

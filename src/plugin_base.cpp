@@ -140,7 +140,7 @@ PluginBase::PluginBase(std::string tag,
     bypass = g_settings_get_boolean(settings, "bypass") != 0;
 
     gconnections.push_back(g_signal_connect(settings, "changed::bypass",
-                                            G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                            G_CALLBACK(+[](GSettings* settings, char*  /*key*/, gpointer user_data) {
                                               auto self = static_cast<PluginBase*>(user_data);
 
                                               self->bypass = g_settings_get_boolean(settings, "bypass") != 0;

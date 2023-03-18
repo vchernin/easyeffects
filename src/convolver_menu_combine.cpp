@@ -162,7 +162,7 @@ void combine_kernels(ConvolverMenuCombine* self,
   util::idle_add([=] { gtk_spinner_stop(self->spinner); });
 }
 
-void on_combine_kernels(ConvolverMenuCombine* self, GtkButton* btn) {
+void on_combine_kernels(ConvolverMenuCombine* self, GtkButton*  /*btn*/) {
   if (g_list_model_get_n_items(G_LIST_MODEL(self->string_list_1)) == 0 ||
       g_list_model_get_n_items(G_LIST_MODEL(self->string_list_2)) == 0) {
     return;

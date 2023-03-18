@@ -50,15 +50,15 @@ struct _EqualizerBandBox {
 
 G_DEFINE_TYPE(EqualizerBandBox, equalizer_band_box, GTK_TYPE_BOX)
 
-void on_reset_quality(EqualizerBandBox* self, GtkButton* btn) {
+void on_reset_quality(EqualizerBandBox* self, GtkButton*  /*btn*/) {
   g_settings_reset(self->settings, tags::equalizer::band_q[self->data->index].data());
 }
 
-void on_reset_frequency(EqualizerBandBox* self, GtkButton* btn) {
+void on_reset_frequency(EqualizerBandBox* self, GtkButton*  /*btn*/) {
   g_settings_reset(self->settings, tags::equalizer::band_frequency[self->data->index].data());
 }
 
-auto set_band_label(EqualizerBandBox* self, double value) -> const char* {
+auto set_band_label(EqualizerBandBox*  /*self*/, double value) -> const char* {
   if (value < 1000.0) {
     // Show no decimal digits: full integer. No need of locale.
     return g_strdup(fmt::format("{0:.0f} Hz", value).c_str());
@@ -68,11 +68,11 @@ auto set_band_label(EqualizerBandBox* self, double value) -> const char* {
   return g_strdup(fmt::format(ui::get_user_locale(), "{0:.1Lf} kHz", value / 1000.0).c_str());
 }
 
-auto set_band_quality_label(EqualizerBandBox* self, double value) -> const char* {
+auto set_band_quality_label(EqualizerBandBox*  /*self*/, double value) -> const char* {
   return g_strdup(fmt::format(ui::get_user_locale(), "Q {0:.2Lf}", value).c_str());
 }
 
-auto set_band_width_label(EqualizerBandBox* self, double quality, double frequency) -> const char* {
+auto set_band_width_label(EqualizerBandBox*  /*self*/, double quality, double frequency) -> const char* {
   if (quality > 0.0) {
     return g_strdup(fmt::format(ui::get_user_locale(), "{0:.1Lf} Hz", frequency / quality).c_str());
   }
@@ -80,7 +80,7 @@ auto set_band_width_label(EqualizerBandBox* self, double quality, double frequen
   return g_strdup(_("infinity"));
 }
 
-auto set_band_scale_sensitive(EqualizerBandBox* self, const char* active_id) -> gboolean {
+auto set_band_scale_sensitive(EqualizerBandBox*  /*self*/, const char* active_id) -> gboolean {
   if (g_strcmp0(active_id, "Off") == 0 || g_strcmp0(active_id, "Hi-pass") == 0 ||
       g_strcmp0(active_id, "Lo-pass") == 0) {
     return 0;

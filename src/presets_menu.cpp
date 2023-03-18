@@ -25,7 +25,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  app::Application* application;
+  app::Application* application{};
 
   std::vector<sigc::connection> connections;
 
@@ -55,7 +55,7 @@ struct _PresetsMenu {
 G_DEFINE_TYPE(PresetsMenu, presets_menu, GTK_TYPE_POPOVER)
 
 template <PresetType preset_type>
-void create_preset(PresetsMenu* self, GtkButton* button) {
+void create_preset(PresetsMenu* self, GtkButton*  /*button*/) {
   GtkText* preset_name_box = nullptr;
 
   if constexpr (preset_type == PresetType::output) {
@@ -134,11 +134,11 @@ void import_preset(PresetsMenu* self) {
   gtk_native_dialog_show(GTK_NATIVE_DIALOG(dialog));
 }
 
-void import_output_preset(PresetsMenu* self, GtkButton* button) {
+void import_output_preset(PresetsMenu* self, GtkButton*  /*button*/) {
   import_preset<PresetType::output>(self);
 }
 
-void import_input_preset(PresetsMenu* self, GtkButton* button) {
+void import_input_preset(PresetsMenu* self, GtkButton*  /*button*/) {
   import_preset<PresetType::input>(self);
 }
 
@@ -149,7 +149,7 @@ void setup_listview(PresetsMenu* self, GtkListView* listview, GtkStringList* str
   // setting the factory callbacks
 
   g_signal_connect(
-      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PresetsMenu* self) {
+      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PresetsMenu* self) {
         auto builder = gtk_builder_new_from_resource(tags::resources::preset_row_ui);
 
         auto* top_box = gtk_builder_get_object(builder, "top_box");
@@ -223,7 +223,7 @@ void setup_listview(PresetsMenu* self, GtkListView* listview, GtkStringList* str
       self);
 
   g_signal_connect(factory, "bind",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PresetsMenu* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PresetsMenu*  /*self*/) {
                      auto* label = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "name"));
                      auto* apply = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "apply"));
                      auto* save = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "save"));

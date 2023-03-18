@@ -24,13 +24,13 @@ RNNoise::RNNoise(const std::string& tag,
                  const std::string& schema_path,
                  PipeManager* pipe_manager)
     : PluginBase(tag, tags::plugin_name::rnnoise, tags::plugin_package::rnnoise, schema, schema_path, pipe_manager),
-      data_L(0),
-      data_R(0) {
+      rnnoise_ready(true), data_L(0),
+      data_R(0), state_left(rnnoise_create(model)), state_right(rnnoise_create(model)) {
   data_L.reserve(blocksize);
   data_R.reserve(blocksize);
 
   gconnections.push_back(g_signal_connect(settings, "changed::model-path",
-                                          G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                                          G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
                                             auto self = static_cast<RNNoise*>(user_data);
 
                                             self->data_mutex.lock();
@@ -62,10 +62,10 @@ RNNoise::RNNoise(const std::string& tag,
 
   model = m;
 
-  state_left = rnnoise_create(model);
-  state_right = rnnoise_create(model);
+  
+  
 
-  rnnoise_ready = true;
+  
 #else
   util::warning("The RNNoise library was not available at compilation time. The noise reduction filter won't work");
 #endif
@@ -76,7 +76,7 @@ RNNoise::~RNNoise() {
     disconnect_from_pw();
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   resampler_ready = false;
 
@@ -88,7 +88,7 @@ RNNoise::~RNNoise() {
 }
 
 void RNNoise::setup() {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   resampler_ready = false;
 
@@ -115,7 +115,7 @@ void RNNoise::process(std::span<float>& left_in,
                       std::span<float>& right_in,
                       std::span<float>& left_out,
                       std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !rnnoise_ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

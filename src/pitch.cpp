@@ -23,16 +23,16 @@ Pitch::Pitch(const std::string& tag,
              const std::string& schema,
              const std::string& schema_path,
              PipeManager* pipe_manager)
-    : PluginBase(tag, tags::plugin_name::pitch, tags::plugin_package::rubber, schema, schema_path, pipe_manager) {
+    : PluginBase(tag, tags::plugin_name::pitch, tags::plugin_package::rubber, schema, schema_path, pipe_manager), cents(g_settings_get_int(settings, "cents")), semitones(g_settings_get_int(settings, "semitones")), octaves(g_settings_get_int(settings, "octaves")) {
   mode = parse_mode_key(util::gsettings_get_string(settings, "mode"));
   formant = parse_formant_key(util::gsettings_get_string(settings, "formant"));
   transients = parse_transients_key(util::gsettings_get_string(settings, "transients"));
   detector = parse_detector_key(util::gsettings_get_string(settings, "detector"));
   phase = parse_phase_key(util::gsettings_get_string(settings, "phase"));
 
-  octaves = g_settings_get_int(settings, "octaves");
-  semitones = g_settings_get_int(settings, "semitones");
-  cents = g_settings_get_int(settings, "cents");
+  
+  
+  
 
   gconnections.push_back(g_signal_connect(settings, "changed::mode",
                                           G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
@@ -164,7 +164,7 @@ void Pitch::setup() {
 
     init_stretcher();
 
-    std::scoped_lock<std::mutex> lock(data_mutex);
+    std::scoped_lock<std::mutex> const lock(data_mutex);
 
     rubberband_ready = true;
   });
@@ -174,7 +174,7 @@ void Pitch::process(std::span<float>& left_in,
                     std::span<float>& right_in,
                     std::span<float>& left_out,
                     std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !rubberband_ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());
@@ -370,7 +370,7 @@ void Pitch::set_mode() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   switch (mode) {
     case Mode::speed:
@@ -393,7 +393,7 @@ void Pitch::set_formant() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   switch (formant) {
     case Formant::shifted:
@@ -412,7 +412,7 @@ void Pitch::set_transients() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   switch (transients) {
     case Transients::crisp:
@@ -435,7 +435,7 @@ void Pitch::set_detector() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   switch (detector) {
     case Detector::compound:
@@ -458,7 +458,7 @@ void Pitch::set_phase() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   switch (phase) {
     case Phase::laminar:
@@ -477,7 +477,7 @@ void Pitch::set_pitch_scale() {
     return;
   }
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   const double n_octaves = octaves + (static_cast<double>(semitones) / 12.0) + (static_cast<double>(cents) / 1200.0);
 
@@ -489,7 +489,7 @@ void Pitch::set_pitch_scale() {
 void Pitch::init_stretcher() {
   delete stretcher;
 
-  RubberBand::RubberBandStretcher::Options options =
+  RubberBand::RubberBandStretcher::Options const options =
       RubberBand::RubberBandStretcher::OptionProcessRealTime | RubberBand::RubberBandStretcher::OptionChannelsTogether;
 
   stretcher = new RubberBand::RubberBandStretcher(rate, 2, options);

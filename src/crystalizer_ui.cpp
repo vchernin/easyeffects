@@ -54,13 +54,13 @@ struct _CrystalizerBox {
 
 G_DEFINE_TYPE(CrystalizerBox, crystalizer_box, GTK_TYPE_BOX)
 
-void on_reset(CrystalizerBox* self, GtkButton* btn) {
+void on_reset(CrystalizerBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
 void build_bands(CrystalizerBox* self) {
   for (uint n = 0; n < nbands; n++) {
-    auto builder = gtk_builder_new_from_resource(tags::resources::crystalizer_band_ui);
+    auto *builder = gtk_builder_new_from_resource(tags::resources::crystalizer_band_ui);
 
     auto* band_box = GTK_BOX(gtk_builder_get_object(builder, "band_box"));
 
@@ -131,7 +131,7 @@ void build_bands(CrystalizerBox* self) {
   }
 }
 
-void setup(CrystalizerBox* self, std::shared_ptr<Crystalizer> crystalizer, const std::string& schema_path) {
+void setup(CrystalizerBox* self, const std::shared_ptr<Crystalizer>& crystalizer, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

@@ -55,7 +55,7 @@ AutoGain::AutoGain(const std::string& tag,
                                           this));
 
   gconnections.push_back(g_signal_connect(
-      settings, "changed::reset-history", G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+      settings, "changed::reset-history", G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, gpointer user_data) {
         auto self = static_cast<AutoGain*>(user_data);
 
         self->mythreads.emplace_back([self]() {  // Using emplace_back here makes sense
@@ -98,7 +98,7 @@ AutoGain::~AutoGain() {
 
   mythreads.clear();
 
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (ebur_state != nullptr) {
     ebur128_destroy(&ebur_state);
@@ -204,7 +204,7 @@ void AutoGain::process(std::span<float>& left_in,
                        std::span<float>& right_in,
                        std::span<float>& left_out,
                        std::span<float>& right_out) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !ebur128_ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

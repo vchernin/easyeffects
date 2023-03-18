@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> DelayBox*;
 
-void setup(DelayBox* self, std::shared_ptr<Delay> delay, const std::string& schema_path);
+void setup(DelayBox* self, const std::shared_ptr<Delay>& delay, const std::string& schema_path);
 
 }  // namespace ui::delay_box

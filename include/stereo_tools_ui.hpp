@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> StereoToolsBox*;
 
-void setup(StereoToolsBox* self, std::shared_ptr<StereoTools> stereo_tools, const std::string& schema_path);
+void setup(StereoToolsBox* self, const std::shared_ptr<StereoTools>& stereo_tools, const std::string& schema_path);
 
 }  // namespace ui::stereo_tools_box

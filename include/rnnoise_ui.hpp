@@ -39,7 +39,7 @@ G_END_DECLS
 auto create() -> RNNoiseBox*;
 
 void setup(RNNoiseBox* self,
-           std::shared_ptr<RNNoise> rnnoise,
+           const std::shared_ptr<RNNoise>& rnnoise,
            const std::string& schema_path,
            app::Application* application);
 

@@ -60,18 +60,18 @@ struct _AutogainBox {
 
 G_DEFINE_TYPE(AutogainBox, autogain_box, GTK_TYPE_BOX)
 
-void on_reset(AutogainBox* self, GtkButton* btn) {
+void on_reset(AutogainBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void on_reset_history(AutogainBox* self, GtkButton* btn) {
+void on_reset_history(AutogainBox* self, GtkButton*  /*btn*/) {
   // it is ugly but will ensure that third party tools are able to reset this plugin history
 
   g_settings_set_boolean(self->settings, "reset-history",
                          static_cast<gboolean>(g_settings_get_boolean(self->settings, "reset-history") == 0));
 }
 
-void setup(AutogainBox* self, std::shared_ptr<AutoGain> autogain, const std::string& schema_path) {
+void setup(AutogainBox* self, const std::shared_ptr<AutoGain>& autogain, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

@@ -56,11 +56,11 @@ struct _MaximizerBox {
 
 G_DEFINE_TYPE(MaximizerBox, maximizer_box, GTK_TYPE_BOX)
 
-void on_reset(MaximizerBox* self, GtkButton* btn) {
+void on_reset(MaximizerBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void setup(MaximizerBox* self, std::shared_ptr<Maximizer> maximizer, const std::string& schema_path) {
+void setup(MaximizerBox* self, const std::shared_ptr<Maximizer>& maximizer, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

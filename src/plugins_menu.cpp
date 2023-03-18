@@ -29,9 +29,9 @@ struct Data {
 
   ~Data() { util::debug("data struct destroyed"); }
 
-  bool schedule_signal_idle;
+  bool schedule_signal_idle{};
 
-  app::Application* application;
+  app::Application* application{};
 
   std::map<std::string, std::string> translated;
 
@@ -62,7 +62,7 @@ void setup_listview(PluginsMenu* self) {
   // setting the factory callbacks
 
   g_signal_connect(
-      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PluginsMenu* self) {
+      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PluginsMenu* self) {
         auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
         auto* label = gtk_label_new(nullptr);
         auto* button = gtk_button_new_from_icon_name("list-add-symbolic");
@@ -137,7 +137,7 @@ void setup_listview(PluginsMenu* self) {
       self);
 
   g_signal_connect(factory, "bind",
-                   G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PluginsMenu* self) {
+                   G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PluginsMenu*  /*self*/) {
                      auto* label = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "name"));
                      auto* btn_add = static_cast<GtkButton*>(g_object_get_data(G_OBJECT(item), "add"));
 

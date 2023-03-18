@@ -27,21 +27,21 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  bool draw_bar_border, fill_bars, is_visible, rounded_corners;
+  bool draw_bar_border{}, fill_bars{}, is_visible{}, rounded_corners{};
 
-  int x_axis_height, n_x_decimals, n_y_decimals;
+  int x_axis_height{}, n_x_decimals{}, n_y_decimals{};
 
-  double mouse_y, mouse_x, margin, line_width;
+  double mouse_y{}, mouse_x{}, margin{}, line_width{};
 
-  double x_min, x_max, y_min, y_max;
+  double x_min{}, x_max{}, y_min{}, y_max{};
 
-  double x_min_log, x_max_log;
+  double x_min_log{}, x_max_log{};
 
   ChartType chart_type;
 
   ChartScale chart_scale;
 
-  GdkRGBA background_color, color, color_axis_labels, gradient_color;
+  GdkRGBA background_color{}, color{}, color_axis_labels{}, gradient_color{};
 
   std::string x_unit, y_unit;
 
@@ -231,7 +231,7 @@ void set_y_data(Chart* self, const std::vector<double>& y) {
   gtk_widget_queue_draw(GTK_WIDGET(self));
 }
 
-void on_pointer_motion(GtkEventControllerMotion* controller, double xpos, double ypos, Chart* self) {
+void on_pointer_motion(GtkEventControllerMotion*  /*controller*/, double xpos, double ypos, Chart* self) {
   // Static cast trying to fix codeql issue
   const auto x = xpos;
   const auto y = ypos;
@@ -300,7 +300,7 @@ auto draw_unit(Chart* self, GtkSnapshot* snapshot, const int& width, const int& 
 auto draw_x_labels(Chart* self, GtkSnapshot* snapshot, const int& width, const int& height) -> int {
   double labels_offset = 0.1 * width;
 
-  int n_x_labels = static_cast<int>(std::ceil((width - 2 * self->data->margin * width) / labels_offset)) + 1;
+  int const n_x_labels = static_cast<int>(std::ceil((width - 2 * self->data->margin * width) / labels_offset)) + 1;
 
   if (n_x_labels < 2) {
     return 0;
@@ -399,7 +399,7 @@ void snapshot(GtkWidget* widget, GtkSnapshot* snapshot) {
   gtk_snapshot_append_color(snapshot, &self->data->background_color, &widget_rectangle);
 
   if (const auto n_points = self->data->y_axis.size(); n_points > 0) {
-    double usable_width = width - 2.0 * (self->data->line_width + self->data->margin * width);
+    double const usable_width = width - 2.0 * (self->data->line_width + self->data->margin * width);
 
     auto usable_height = (height - self->data->margin * height) - self->data->x_axis_height;
 
@@ -430,18 +430,18 @@ void snapshot(GtkWidget* widget, GtkSnapshot* snapshot) {
         static_cast<float>(self->data->line_width), static_cast<float>(self->data->line_width),
         static_cast<float>(self->data->line_width), static_cast<float>(self->data->line_width)};
 
-    float radius = (self->data->rounded_corners) ? 5.0F : 0.0F;
+    float const radius = (self->data->rounded_corners) ? 5.0F : 0.0F;
 
     switch (self->data->chart_type) {
       case ChartType::bar: {
-        double dw = width / static_cast<double>(n_points);
+        double const dw = width / static_cast<double>(n_points);
 
         for (uint n = 0U; n < n_points; n++) {
-          double bar_height = usable_height * self->data->y_axis[n];
+          double const bar_height = usable_height * self->data->y_axis[n];
 
-          double rect_x = self->data->objects_x[n];
-          double rect_y = self->data->margin * height + usable_height - bar_height;
-          double rect_height = bar_height;
+          double const rect_x = self->data->objects_x[n];
+          double const rect_y = self->data->margin * height + usable_height - bar_height;
+          double const rect_height = bar_height;
           double rect_width = dw;
 
           if (self->data->draw_bar_border) {
@@ -469,15 +469,15 @@ void snapshot(GtkWidget* widget, GtkSnapshot* snapshot) {
         break;
       }
       case ChartType::dots: {
-        double dw = width / static_cast<double>(n_points);
+        double const dw = width / static_cast<double>(n_points);
 
         usable_height -= radius;  // this avoids the dots being drawn over the axis label
 
         for (uint n = 0U; n < n_points; n++) {
-          double dot_y = usable_height * self->data->y_axis[n];
+          double const dot_y = usable_height * self->data->y_axis[n];
 
-          double rect_x = self->data->objects_x[n];
-          double rect_y = self->data->margin * height + radius + usable_height - dot_y;
+          double const rect_x = self->data->objects_x[n];
+          double const rect_y = self->data->margin * height + radius + usable_height - dot_y;
           double rect_width = dw;
 
           if (self->data->draw_bar_border) {
@@ -645,10 +645,10 @@ void chart_init(Chart* self) {
   g_signal_connect(self->controller_motion, "motion", G_CALLBACK(on_pointer_motion), self);
 
   g_signal_connect(GTK_WIDGET(self), "hide",
-                   G_CALLBACK(+[](GtkWidget* widget, Chart* self) { self->data->is_visible = false; }), self);
+                   G_CALLBACK(+[](GtkWidget*  /*widget*/, Chart* self) { self->data->is_visible = false; }), self);
 
   g_signal_connect(GTK_WIDGET(self), "show",
-                   G_CALLBACK(+[](GtkWidget* widget, Chart* self) { self->data->is_visible = true; }), self);
+                   G_CALLBACK(+[](GtkWidget*  /*widget*/, Chart* self) { self->data->is_visible = true; }), self);
 
   gtk_widget_add_controller(GTK_WIDGET(self), self->controller_motion);
 }

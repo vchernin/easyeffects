@@ -52,26 +52,26 @@ struct _CrossfeedBox {
 
 G_DEFINE_TYPE(CrossfeedBox, crossfeed_box, GTK_TYPE_BOX)
 
-void on_reset(CrossfeedBox* self, GtkButton* btn) {
+void on_reset(CrossfeedBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void on_preset_cmoy(CrossfeedBox* self, GtkButton* btn) {
+void on_preset_cmoy(CrossfeedBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->fcut, 700.0);
   gtk_spin_button_set_value(self->feed, 6.0);
 }
 
-void on_preset_default(CrossfeedBox* self, GtkButton* btn) {
+void on_preset_default(CrossfeedBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->fcut, 700.0);
   gtk_spin_button_set_value(self->feed, 4.5);
 }
 
-void on_preset_jmeier(CrossfeedBox* self, GtkButton* btn) {
+void on_preset_jmeier(CrossfeedBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->fcut, 650.0);
   gtk_spin_button_set_value(self->feed, 9.0);
 }
 
-void setup(CrossfeedBox* self, std::shared_ptr<Crossfeed> crossfeed, const std::string& schema_path) {
+void setup(CrossfeedBox* self, const std::shared_ptr<Crossfeed>& crossfeed, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

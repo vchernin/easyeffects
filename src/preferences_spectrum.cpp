@@ -135,7 +135,7 @@ void preferences_spectrum_init(PreferencesSpectrum* self) {
 
   prepare_spinbuttons<"px">(self->height, self->line_width);
 
-  g_signal_connect(self->minimum_frequency, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer user_data) {
+  g_signal_connect(self->minimum_frequency, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer  /*user_data*/) {
                      return parse_spinbutton_output(button, "Hz");
                    }),
                    nullptr);
@@ -157,7 +157,7 @@ void preferences_spectrum_init(PreferencesSpectrum* self) {
                    }),
                    self);
 
-  g_signal_connect(self->maximum_frequency, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer user_data) {
+  g_signal_connect(self->maximum_frequency, "output", G_CALLBACK(+[](GtkSpinButton* button, gpointer  /*user_data*/) {
                      return parse_spinbutton_output(button, "Hz");
                    }),
                    nullptr);

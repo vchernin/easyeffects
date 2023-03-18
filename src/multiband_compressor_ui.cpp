@@ -67,11 +67,11 @@ struct _MultibandCompressorBox {
 
 G_DEFINE_TYPE(MultibandCompressorBox, multiband_compressor_box, GTK_TYPE_BOX)
 
-void on_reset(MultibandCompressorBox* self, GtkButton* btn) {
+void on_reset(MultibandCompressorBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void on_listbox_row_selected(MultibandCompressorBox* self, GtkListBoxRow* row, GtkListBox* listbox) {
+void on_listbox_row_selected(MultibandCompressorBox* self, GtkListBoxRow*  /*row*/, GtkListBox* listbox) {
   if (auto* selected_row = gtk_list_box_get_selected_row(listbox); selected_row != nullptr) {
     if (auto index = gtk_list_box_row_get_index(selected_row); index != -1) {
       gtk_stack_set_visible_child_name(self->stack, ("band" + util::to_string(index)).c_str());
@@ -103,7 +103,7 @@ void create_bands(MultibandCompressorBox* self) {
 
     self->data->gconnections.push_back(g_signal_connect(
         self->settings, ("changed::"s + tags::multiband_compressor::band_external_sidechain[n].data()).c_str(),
-        G_CALLBACK(+[](GSettings* settings, char* key, MultibandCompressorBox* self) {
+        G_CALLBACK(+[](GSettings*  /*settings*/, char*  /*key*/, MultibandCompressorBox* self) {
           set_dropdown_input_devices_sensitivity(self);
         }),
         self));
@@ -114,7 +114,7 @@ void setup_dropdown_input_device(MultibandCompressorBox* self) {
   auto* selection = gtk_single_selection_new(G_LIST_MODEL(self->input_devices_model));
 
   g_signal_connect(self->dropdown_input_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, MultibandCompressorBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, MultibandCompressorBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -129,7 +129,7 @@ void setup_dropdown_input_device(MultibandCompressorBox* self) {
 }
 
 void setup(MultibandCompressorBox* self,
-           std::shared_ptr<MultibandCompressor> multiband_compressor,
+           const std::shared_ptr<MultibandCompressor>& multiband_compressor,
            const std::string& schema_path,
            PipeManager* pm) {
   self->data->multiband_compressor = multiband_compressor;
@@ -243,7 +243,7 @@ void setup(MultibandCompressorBox* self,
         });
       }));
 
-  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
@@ -257,14 +257,14 @@ void setup(MultibandCompressorBox* self,
       g_object_unref(holder);
     }
 
-    auto holder = ui::holders::create(info);
+    auto *holder = ui::holders::create(info);
 
     g_list_store_append(self->input_devices_model, holder);
 
     g_object_unref(holder);
   }));
 
-  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));

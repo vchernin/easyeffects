@@ -113,7 +113,7 @@ EchoCanceller::~EchoCanceller() {
 }
 
 void EchoCanceller::setup() {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   ready = false;
 
@@ -130,7 +130,7 @@ void EchoCanceller::process(std::span<float>& left_in,
                             std::span<float>& right_out,
                             std::span<float>& probe_left,
                             std::span<float>& probe_right) {
-  std::scoped_lock<std::mutex> lock(data_mutex);
+  std::scoped_lock<std::mutex> const lock(data_mutex);
 
   if (bypass || !ready) {
     std::copy(left_in.begin(), left_in.end(), left_out.begin());

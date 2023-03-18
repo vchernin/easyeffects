@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> ExciterBox*;
 
-void setup(ExciterBox* self, std::shared_ptr<Exciter> exciter, const std::string& schema_path);
+void setup(ExciterBox* self, const std::shared_ptr<Exciter>& exciter, const std::string& schema_path);
 
 }  // namespace ui::exciter_box

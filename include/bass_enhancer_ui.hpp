@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> BassEnhancerBox*;
 
-void setup(BassEnhancerBox* self, std::shared_ptr<BassEnhancer> bass_enhancer, const std::string& schema_path);
+void setup(BassEnhancerBox* self, const std::shared_ptr<BassEnhancer>& bass_enhancer, const std::string& schema_path);
 
 }  // namespace ui::bass_enhancer_box

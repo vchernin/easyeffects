@@ -65,7 +65,7 @@ struct _LimiterBox {
 
 G_DEFINE_TYPE(LimiterBox, limiter_box, GTK_TYPE_BOX)
 
-void on_reset(LimiterBox* self, GtkButton* btn) {
+void on_reset(LimiterBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
@@ -73,7 +73,7 @@ void setup_dropdown_input_device(LimiterBox* self) {
   auto* selection = gtk_single_selection_new(G_LIST_MODEL(self->input_devices_model));
 
   g_signal_connect(self->dropdown_input_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, LimiterBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, LimiterBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -87,7 +87,7 @@ void setup_dropdown_input_device(LimiterBox* self) {
   g_object_unref(selection);
 }
 
-void setup(LimiterBox* self, std::shared_ptr<Limiter> limiter, const std::string& schema_path, PipeManager* pm) {
+void setup(LimiterBox* self, const std::shared_ptr<Limiter>& limiter, const std::string& schema_path, PipeManager* pm) {
   self->data->limiter = limiter;
 
   auto serial = get_new_filter_serial();
@@ -198,7 +198,7 @@ void setup(LimiterBox* self, std::shared_ptr<Limiter> limiter, const std::string
     });
   }));
 
-  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
@@ -212,14 +212,14 @@ void setup(LimiterBox* self, std::shared_ptr<Limiter> limiter, const std::string
       g_object_unref(holder);
     }
 
-    auto holder = ui::holders::create(info);
+    auto *holder = ui::holders::create(info);
 
     g_list_store_append(self->input_devices_model, holder);
 
     g_object_unref(holder);
   }));
 
-  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));

@@ -71,11 +71,11 @@ struct _GateBox {
 
 G_DEFINE_TYPE(GateBox, gate_box, GTK_TYPE_BOX)
 
-void on_reset(GateBox* self, GtkButton* btn) {
+void on_reset(GateBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-auto set_dropdown_sensitive(GateBox* self, const char* active_id) -> gboolean {
+auto set_dropdown_sensitive(GateBox*  /*self*/, const char* active_id) -> gboolean {
   if (g_strcmp0(active_id, "External") == 0) {
     return 1;
   }
@@ -87,7 +87,7 @@ void setup_dropdown_input_device(GateBox* self) {
   auto* selection = gtk_single_selection_new(G_LIST_MODEL(self->input_devices_model));
 
   g_signal_connect(self->dropdown_input_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, GateBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, GateBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -101,7 +101,7 @@ void setup_dropdown_input_device(GateBox* self) {
   g_object_unref(selection);
 }
 
-void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_path, PipeManager* pm) {
+void setup(GateBox* self, const std::shared_ptr<Gate>& gate, const std::string& schema_path, PipeManager* pm) {
   self->data->gate = gate;
 
   auto serial = get_new_filter_serial();
@@ -287,7 +287,7 @@ void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_
     });
   }));
 
-  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_added.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));
@@ -308,7 +308,7 @@ void setup(GateBox* self, std::shared_ptr<Gate> gate, const std::string& schema_
     g_object_unref(holder);
   }));
 
-  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo info) {
+  self->data->connections.push_back(pm->source_removed.connect([=](const NodeInfo& info) {
     for (guint n = 0U; n < g_list_model_get_n_items(G_LIST_MODEL(self->input_devices_model)); n++) {
       auto* holder =
           static_cast<ui::holders::NodeInfoHolder*>(g_list_model_get_item(G_LIST_MODEL(self->input_devices_model), n));

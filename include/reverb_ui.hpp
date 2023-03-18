@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> ReverbBox*;
 
-void setup(ReverbBox* self, std::shared_ptr<Reverb> reverb, const std::string& schema_path);
+void setup(ReverbBox* self, const std::shared_ptr<Reverb>& reverb, const std::string& schema_path);
 
 }  // namespace ui::reverb_box

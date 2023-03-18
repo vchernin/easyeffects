@@ -39,7 +39,7 @@ G_END_DECLS
 auto create() -> MultibandGateBox*;
 
 void setup(MultibandGateBox* self,
-           std::shared_ptr<MultibandGate> multiband_gate,
+           const std::shared_ptr<MultibandGate>& multiband_gate,
            const std::string& schema_path,
            PipeManager* pm);
 

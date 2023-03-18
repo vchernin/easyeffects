@@ -463,10 +463,10 @@ void on_node_info(void* object, const struct pw_node_info* info) {
 }
 
 void on_node_event_param(void* object,
-                         int seq,
-                         uint32_t id,
-                         uint32_t index,
-                         uint32_t next,
+                         int  /*seq*/,
+                         uint32_t  /*id*/,
+                         uint32_t  /*index*/,
+                         uint32_t  /*next*/,
                          const struct spa_pod* param) {
   if (PipeManager::exiting) {
     return;
@@ -507,7 +507,7 @@ void on_node_event_param(void* object,
         for (const auto type_info : std::to_array(spa_type_audio_format)) {
           if (format == type_info.type) {
             if (type_info.name != nullptr) {
-              std::string long_name = type_info.name;
+              std::string const long_name = type_info.name;
 
               format_str = long_name.substr(long_name.rfind(':') + 1U);
             }
@@ -814,10 +814,10 @@ void on_device_info(void* object, const struct pw_device_info* info) {
 }
 
 void on_device_event_param(void* object,
-                           int seq,
+                           int  /*seq*/,
                            uint32_t id,
-                           uint32_t index,
-                           uint32_t next,
+                           uint32_t  /*index*/,
+                           uint32_t  /*next*/,
                            const struct spa_pod* param) {
   if (id != SPA_PARAM_Route) {
     return;
@@ -1001,9 +1001,9 @@ const struct pw_device_events device_events = {.info = on_device_info, .param = 
 
 void on_registry_global(void* data,
                         uint32_t id,
-                        uint32_t permissions,
+                        uint32_t  /*permissions*/,
                         const char* type,
-                        uint32_t version,
+                        uint32_t  /*version*/,
                         const struct spa_dict* props) {
   if (id == SPA_ID_INVALID) {
     // If PipeWire send us a wrong id, we don't have issues
@@ -1026,7 +1026,7 @@ void on_registry_global(void* data,
         if (const auto* key_media_category = spa_dict_lookup(props, PW_KEY_MEDIA_CATEGORY)) {
           if (g_strcmp0(key_media_category, "Filter") == 0) {
             if (const auto* key_node_name = spa_dict_lookup(props, PW_KEY_NODE_NAME)) {
-              if (std::string node_name(key_node_name); node_name.size() > 3U) {
+              if (std::string const node_name(key_node_name); node_name.size() > 3U) {
                 if (node_name.starts_with("ee_")) {
                   is_ee_filter = true;
                 }
@@ -1297,7 +1297,7 @@ void on_registry_global(void* data,
     pw_client_add_listener(proxy, &pd->object_listener, &client_events, pd);
     pw_proxy_add_listener(proxy, &pd->proxy_listener, &client_proxy_events, pd);
 
-    ClientInfo c_info{.id = id, .serial = serial};
+    ClientInfo const c_info{.id = id, .serial = serial};
 
     pm->list_clients.push_back(c_info);
 
@@ -1356,7 +1356,7 @@ void on_registry_global(void* data,
         pw_device_add_listener(proxy, &pd->object_listener, &device_events, pd);
         pw_proxy_add_listener(proxy, &pd->proxy_listener, &device_proxy_events, pd);
 
-        DeviceInfo d_info{.id = id, .serial = serial, .media_class = media_class};
+        DeviceInfo const d_info{.id = id, .serial = serial, .media_class = media_class};
 
         pm->list_devices.push_back(d_info);
       }
@@ -1366,7 +1366,7 @@ void on_registry_global(void* data,
   }
 }
 
-void on_core_error(void* data, uint32_t id, int seq, int res, const char* message) {
+void on_core_error(void* data, uint32_t id, int  /*seq*/, int res, const char* message) {
   auto* const pm = static_cast<PipeManager*>(data);
 
   using namespace std::string_literals;
@@ -1398,7 +1398,7 @@ void on_core_info(void* data, const struct pw_core_info* info) {
   util::debug("core name: "s + info->name);
 }
 
-void on_core_done(void* data, uint32_t id, int seq) {
+void on_core_done(void* data, uint32_t id, int  /*seq*/) {
   auto* const pm = static_cast<PipeManager*>(data);
 
   if (id == PW_ID_CORE) {
@@ -1426,6 +1426,8 @@ PipeManager::PipeManager() : header_version(pw_get_headers_version()), library_v
   util::debug("compiled with PipeWire: " + header_version);
   util::debug("linked to PipeWire: " + library_version);
 
+  // this needs to occur after pw_init(), so putting it before pw_init() in the initializer breaks this
+  // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
   thread_loop = pw_thread_loop_new("ee-pipewire-thread", nullptr);
 
   if (thread_loop == nullptr) {

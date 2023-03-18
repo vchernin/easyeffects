@@ -27,7 +27,7 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  app::Application* application;
+  app::Application* application{};
 
   std::unique_ptr<TestSignals> ts;
 
@@ -64,7 +64,7 @@ struct _PipeManagerBox {
 
 G_DEFINE_TYPE(PipeManagerBox, pipe_manager_box, GTK_TYPE_BOX)
 
-void on_enable_test_signal(PipeManagerBox* self, gboolean state, GtkSwitch* btn) {
+void on_enable_test_signal(PipeManagerBox* self, gboolean state, GtkSwitch*  /*btn*/) {
   self->data->ts->set_state(state != 0);
 }
 
@@ -102,7 +102,7 @@ void on_checkbutton_signal_gaussian(PipeManagerBox* self, GtkCheckButton* btn) {
   }
 }
 
-void on_autoloading_add_input_profile(PipeManagerBox* self, GtkButton* btn) {
+void on_autoloading_add_input_profile(PipeManagerBox* self, GtkButton*  /*btn*/) {
   auto* holder = static_cast<ui::holders::NodeInfoHolder*>(
       gtk_drop_down_get_selected_item(self->dropdown_autoloading_input_devices));
 
@@ -151,7 +151,7 @@ void on_autoloading_add_input_profile(PipeManagerBox* self, GtkButton* btn) {
                                                          holder->info->description, device_profile);
 }
 
-void on_autoloading_add_output_profile(PipeManagerBox* self, GtkButton* btn) {
+void on_autoloading_add_output_profile(PipeManagerBox* self, GtkButton*  /*btn*/) {
   auto* holder = static_cast<ui::holders::NodeInfoHolder*>(
       gtk_drop_down_get_selected_item(self->dropdown_autoloading_output_devices));
 
@@ -203,7 +203,8 @@ void on_autoloading_add_output_profile(PipeManagerBox* self, GtkButton* btn) {
 void update_modules_info(PipeManagerBox* self) {
   std::vector<ui::holders::ModuleInfoHolder*> values;
 
-  for (const auto& info : self->data->application->pm->list_modules) {
+  values.reserve(self->data->application->pm->list_modules.size());
+for (const auto& info : self->data->application->pm->list_modules) {
     values.push_back(ui::holders::create(info));
   }
 
@@ -218,7 +219,8 @@ void update_modules_info(PipeManagerBox* self) {
 void update_clients_info(PipeManagerBox* self) {
   std::vector<ui::holders::ClientInfoHolder*> values;
 
-  for (const auto& info : self->data->application->pm->list_clients) {
+  values.reserve(self->data->application->pm->list_clients.size());
+for (const auto& info : self->data->application->pm->list_clients) {
     values.push_back(ui::holders::create(info));
   }
 
@@ -230,7 +232,7 @@ void update_clients_info(PipeManagerBox* self) {
   }
 }
 
-void on_stack_visible_child_changed(PipeManagerBox* self, GParamSpec* pspec, GtkWidget* stack) {
+void on_stack_visible_child_changed(PipeManagerBox* self, GParamSpec*  /*pspec*/, GtkWidget* stack) {
   if (const auto* const name = gtk_stack_get_visible_child_name(GTK_STACK(stack));
       g_strcmp0(name, "page_modules") == 0) {
     update_modules_info(self);
@@ -275,7 +277,7 @@ void setup_listview_autoloading(PipeManagerBox* self) {
   // setting the factory callbacks
 
   g_signal_connect(
-      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PipeManagerBox* self) {
+      factory, "setup", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PipeManagerBox* self) {
         auto builder = gtk_builder_new_from_resource(tags::resources::autoload_row_ui);
 
         auto* top_box = gtk_builder_get_object(builder, "top_box");
@@ -308,7 +310,7 @@ void setup_listview_autoloading(PipeManagerBox* self) {
       self);
 
   g_signal_connect(
-      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory* factory, GtkListItem* item, PipeManagerBox* self) {
+      factory, "bind", G_CALLBACK(+[](GtkSignalListItemFactory*  /*factory*/, GtkListItem* item, PipeManagerBox*  /*self*/) {
         auto* device = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "device"));
         auto* device_description = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "device_description"));
         auto* device_profile = static_cast<GtkLabel*>(g_object_get_data(G_OBJECT(item), "device_profile"));
@@ -391,7 +393,7 @@ void setup_dropdown_presets(PipeManagerBox* self) {
   g_object_unref(selection);
 }
 
-void setup_dropdown_devices(PipeManagerBox* self, GtkDropDown* dropdown, GListStore* model) {
+void setup_dropdown_devices(PipeManagerBox*  /*self*/, GtkDropDown* dropdown, GListStore* model) {
   auto* selection = gtk_single_selection_new(G_LIST_MODEL(model));
 
   gtk_drop_down_set_model(dropdown, G_LIST_MODEL(model));
@@ -460,7 +462,7 @@ void setup(PipeManagerBox* self, app::Application* application) {
   */
 
   g_signal_connect(self->dropdown_input_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, PipeManagerBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, PipeManagerBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -470,7 +472,7 @@ void setup(PipeManagerBox* self, app::Application* application) {
                    self);
 
   g_signal_connect(self->dropdown_output_devices, "notify::selected-item",
-                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec* pspec, PipeManagerBox* self) {
+                   G_CALLBACK(+[](GtkDropDown* dropdown, GParamSpec*  /*pspec*/, PipeManagerBox* self) {
                      if (auto selected_item = gtk_drop_down_get_selected_item(dropdown); selected_item != nullptr) {
                        auto* holder = static_cast<ui::holders::NodeInfoHolder*>(selected_item);
 
@@ -853,7 +855,7 @@ void pipe_manager_box_init(PipeManagerBox* self) {
 
   g_signal_connect(
       self->use_default_input, "notify::active",
-      G_CALLBACK(+[](GtkSwitch* btn, GParamSpec* pspec, PipeManagerBox* self) {
+      G_CALLBACK(+[](GtkSwitch* btn, GParamSpec*  /*pspec*/, PipeManagerBox* self) {
         if (gtk_switch_get_active(btn) != 0) {
           g_settings_set_string(self->sie_settings, "input-device",
                                 self->data->application->pm->default_input_device_name.c_str());
@@ -887,7 +889,7 @@ void pipe_manager_box_init(PipeManagerBox* self) {
 
   g_signal_connect(
       self->use_default_output, "notify::active",
-      G_CALLBACK(+[](GtkSwitch* btn, GParamSpec* pspec, PipeManagerBox* self) {
+      G_CALLBACK(+[](GtkSwitch* btn, GParamSpec*  /*pspec*/, PipeManagerBox* self) {
         if (gtk_switch_get_active(btn) != 0) {
           g_settings_set_string(self->soe_settings, "output-device",
                                 self->data->application->pm->default_output_device_name.c_str());

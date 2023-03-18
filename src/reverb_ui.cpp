@@ -54,11 +54,11 @@ struct _ReverbBox {
 
 G_DEFINE_TYPE(ReverbBox, reverb_box, GTK_TYPE_BOX)
 
-void on_reset(ReverbBox* self, GtkButton* btn) {
+void on_reset(ReverbBox* self, GtkButton*  /*btn*/) {
   util::reset_all_keys_except(self->settings);
 }
 
-void on_preset_room(ReverbBox* self, GtkButton* btn) {
+void on_preset_room(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 0.445945);
   gtk_spin_button_set_value(self->hf_damp, 5508.46);
   gtk_combo_box_set_active(GTK_COMBO_BOX(self->room_size), 4);
@@ -70,7 +70,7 @@ void on_preset_room(ReverbBox* self, GtkButton* btn) {
   gtk_spin_button_set_value(self->treble_cut, 20000.0);
 }
 
-void on_preset_empty_walls(ReverbBox* self, GtkButton* btn) {
+void on_preset_empty_walls(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 0.505687);
   gtk_spin_button_set_value(self->hf_damp, 3971.64);
   gtk_combo_box_set_active(GTK_COMBO_BOX(self->room_size), 4);
@@ -82,7 +82,7 @@ void on_preset_empty_walls(ReverbBox* self, GtkButton* btn) {
   gtk_spin_button_set_value(self->treble_cut, 3303.47);
 }
 
-void on_preset_ambience(ReverbBox* self, GtkButton* btn) {
+void on_preset_ambience(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 1.10354);
   gtk_spin_button_set_value(self->hf_damp, 2182.58);
   gtk_combo_box_set_active(GTK_COMBO_BOX(self->room_size), 4);
@@ -94,7 +94,7 @@ void on_preset_ambience(ReverbBox* self, GtkButton* btn) {
   gtk_spin_button_set_value(self->treble_cut, 4064.15);
 }
 
-void on_preset_large_empty_hall(ReverbBox* self, GtkButton* btn) {
+void on_preset_large_empty_hall(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 2.00689);
   gtk_spin_button_set_value(self->hf_damp, 20000.0);
   gtk_spin_button_set_value(self->wet, util::linear_to_db(0.366022));
@@ -106,7 +106,7 @@ void on_preset_large_empty_hall(ReverbBox* self, GtkButton* btn) {
   g_settings_reset(self->settings, "treble-cut");
 }
 
-void on_preset_disco(ReverbBox* self, GtkButton* btn) {
+void on_preset_disco(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 1.0);
   gtk_spin_button_set_value(self->hf_damp, 3396.49);
   gtk_spin_button_set_value(self->wet, util::linear_to_db(0.269807));
@@ -118,7 +118,7 @@ void on_preset_disco(ReverbBox* self, GtkButton* btn) {
   g_settings_reset(self->settings, "treble-cut");
 }
 
-void on_preset_large_occupied_hall(ReverbBox* self, GtkButton* btn) {
+void on_preset_large_occupied_hall(ReverbBox* self, GtkButton*  /*btn*/) {
   gtk_spin_button_set_value(self->decay_time, 1.45397);
   gtk_spin_button_set_value(self->hf_damp, 9795.58);
   gtk_spin_button_set_value(self->wet, util::linear_to_db(0.184284));
@@ -130,7 +130,7 @@ void on_preset_large_occupied_hall(ReverbBox* self, GtkButton* btn) {
   g_settings_reset(self->settings, "treble-cut");
 }
 
-void setup(ReverbBox* self, std::shared_ptr<Reverb> reverb, const std::string& schema_path) {
+void setup(ReverbBox* self, const std::shared_ptr<Reverb>& reverb, const std::string& schema_path) {
   auto serial = get_new_filter_serial();
 
   self->data->serial = serial;

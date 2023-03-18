@@ -27,13 +27,13 @@ struct Data {
  public:
   ~Data() { util::debug("data struct destroyed"); }
 
-  app::Application* application;
+  app::Application* application{};
 
   NodeInfo info;
 
-  gulong handler_id_enable, handler_id_volume, handler_id_mute, handler_id_blocklist;
+  gulong handler_id_enable{}, handler_id_volume{}, handler_id_mute{}, handler_id_blocklist{};
 
-  std::unordered_map<uint, bool>* enabled_app_list;
+  std::unordered_map<uint, bool>* enabled_app_list{};
 };
 
 struct _AppInfo {
@@ -211,7 +211,7 @@ void on_blocklist(GtkCheckButton* btn, AppInfo* self) {
   }
 }
 
-void update(AppInfo* self, const NodeInfo node_info) {
+void update(AppInfo* self, const NodeInfo& node_info) {
   if (node_info.state == PW_NODE_STATE_CREATING) {
     // PW_NODE_STATE_CREATING is useless and does not give any meaningful info, therefore skip it
     return;

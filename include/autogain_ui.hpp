@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> AutogainBox*;
 
-void setup(AutogainBox* self, std::shared_ptr<AutoGain> autogain, const std::string& schema_path);
+void setup(AutogainBox* self, const std::shared_ptr<AutoGain>& autogain, const std::string& schema_path);
 
 }  // namespace ui::autogain_box

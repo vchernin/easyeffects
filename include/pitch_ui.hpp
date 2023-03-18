@@ -36,6 +36,6 @@ G_END_DECLS
 
 auto create() -> PitchBox*;
 
-void setup(PitchBox* self, std::shared_ptr<Pitch> pitch, const std::string& schema_path);
+void setup(PitchBox* self, const std::shared_ptr<Pitch>& pitch, const std::string& schema_path);
 
 }  // namespace ui::pitch_box

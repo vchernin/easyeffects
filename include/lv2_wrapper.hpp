@@ -57,7 +57,7 @@ struct Port {
 
 class Lv2Wrapper {
  public:
-  Lv2Wrapper(const std::string& plugin_uri);
+  explicit Lv2Wrapper(const std::string& plugin_uri);
   Lv2Wrapper(const Lv2Wrapper&) = delete;
   auto operator=(const Lv2Wrapper&) -> Lv2Wrapper& = delete;
   Lv2Wrapper(const Lv2Wrapper&&) = delete;
@@ -168,7 +168,7 @@ class Lv2Wrapper {
     set_control_port_value(key_wrapper.msg.data(), linear_v);
 
     g_signal_connect(settings, ("changed::"s + gkey_wrapper.msg.data()).c_str(),
-                     G_CALLBACK(+[](GSettings* settings, char* key, gpointer user_data) {
+                     G_CALLBACK(+[](GSettings* settings, char*  /*key*/, gpointer user_data) {
                        auto self = static_cast<Lv2Wrapper*>(user_data);
 
                        auto key_v = g_settings_get_double(settings, gkey_wrapper.msg.data());
