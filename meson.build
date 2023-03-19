@@ -20,6 +20,19 @@ suppressed_warnings = [
   '-Wno-unused-parameter'
   ]
 
+status = []
+
+cxx = meson.get_compiler('cpp')
+# for the sake of making clang-tidy pass, we need to silence these compiler warnings, otherwise they get reported by clang-tidy as clang-diagnostic-* errors
+if cxx.get_id() == 'clang'
+  suppressed_warnings += [
+  '-Wno-deprecated-declarations',
+  '-Wno-dangling-gsl',
+  '-Wno-unused-private-field'
+  ]
+  status += ['Suppressing some compiler warnings due to usage of clang compiler, this is only done for the purposes of letting clang-tidy temporarily pass.']
+endif
+
 add_project_arguments (
   suppressed_warnings,
   language: [ 'c', 'cpp' ],
@@ -40,8 +53,6 @@ include_dir = include_directories('include')
 config_h_dir = include_directories('.')
 
 libportal = dependency('libportal-gtk4', include_type: 'system', required: false)
-
-status = []
 
 if get_option('devel')
   status += [ 
