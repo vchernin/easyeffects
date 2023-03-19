@@ -148,6 +148,36 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
 
+  clang-tidy:
+    name: Clang Tidy
+    runs-on: ubuntu-22.04
+    container:
+      image: archlinux
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3.4.0
+
+    - name: Install deps
+      run: |
+        # install general build deps
+        pacman -Syu --noconfirm ninja gcc pkgconf python3 python-pip which clang clang-tidy
+        # install easyeffects deps
+        source ./PKGBUILD && pacman -Syu --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
+
+    - name: Build
+      run: |
+        meson setup build
+        ninja -C build
+    
+    - name: Clang tidy (full check)
+      if: github.event_name == 'push'
+      run: ./util/clang-tidy.sh
+
+    - name: Clang tidy (diff only check)
+      if: github.event_name == 'pull_request'
+      run: ./util/clang-tidy.sh; exit 1
+
   appstream-news-validate:
     name: AppStream and News validate
     runs-on: ubuntu-22.04
