@@ -225,9 +225,22 @@ jobs:
         # the ctcache itself is what handles what misses or not
         # https://github.com/actions/cache/blob/ea0503788c59256f4da17725d04df850ca027df5/tips-and-workarounds.md#update-a-cache
         path: /tmp/ci-ctcache
-        key: clang-tidy-ctcache-${{ github.run_id }}
+        key: clang-tidy-ctcache-${{ github.ref_name }}-${{ github.run_id }}
+        # get the cache which is most likely to have the most hits, in practice the most similar branch is usually the same one
+        # this relies on github's fairly restricted isolation for caches
+        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+
+        # first, try to get a cache from the same pr or push to the same branch
+
+        # next, to try to get a cache from a push to the base branch in a pr (which may not be master)
+        # github.base_ref will be empty when not in a pr, 
+        # but there will only be caches from pushes to master left to find anyhow 
+
+        # last, try get a cache from pushes to master
         restore-keys: |
-          clang-tidy-ctcache
+          clang-tidy-ctcache-${{ github.ref_name }}
+          clang-tidy-ctcache-${{ github.base_ref }}
+          clang-tidy-ctcache-master
 
     - name: Clang Tidy
       run: |
