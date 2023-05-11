@@ -1395,6 +1395,15 @@ void on_core_info(void* data, const struct pw_core_info* info) {
 
   spa_dict_get_string(info->props, "default.clock.quantum", pm->default_quantum);
 
+  if (static_cast<std::string>(info->version) >= "0.3.44"){
+    util::warning("version matched is new enough");
+    //gtk_widget_set_visible(GTK_WIDGET(self->overlay_no_plugins), 0);
+  }
+  else {
+    util::warning("version is too old");
+    //gtk_widget_set_visible(GTK_WIDGET(self->overlay_no_plugins), 1);
+
+  }
   util::debug("core version: "s + info->version);
   util::debug("core name: "s + info->name);
 }

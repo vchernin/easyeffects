@@ -69,7 +69,7 @@
                             </object>
                         </child>
 
-                        <child type="end">
+                        <!-- <child type="end">
                             <object class="GtkMenuButton" id="primary_menu_button">
                                 <property name="menu-model">primary_menu</property>
                                 <property name="icon-name">open-menu-symbolic</property>
@@ -77,7 +77,7 @@
                                     <property name="label" translatable="yes">Primary Menu</property>
                                 </accessibility>
                             </object>
-                        </child>
+                        </child> -->
                     </object>
                 </child>
 
@@ -87,6 +87,49 @@
                         <property name="vexpand">1</property>
                     </object>
                 </child>
+
+                <!-- <child>
+                    <object class="GtkScrolledWindow">
+                        <child>
+                            <object class="GtkStack" id="stack">
+                                <property name="hhomogeneous">0</property>
+                                <property name="vhomogeneous">0</property>
+                            </object>
+                        </child>
+                    </object>
+                </child> -->
+
+                <child type="overlay">
+                    <object class="AdwStatusPage" id="overlay_no_plugins">
+                        <property name="icon-name">emblem-music-symbolic</property>
+                        <property name="title" translatable="yes">No Effects</property>
+                        <property name="description" translatable="yes">Audio Stream Not Modified</property>
+                    </object>
+                </child>
+
+            <!-- <object class="GtkOverlay" id="plugin_overlay">
+                <property name="hexpand">1</property>
+                <property name="vexpand">1</property>
+                <child>
+                    <object class="GtkScrolledWindow">
+                        <child>
+                            <object class="GtkStack" id="stack">
+                                <property name="hhomogeneous">0</property>
+                                <property name="vhomogeneous">0</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+
+                <child type="overlay">
+                    <object class="AdwStatusPage" id="overlay_no_plugins">
+                        <property name="icon-name">emblem-music-symbolic</property>
+                        <property name="title" translatable="yes">No Effects</property>
+                        <property name="description" translatable="yes">Audio Stream Not Modified</property>
+                    </object>
+                </child>
+            </object>
+        </child> -->
 
                 <accessibility>
                     <property name="label" translatable="yes">Easy Effects Window</property>
