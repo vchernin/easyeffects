@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/flatpak/flatpak-builder/master/data/flatpak-manifest.schema.json",
+    "id": "io.github.wwmm.easyeffects.Presets.Digitalone1",
+    "runtime": "com.github.wwmm.easyeffects.Devel",
+    "sdk": "org.freedesktop.Sdk//23.08",
+    "branch": "master",
+    "runtime-version": "master",
+    "build-extension": true,
+    "separate-locales": false,
+    "modules": [
+        {
+            "name": "presets",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm644 io.github.wwmm.easyeffects.Presets.Digitalone1.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo",
+                "install -Dm644 LoudnessEqualizer.json -t ${FLATPAK_DEST}/input/Digitalone1input",
+                "install -Dm644 LoudnessEqualizer.json -t ${FLATPAK_DEST}/output/Digitalone1output"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "LoudnessEqualizer.json"
+                },
+                {
+                    "type": "file",
+                    "path": "io.github.wwmm.easyeffects.Presets.Digitalone1.metainfo.xml"
+                }
+            ]
+        }
+    ]
+}

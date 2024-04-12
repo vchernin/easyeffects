@@ -97,6 +97,10 @@ PresetsManager::PresetsManager()
     system_data_dir_rnnoise.push_back(dir + "easyeffects/rnnoise");
   }
 
+
+  system_data_dir_input.push_back("/app/extensions/Presets/input");
+  system_data_dir_output.push_back("/app/extensions/Presets/output");
+
   // create user presets directories
 
   create_user_directory(user_input_dir);
