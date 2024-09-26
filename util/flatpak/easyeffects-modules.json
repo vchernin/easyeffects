@@ -224,8 +224,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.12.0.tar.gz",
-                    "sha256": "c7bb7aa69c254d91b8f0041a71c5bcc3936acb64408a1719aec0b2b7639dd84f",
+                    "url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.13.0.tar.gz",
+                    "sha256": "3ad5dd08954b39d113dc5b3f8a8dc6dc1fd5250032b7c491eb07aed5c94133e1",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 227581,
@@ -246,8 +246,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/flatpak/libportal.git",
-                    "tag": "0.7.1",
-                    "commit": "e9ed3a50cdde321eaf42361212480a66eb94a57a",
+                    "tag": "0.8.1",
+                    "commit": "26c15008cbe579f57f89468384f8efc033f25f6f",
                     "x-checker-data": {
                         "type": "json",
                         "url": "https://api.github.com/repos/flatpak/libportal/releases/latest",
@@ -271,8 +271,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/fmtlib/fmt",
-                    "tag": "10.2.1",
-                    "commit": "e69e5f977d458f2650bb346dadf2ad30c5320281",
+                    "tag": "11.0.2",
+                    "commit": "0c9fce2ffefecfdce794e1859584e25877b7b592",
                     "x-checker-data": {
                         "type": "json",
                         "url": "https://api.github.com/repos/fmtlib/fmt/releases/latest",
@@ -288,8 +288,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://ftp.gnu.org/gnu/gsl/gsl-2.7.1.tar.gz",
-                    "sha256": "dcb0fbd43048832b757ff9942691a8dd70026d5da0ff85601e52687f6deeb34b",
+                    "url": "https://ftp.gnu.org/gnu/gsl/gsl-2.8.tar.gz",
+                    "sha256": "6a99eeed15632c6354895b1dd542ed5a855c0f15d9ad1326c6fe2b2c9e423190",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1267,
@@ -308,8 +308,8 @@
                     "only-arches": [
                         "x86_64"
                     ],
-                    "url": "https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-x86_64-linux.tar.gz",
-                    "sha256": "977e6a123f9c7a45c73f84cd47fc7d4113fb39471d0de7a751ee39350888ac93",
+                    "url": "https://github.com/rui314/mold/releases/download/v2.34.0/mold-2.34.0-x86_64-linux.tar.gz",
+                    "sha256": "0405c58d9afb47dad44912faa21a8fc2f8835352434b458c3ae9665e6581d1cb",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 241732,
@@ -323,8 +323,8 @@
                     "only-arches": [
                         "aarch64"
                     ],
-                    "url": "https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-aarch64-linux.tar.gz",
-                    "sha256": "258aaf2b7808ea22fca625480efdf7a13830e9ee311716db0ba9c62af1770c07",
+                    "url": "https://github.com/rui314/mold/releases/download/v2.34.0/mold-2.34.0-aarch64-linux.tar.gz",
+                    "sha256": "aa8cd24aaf65564d14f6d7ff457471c3898f7e93a1827353b7ec5e82736ee93e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 241732,
