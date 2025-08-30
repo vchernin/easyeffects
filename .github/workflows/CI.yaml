@@ -322,3 +322,37 @@ jobs:
 
       - name: Run KCFG numeric-defaults checker
         run: ./util/check-kcfg-numeric-defaults.sh
+
+  check-qmlformat:
+    name: Check QML Format
+    runs-on: ubuntu-24.04
+    container:
+      image: archlinux
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5.0.0
+
+      - name: Install deps
+        run: pacman -Syu --noconfirm qt6-declarative
+
+      - name: Run QML Format
+        run: ./util/qmlformat.sh
+
+      - name: Check git diff
+        run: git diff --quiet --exit-code || { echo 'git showed a diff after running qmlformat, did you forget to run ./util/qmlformat.sh? The following files need to be formatted:'; git diff --name-only; exit 1; }
+
+  check-qmllint:
+    name: Check QML Lint
+    runs-on: ubuntu-24.04
+    container:
+      image: archlinux
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5.0.0
+
+      - name: Install deps
+        run: pacman -Syu --noconfirm qt6-declarative
+
+      - name: Run QML Lint
+        run: ./util/qmllint.sh
+
