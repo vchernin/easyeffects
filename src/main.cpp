@@ -184,9 +184,6 @@ static void initQml(QQmlApplicationEngine& engine,
   engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
   engine.rootContext()->setContextProperty("canUseSysTray", QSystemTrayIcon::isSystemTrayAvailable());
   engine.rootContext()->setContextProperty("projectVersion", PROJECT_VERSION);
-  engine.rootContext()->setContextProperty("applicationId", APPLICATION_ID);
-  engine.rootContext()->setContextProperty("applicationIdShort", APPLICATION_ID_SHORT);
-  engine.rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 
   QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, [&](QObject* object, const QUrl& url) {
     if (url.toString() == "qrc:/ui/main.qml") {
@@ -291,7 +288,7 @@ int main(int argc, char* argv[]) {
   QApplication::setApplicationName(APPLICATION_DOMAIN);
   QApplication::setApplicationDisplayName(APPLICATION_NAME);
   QApplication::setApplicationVersion(QStringLiteral(PROJECT_VERSION));
-  QApplication::setDesktopFileName(APPLICATION_ID);
+  QApplication::setDesktopFileName("com.github.wwmm.easyeffects");
 
   QApplication::setStyle(QStringLiteral("breeze"));
   if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {

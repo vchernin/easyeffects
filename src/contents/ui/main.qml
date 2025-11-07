@@ -14,7 +14,7 @@ Kirigami.ApplicationWindow {
 
     width: DB.Manager.main.width
     height: DB.Manager.main.height
-    title: applicationName
+    title: "Easy Effects"
     pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
 
     readonly property real maxOverlayHeight: height - header.height - footer.height
@@ -234,8 +234,8 @@ Kirigami.ApplicationWindow {
         id: tray
 
         visible: DB.Manager.main.showTrayIcon && canUseSysTray // qmllint disable
-        icon.name: applicationId
-        tooltip: applicationName
+        icon.name: "com.github.wwmm.easyeffects"
+        tooltip: "Easy Effects"
         onActivated: {
             if (!appWindow.visible) {
                 appWindow.show();
@@ -536,7 +536,7 @@ Kirigami.ApplicationWindow {
                     },
                     Kirigami.Action {
                         text: i18n("About Easy Effects") // qmllint disable
-                        icon.name: applicationId
+                        icon.name: "com.github.wwmm.easyeffects"
                         displayHint: Kirigami.DisplayHint.AlwaysHide
                         onTriggered: {
                             aboutSheet.open();

@@ -32,7 +32,6 @@
 #include <format>
 #include <fstream>
 #include <string>
-#include "config.h"
 #include "db_manager.hpp"
 #include "tags_app.hpp"
 #include "util.hpp"
@@ -139,14 +138,14 @@ void Autostart::fallback_enable_autostart(const bool& state) {
     std::filesystem::create_directories(autostart_dir);
   }
 
-  std::filesystem::path autostart_file = autostart_dir / std::format("{}-service.desktop", APPLICATION_ID_SHORT);
+  std::filesystem::path autostart_file = autostart_dir / "easyeffects-service.desktop";
 
   if (state) {
     std::ofstream ofs{autostart_file};
 
     ofs << "[Desktop Entry]\n";
-    ofs << "Name=" << APPLICATION_NAME << "\n";
-    ofs << "Comment=" << APPLICATION_NAME << " Service\n";
+    ofs << "Name=Easy Effects\n";
+    ofs << "Comment=Easy Effects Service\n";
     ofs << "Exec=easyeffects --hide-window";
 
     if (db::Main::enableServiceMode()) {
@@ -155,7 +154,7 @@ void Autostart::fallback_enable_autostart(const bool& state) {
       ofs << "\n";
     }
 
-    ofs << "Icon=" << APPLICATION_ID << "\n";
+    ofs << "Icon=com.github.wwmm.easyeffects\n";
     ofs << "StartupNotify=false\n";
     ofs << "Terminal=false\n";
     ofs << "Type=Application\n";
